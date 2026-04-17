@@ -3,24 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - Overview</title>
+    <title>Dashboard Group 8</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
     <div class="dashboard-container">
+        <!-- SIDEBAR -->
         <aside class="sidebar">
             <div class="logo">
                 <i class="fa-regular fa-clipboard"></i> Group 8
             </div>
             <nav class="sidebar-nav">
-                <a href="#" class="nav-item active"><i class="fa-solid fa-border-all"></i> Overview</a>
-                <a href="#" class="nav-item"><i class="fa-regular fa-file-lines"></i> Task</a>
+                <a href="#" id="nav-overview" class="nav-item active"><i class="fa-solid fa-border-all"></i> Overview</a>
+                <a href="#" id="nav-task" class="nav-item"><i class="fa-regular fa-file-lines"></i> Task</a>
                 <a href="#" class="nav-item"><i class="fa-regular fa-calendar"></i> Calendar</a>
             </nav>
         </aside>
 
+        <!-- MAIN CONTENT -->
         <main class="main-content">
+            <!-- HEADER (Dùng chung) -->
             <header class="header">
                 <div class="search-bar">
                     <i class="fa-solid fa-magnifying-glass"></i>
@@ -55,102 +58,135 @@
                 </div>
             </header>
 
+            <!-- KHU VỰC NỘI DUNG THAY ĐỔI -->
             <div class="content-area">
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <div class="stat-title"><i class="fa-regular fa-folder"></i> Total Projects</div>
-                        <div class="stat-value">100</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-title"><i class="fa-solid fa-circle-exclamation"></i> Overdue</div>
-                        <div class="stat-value">100</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-title"><i class="fa-regular fa-square-check"></i> Completed</div>
-                        <div class="stat-value">100</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-title"><i class="fa-regular fa-rectangle-xmark"></i> Incomplete</div>
-                        <div class="stat-value">100</div>
-                    </div>
-                </div>
-
-                <div class="main-grid">
-                    <div class="left-panel">
-                        <div class="chart-section card">
-                            <h3>Monthly Projects Completed</h3>
-                            <div class="chart-placeholder">
-                                <img src="https://via.placeholder.com/600x250?text=Line+Chart+Placeholder" alt="Chart" style="width: 100%; border-radius: 8px;">
-                            </div>
+                
+                <!-- NỘI DUNG 1: OVERVIEW (Mặc định hiện) -->
+                <div id="view-overview" class="page-view active-view">
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-title"><i class="fa-regular fa-folder"></i> Total Projects</div>
+                            <div class="stat-value">100</div>
                         </div>
-                        <div class="activities-section card">
-                            <h3>Recent Activities</h3>
-                            <div class="activity-tags">
-                                <span class="tag"><i class="fa-solid fa-pen"></i> Activity #1</span>
-                                <span class="tag"><i class="fa-solid fa-pen"></i> Activity #2</span>
-                                <span class="tag"><i class="fa-solid fa-pen"></i> Activity #3</span>
-                            </div>
+                        <div class="stat-card">
+                            <div class="stat-title"><i class="fa-solid fa-circle-exclamation"></i> Overdue</div>
+                            <div class="stat-value">100</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-title"><i class="fa-regular fa-square-check"></i> Completed</div>
+                            <div class="stat-value">100</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-title"><i class="fa-regular fa-rectangle-xmark"></i> Incomplete</div>
+                            <div class="stat-value">100</div>
                         </div>
                     </div>
 
-                    <div class="right-panel">
-                        <div class="deadlines-section card">
-                            <h3>Upcoming Deadlines</h3>
-                            <ul class="deadline-list">
-                                <li>
-                                    <div class="dl-info">
-                                        <span class="dl-num">01</span>
-                                        <div>
-                                            <strong>Deadline #1</strong>
-                                            <p>dd/mm/yyyy</p>
+                    <div class="main-grid">
+                        <div class="left-panel">
+                            <div class="chart-section card">
+                                <h3>Monthly Projects Completed</h3>
+                                <div class="chart-placeholder">
+                                    <img src="https://via.placeholder.com/600x250?text=Line+Chart+Placeholder" alt="Chart" style="width: 100%; border-radius: 8px;">
+                                </div>
+                            </div>
+                            <div class="activities-section card">
+                                <h3>Recent Activities</h3>
+                                <div class="activity-tags">
+                                    <span class="tag"><i class="fa-solid fa-pen"></i> Activity #1</span>
+                                    <span class="tag"><i class="fa-solid fa-pen"></i> Activity #2</span>
+                                    <span class="tag"><i class="fa-solid fa-pen"></i> Activity #3</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="right-panel">
+                            <div class="deadlines-section card">
+                                <h3>Upcoming Deadlines</h3>
+                                <ul class="deadline-list">
+                                    <li>
+                                        <div class="dl-info">
+                                            <span class="dl-num">01</span>
+                                            <div><strong>Deadline #1</strong><p>dd/mm/yyyy</p></div>
                                         </div>
-                                    </div>
-                                    <i class="fa-regular fa-circle-check status-icon pending"></i>
-                                </li>
-                                <li>
-                                    <div class="dl-info">
-                                        <span class="dl-num">02</span>
-                                        <div>
-                                            <strong>Deadline #2</strong>
-                                            <p>dd/mm/yyyy</p>
+                                        <i class="fa-regular fa-circle-check status-icon pending"></i>
+                                    </li>
+                                    <li>
+                                        <div class="dl-info">
+                                            <span class="dl-num">04</span>
+                                            <div><strong>Deadline #4</strong><p>dd/mm/yyyy</p></div>
                                         </div>
-                                    </div>
-                                    <i class="fa-regular fa-circle-check status-icon pending"></i>
-                                </li>
-                                <li>
-                                    <div class="dl-info">
-                                        <span class="dl-num">03</span>
-                                        <div>
-                                            <strong>Deadline #3</strong>
-                                            <p>dd/mm/yyyy</p>
-                                        </div>
-                                    </div>
-                                    <i class="fa-regular fa-circle-check status-icon pending"></i>
-                                </li>
-                                <li>
-                                    <div class="dl-info">
-                                        <span class="dl-num">04</span>
-                                        <div>
-                                            <strong>Deadline #4</strong>
-                                            <p>dd/mm/yyyy</p>
-                                        </div>
-                                    </div>
-                                    <i class="fa-solid fa-circle-check status-icon completed"></i>
-                                </li>
-                                <li>
-                                    <div class="dl-info">
-                                        <span class="dl-num">05</span>
-                                        <div>
-                                            <strong>Deadline #5</strong>
-                                            <p>dd/mm/yyyy</p>
-                                        </div>
-                                    </div>
-                                    <i class="fa-solid fa-circle-check status-icon completed"></i>
-                                </li>
-                            </ul>
+                                        <i class="fa-solid fa-circle-check status-icon completed"></i>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
+
+                <!-- NỘI DUNG 2: TASK (Mặc định ẩn) -->
+                <div id="view-task" class="page-view">
+                    <div class="task-section">
+                        <div class="section-header">
+                            <h3>Tasks</h3>
+                            <div class="header-controls">
+                                <span class="sort-by"><i class="fa-solid fa-align-left"></i> Sort By : Deadline <i class="fa-solid fa-angle-left"></i> <i class="fa-solid fa-angle-right"></i></span>
+                                <button class="btn-primary">+ New Task</button>
+                            </div>
+                        </div>
+                        <div class="cards-row">
+                            <div class="task-card">
+                                <div class="card-image"><img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=300&q=80" alt="Code"></div>
+                                <div class="card-content">
+                                    <h4>Creating Web UI</h4>
+                                    <p class="subtitle">Web Developer</p>
+                                    <div class="progress-container">
+                                        <div class="progress-text"><span>Progress</span><span class="percent">85%</span></div>
+                                        <div class="progress-bar"><div class="progress-fill" style="width: 85%;"></div></div>
+                                    </div>
+                                    <div class="card-footer"><i class="fa-regular fa-clock"></i> 4 Hours Left</div>
+                                </div>
+                            </div>
+                             <div class="task-card">
+                                <div class="card-image"><img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=300&q=80" alt="Code"></div>
+                                <div class="card-content">
+                                    <h4>Backend API</h4>
+                                    <p class="subtitle">Web Developer</p>
+                                    <div class="progress-container">
+                                        <div class="progress-text"><span>Progress</span><span class="percent">60%</span></div>
+                                        <div class="progress-bar"><div class="progress-fill" style="width: 60%;"></div></div>
+                                    </div>
+                                    <div class="card-footer"><i class="fa-regular fa-clock"></i> 6 Hours Left</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="task-section">
+                        <div class="section-header">
+                            <h3>Projects</h3>
+                            <div class="header-controls">
+                                <span class="sort-by"><i class="fa-solid fa-align-left"></i> Sort By : Deadline <i class="fa-solid fa-angle-left"></i> <i class="fa-solid fa-angle-right"></i></span>
+                                <button class="btn-primary">+ New Project</button>
+                            </div>
+                        </div>
+                        <div class="cards-row">
+                            <div class="task-card">
+                                <div class="card-image"><img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=300&q=80" alt="Code"></div>
+                                <div class="card-content">
+                                    <h4>Creating Perfect Website</h4>
+                                    <p class="subtitle">Web Developer</p>
+                                    <div class="progress-container">
+                                        <div class="progress-text"><span>Progress</span><span class="percent">85%</span></div>
+                                        <div class="progress-bar"><div class="progress-fill" style="width: 85%;"></div></div>
+                                    </div>
+                                    <div class="card-footer"><i class="fa-regular fa-clock"></i> 4 Days Left</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </main>
     </div>
