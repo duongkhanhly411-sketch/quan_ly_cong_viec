@@ -368,12 +368,8 @@
                 </div>
                 <div class="header-actions">
                     <div class="noti-btn" onclick="toggleDropdown(event, 'drop-noti')"><i class="fa-regular fa-bell"></i></div>
-                    
                     <div class="dropdown noti-drop" id="drop-noti" onclick="event.stopPropagation()">
-                        <div class="noti-header">
-                            <span>Notifications</span>
-                            <i class="fa-solid fa-xmark" style="cursor: pointer;" onclick="closeDropdown('drop-noti')"></i>
-                        </div>
+                        <div class="noti-header"><span>Notifications</span><i class="fa-solid fa-xmark" style="cursor: pointer;" onclick="document.getElementById('drop-noti').classList.remove('show')"></i></div>
                         <div class="noti-body"><i class="fa-regular fa-circle-question" style="color: #00D1FF;"></i><span>You don't have any notifications</span><i class="fa-regular fa-face-smile"></i></div>
                     </div>
 
@@ -383,7 +379,7 @@
                         <i class="fa-solid fa-caret-down" style="font-size: 12px;"></i>
                     </div>
                     
-                    <div class="dropdown profile-drop" id="drop-profile" onclick="event.stopPropagation()">
+                    <div class="dropdown profile-drop" id="drop-profile">
                         <div class="drop-item"><i class="fa-regular fa-user-circle"></i> Profile</div>
                         <div class="drop-item"><i class="fa-solid fa-gear"></i> Settings</div>
                         <div class="drop-item" onclick="logout()"><i class="fa-solid fa-arrow-right-from-bracket"></i> Log out</div>
@@ -477,7 +473,6 @@
                             <div class="btn-icon"><i class="fa-solid fa-chevron-left"></i></div>
                             <div class="cal-date" onclick="toggleDropdown(event, 'drop-datepicker')">
                                 Apr 16, 2026 <i class="fa-solid fa-chevron-down" style="font-size:12px;"></i>
-                                
                                 <div class="dropdown date-picker-drop" id="drop-datepicker" onclick="event.stopPropagation()">
                                     <div class="dp-header"><i class="fa-solid fa-chevron-left"></i> Apr 2026 <i class="fa-solid fa-chevron-right"></i></div>
                                     <div class="dp-grid">
@@ -625,42 +620,31 @@
         }
 
         // ==========================================
-        // 3. DROPDOWNS TOGGLE (ĐÃ ĐƯỢC FIX HOÀN TOÀN)
+        // 3. DROPDOWNS TOGGLE (ĐÃ ĐƯỢC FIX LỖI TẮT BẬT)
         // ==========================================
         function toggleDropdown(event, id) {
-            event.stopPropagation(); // Ngăn click lọt ra ngoài màn hình
+            event.stopPropagation(); // Ngăn sự kiện click lọt ra màn hình nền
             
             var targetDrop = document.getElementById(id);
-            var allDrops = document.getElementsByClassName('dropdown');
-            
-            // Nhớ xem nó đang bật hay tắt
             var isCurrentlyOpen = targetDrop.classList.contains('show');
             
-            // Tắt hết tất cả các bảng trước
+            // Xóa tất cả dropdown đang mở
+            var allDrops = document.getElementsByClassName('dropdown');
             for(var i = 0; i < allDrops.length; i++) {
                 allDrops[i].classList.remove('show');
             }
             
-            // Nếu ban đầu nó chưa bật, thì giờ bật nó lên
+            // Nếu chưa mở thì mở lên
             if(!isCurrentlyOpen) {
                 targetDrop.classList.add('show');
             }
         }
 
-        // Nút ấn tắt riêng cho dấu X
-        function closeDropdown(id) {
-            document.getElementById(id).classList.remove('show');
-        }
-
-        // Sự kiện click ở bất cứ đâu trên màn hình thì tắt bảng
-        document.onclick = function(event) {
+        // Bấm ra nền trắng thì tự động tắt hết các menu
+        document.onclick = function() {
             var allDrops = document.getElementsByClassName('dropdown');
             for(var i = 0; i < allDrops.length; i++) {
-                // Kiểm tra xem chuột vừa click có NẰM TRONG cái bảng không
-                // Nếu không nằm trong thì mới tắt đi (Tránh việc ấn vào chữ bên trong mà bị tắt)
-                if (!allDrops[i].contains(event.target)) {
-                    allDrops[i].classList.remove('show');
-                }
+                allDrops[i].classList.remove('show');
             }
         };
 
