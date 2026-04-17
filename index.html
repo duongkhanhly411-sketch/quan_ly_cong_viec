@@ -47,9 +47,9 @@
             top: 0; left: 0; right: 0; bottom: 0;
             background: #F3F4F8;
             display: flex; justify-content: center; align-items: center;
-            z-index: 1000; transition: transform 0.7s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            z-index: 1000; 
         }
-        .auth-container.hidden { transform: translateY(-100%); }
+        .auth-container.hidden { display: none; } /* Đổi từ hiệu ứng trượt sang ẩn luôn */
 
         .auth-box {
             background: #FFFFFF;
@@ -66,9 +66,8 @@
         .form-group input { 
             width: 100%; height: 56px; border: 1px solid rgba(102, 102, 102, 0.35);
             border-radius: 12px; padding: 0 20px; font-family: 'Poppins'; font-size: 16px;
-            transition: all 0.3s ease;
         }
-        .form-group input:focus { border-color: #546FFF; outline: none; box-shadow: 0 0 0 3px rgba(84,111,255,0.2);}
+        .form-group input:focus { border-color: #546FFF; outline: none;} /* Bỏ box-shadow mượt */
         
         .check-group { display: flex; align-items: center; gap: 10px; width: 100%; font-size: 14px; margin-top: -10px; margin-bottom: 20px;}
         .check-group input { width: 20px; height: 20px; cursor: pointer; }
@@ -76,10 +75,9 @@
         .btn-auth {
             width: 100%; height: 64px; border-radius: 40px; border: none;
             background: #111; color: white; font-size: 20px; font-weight: 500; font-family: 'Poppins';
-            cursor: pointer; transition: all 0.3s ease; margin-top: 10px;
+            cursor: pointer; margin-top: 10px;
         }
-        .btn-auth:hover { background: #546FFF; box-shadow: 0 10px 20px rgba(84,111,255,0.3);}
-        .btn-auth:active { transform: scale(0.98); }
+        .btn-auth:hover { background: #546FFF; } /* Bỏ hiệu ứng active scale */
 
         .auth-divider { display: flex; align-items: center; gap: 20px; width: 100%; margin: 30px 0;}
         .auth-divider span { height: 1px; flex: 1; background: rgba(102,102,102,0.25);}
@@ -88,11 +86,11 @@
         .btn-outline {
             width: 100%; height: 64px; border-radius: 40px; border: 1px solid rgba(102,102,102,0.5);
             background: white; color: #111; font-size: 20px; font-weight: 500; font-family: 'Poppins';
-            cursor: pointer; transition: all 0.3s ease; display: flex; justify-content: center; align-items: center;
+            cursor: pointer; display: flex; justify-content: center; align-items: center;
         }
         .btn-outline:hover { background: #f5f5f5; }
 
-        .auth-form { width: 100%; display: none; flex-direction: column; align-items: center; animation: fadeIn 0.4s; }
+        .auth-form { width: 100%; display: none; flex-direction: column; align-items: center; } /* Bỏ animation fadeIn */
         .auth-form.active-form { display: flex; }
 
         .auth-footer { 
@@ -113,10 +111,10 @@
         .nav-menu { display: flex; flex-direction: column; gap: 15px; }
         .nav-item {
             display: flex; align-items: center; gap: 15px; padding: 15px 20px; border-radius: 10px;
-            font-size: 18px; font-weight: 600; cursor: pointer; opacity: 0.6; transition: all 0.3s ease;
+            font-size: 18px; font-weight: 600; cursor: pointer; opacity: 0.6; 
         }
-        .nav-item:hover { opacity: 1; background: rgba(245, 245, 247, 0.5); transform: translateX(5px); }
-        .nav-item.active { background: #F5F5F7; opacity: 1; transform: translateX(0); }
+        .nav-item:hover { opacity: 1; background: #f5f5f7; } /* Bỏ transform dịch chuyển */
+        .nav-item.active { background: #F5F5F7; opacity: 1; }
         .nav-item.active i { color: #546FFF; }
 
         /* ================= MAIN CONTENT ================= */
@@ -129,15 +127,14 @@
             margin-bottom: 40px; position: relative; z-index: 50; box-shadow: 0 2px 10px rgba(0,0,0,0.02);
             flex-shrink: 0;
         }
-        .search-bar { background: #F5F5F7; width: 300px; height: 45px; border-radius: 30px; display: flex; align-items: center; padding: 0 20px; gap: 10px; transition: all 0.3s ease;}
-        .search-bar:focus-within { width: 320px; box-shadow: 0 0 0 2px #BAC8FF; }
+        .search-bar { background: #F5F5F7; width: 300px; height: 45px; border-radius: 30px; display: flex; align-items: center; padding: 0 20px; gap: 10px; }
         .search-bar input { border: none; background: transparent; outline: none; font-family: 'Poppins'; font-size: 16px; width: 100%;}
         
         .header-actions { display: flex; align-items: center; gap: 30px; position: relative;}
-        .noti-btn { width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s ease; font-size: 24px;}
+        .noti-btn { width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 24px;}
         .noti-btn:hover { background: #F5F5F7; }
         
-        .user-profile { display: flex; align-items: center; gap: 15px; cursor: pointer; padding: 5px 10px; border-radius: 30px; transition: all 0.3s ease;}
+        .user-profile { display: flex; align-items: center; gap: 15px; cursor: pointer; padding: 5px 10px; border-radius: 30px;}
         .user-profile:hover { background: #F5F5F7; }
         .avatar { width: 45px; height: 45px; background: #e0e0e0; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px; }
 
@@ -145,34 +142,32 @@
         .dropdown {
             position: absolute; background: #FFFFFF; border: 2px solid #F5F5F7;
             border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            opacity: 0; visibility: hidden; transform: translateY(10px); transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55); z-index: 100;
+            display: none; z-index: 100; /* Thay opacity bằng display: none cứng */
         }
-        .dropdown.show { opacity: 1; visibility: visible; transform: translateY(0); }
+        .dropdown.show { display: block; }
         
         .noti-drop { top: 60px; right: 200px; width: 280px; padding: 15px; }
         .noti-header { display: flex; justify-content: space-between; font-weight: 700; margin-bottom: 15px; }
-        .noti-header i { cursor: pointer; transition: all 0.3s ease; }
-        .noti-header i:hover { color: red; transform: rotate(90deg); }
+        .noti-header i { cursor: pointer; }
+        .noti-header i:hover { color: red; } /* Bỏ hiệu ứng xoay */
         .noti-body { display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 500;}
 
         .profile-drop { top: 60px; right: 0; width: 230px; padding: 10px; display: flex; flex-direction: column; gap: 5px;}
-        .drop-item { display: flex; align-items: center; gap: 15px; padding: 12px 15px; font-weight: 600; font-size: 18px; border-radius: 10px; cursor: pointer; transition: all 0.3s ease; }
-        .drop-item:hover { background: #F5F5F7; color: #546FFF; transform: translateX(5px); }
+        .drop-item { display: flex; align-items: center; gap: 15px; padding: 12px 15px; font-weight: 600; font-size: 18px; border-radius: 10px; cursor: pointer; }
+        .drop-item:hover { background: #F5F5F7; color: #546FFF; }
 
 
         /* ================= TABS CHÍNH ================= */
         .page-content {
-            flex: 1; position: relative; overflow-y: auto; opacity: 0; visibility: hidden; transition: opacity 0.4s ease; display: none; padding-bottom: 20px;
+            flex: 1; position: relative; overflow-y: auto; display: none; padding-bottom: 20px;
         }
-        .page-content.active-view { opacity: 1; visibility: visible; display: block; animation: fadeIn 0.4s ease;}
+        .page-content.active-view { display: block; } /* Bỏ hiệu ứng hiện dần fadeIn */
 
-        .card { background: #FFFFFF; border-radius: 20px; transition: all 0.3s ease; }
-        .card:hover { box-shadow: 0 10px 20px rgba(0,0,0,0.05); transform: translateY(-3px); }
+        .card { background: #FFFFFF; border-radius: 20px; }
 
         /* --- TAB OVERVIEW --- */
         .stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px; margin-bottom: 30px; }
         .stat-card { height: 160px; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 10px; cursor: pointer;}
-        .stat-card:active { transform: scale(0.97); }
         .stat-title { font-size: 18px; font-weight: 500; display: flex; align-items: center; gap: 10px; color: #141522;}
         .stat-num { font-size: 36px; font-weight: 700; }
 
@@ -183,19 +178,19 @@
         .recent-card { margin-top: 30px; padding: 25px 30px; display: flex; align-items: center; gap: 20px; height: 120px;}
         .recent-card h3 { font-size: 20px; font-weight: 700; white-space: nowrap; }
         .activity-tags { display: flex; gap: 15px; overflow-x: auto;}
-        .tag { background: #F7F7F7; padding: 8px 20px; border-radius: 20px; font-size: 14px; font-weight: 500; display: flex; align-items: center; gap: 10px; cursor: pointer; transition: all 0.3s ease;}
-        .tag:hover { background: #e2e4ff; color: #546FFF; transform: translateY(-3px);}
+        .tag { background: #F7F7F7; padding: 8px 20px; border-radius: 20px; font-size: 14px; font-weight: 500; display: flex; align-items: center; gap: 10px; cursor: pointer; }
+        .tag:hover { background: #e2e4ff; color: #546FFF; }
         .tag-icon { width: 28px; height: 28px; background: #7784EE; border-radius: 50%; color: white; display: flex; align-items: center; justify-content: center; font-size: 12px;}
 
         .deadline-card { padding: 30px; height: 530px; }
         .deadline-card h3 { font-size: 22px; font-weight: 700; text-align: center; margin-bottom: 20px; }
-        .dl-item { display: flex; align-items: center; gap: 15px; padding: 12px 0; border-bottom: 1px solid rgba(0,0,0,0.05); transition: all 0.3s ease; cursor: pointer;}
+        .dl-item { display: flex; align-items: center; gap: 15px; padding: 12px 0; border-bottom: 1px solid rgba(0,0,0,0.05); cursor: pointer;}
         .dl-item:hover { background: #fafafa; border-radius: 10px; padding: 12px 10px; margin: 0 -10px;}
         .dl-num { font-weight: 600; font-size: 18px; width: 25px; }
         .dl-info { flex: 1; }
         .dl-info strong { font-size: 16px; font-weight: 600; }
         .dl-info p { font-size: 12px; color: #54577A; }
-        .dl-check { width: 26px; height: 26px; border-radius: 50%; border: 2px solid #141522; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease; font-size: 12px;}
+        .dl-check { width: 26px; height: 26px; border-radius: 50%; border: 2px solid #141522; display: flex; align-items: center; justify-content: center; font-size: 12px;}
         .dl-item.done .dl-info strong { text-decoration: line-through; color: #54577A; }
         .dl-item.done .dl-check { background: #05cd99; border-color: #05cd99; color: white; }
 
@@ -204,12 +199,12 @@
         .ts-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
         .ts-header h2 { font-size: 24px; font-weight: 700; }
         .ts-actions { display: flex; align-items: center; gap: 20px; }
-        .btn-primary { background: #546FFF; color: white; border: none; padding: 10px 20px; border-radius: 20px; font-weight: 500; font-size: 14px; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(84, 111, 255, 0.4);}
-        .btn-primary:hover { background: #425adb; transform: translateY(-2px); }
+        .btn-primary { background: #546FFF; color: white; border: none; padding: 10px 20px; border-radius: 20px; font-weight: 500; font-size: 14px; cursor: pointer; }
+        .btn-primary:hover { background: #425adb; }
         
         .task-list { display: flex; gap: 30px; overflow-x: auto; padding: 10px 0 20px 0; }
-        .t-card { min-width: 300px; height: 280px; background: rgba(243, 244, 248, 0.5); border-radius: 20px; padding: 15px; border: 2px solid transparent; transition: all 0.3s ease; cursor: pointer;}
-        .t-card:hover { transform: translateY(-5px); background: white; box-shadow: 0 15px 30px rgba(0,0,0,0.08); border-color: #BAC8FF;}
+        .t-card { min-width: 300px; height: 280px; background: rgba(243, 244, 248, 0.5); border-radius: 20px; padding: 15px; border: 2px solid transparent; cursor: pointer;}
+        .t-card:hover { background: white; border-color: #BAC8FF;} /* Bỏ box shadow và transform nảy lên */
         .t-img { width: 100%; height: 110px; border-radius: 10px; object-fit: cover; margin-bottom: 15px; }
         .t-title { font-weight: 600; font-size: 16px; margin-bottom: 2px; }
         .t-sub { font-weight: 500; font-size: 12px; color: #54577A; margin-bottom: 20px; }
@@ -224,16 +219,16 @@
         
         .cal-header { display: flex; justify-content: space-between; padding: 20px 30px; align-items: center; border-bottom: 1px solid #DADCE0; position: relative;}
         .cal-nav { display: flex; align-items: center; gap: 15px; font-weight: 600;}
-        .btn-icon { width: 44px; height: 36px; border: 1px solid #DADCE0; border-radius: 20px; display: flex; align-items: center; justify-content: center; cursor: pointer; background: white; transition: all 0.3s ease;}
+        .btn-icon { width: 44px; height: 36px; border: 1px solid #DADCE0; border-radius: 20px; display: flex; align-items: center; justify-content: center; cursor: pointer; background: white;}
         .btn-icon:hover { background: #F5F5F7; }
         .cal-date { display: flex; align-items: center; gap: 5px; cursor: pointer; position: relative;}
         
         /* Dropdown Date Picker */
         .date-picker-drop {
             position: absolute; top: 50px; left: 0; background: white; border-radius: 20px;
-            padding: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); display: none; z-index: 100; width: 250px;
+            padding: 15px; border: 1px solid #ccc; display: none; z-index: 100; width: 250px;
         }
-        .date-picker-drop.show { display: block; animation: fadeIn 0.2s;}
+        .date-picker-drop.show { display: block; }
         .dp-header { display: flex; justify-content: space-between; font-weight: 600; margin-bottom: 10px; font-size: 14px;}
         .dp-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; text-align: center; font-size: 14px;}
         .dp-day { padding: 5px; cursor: pointer; border-radius: 4px; font-weight: 500;}
@@ -242,8 +237,8 @@
         .dp-day.active { background: #F5F5F7; border: 1px solid black;}
 
         .cal-view-switch { display: flex; background: #F3F4F6; border: 1px solid #DADCE0; border-radius: 20px; padding: 2px;}
-        .view-btn { padding: 6px 12px; font-size: 14px; cursor: pointer; border-radius: 18px; transition: all 0.3s ease;}
-        .view-btn.active { background: white; box-shadow: 0 2px 5px rgba(0,0,0,0.05); font-weight: 600;}
+        .view-btn { padding: 6px 12px; font-size: 14px; cursor: pointer; border-radius: 18px; }
+        .view-btn.active { background: white; border: 1px solid #ccc; font-weight: 600;}
 
         /* Lịch View */
         .cal-body { display: flex; flex: 1; overflow-y: auto; position: relative;}
@@ -251,7 +246,7 @@
         .cal-sidebar { width: 280px; padding: 20px; border-right: 1px solid #DADCE0; display: flex; flex-direction: column; align-items: center; flex-shrink: 0;}
         .mini-cal-header { font-weight: 600; margin-bottom: 15px; width: 100%; display: flex; justify-content: space-between; align-items: center;}
         .mini-grid { display: grid; grid-template-columns: repeat(7, 33px); gap: 2px; text-align: center; font-size: 14px; font-weight: 500;}
-        .m-day { width: 33px; height: 33px; display: flex; justify-content: center; align-items: center; border-radius: 4px; cursor: pointer; transition: all 0.3s ease;}
+        .m-day { width: 33px; height: 33px; display: flex; justify-content: center; align-items: center; border-radius: 4px; cursor: pointer;}
         .m-day:hover { background: #eee; }
         .m-day.muted { opacity: 0.3; }
         .m-day.active { background: #F5F5F7; border: 1px solid black;}
@@ -279,10 +274,10 @@
         /* Event Blocks */
         .event-block { 
             position: absolute; left: 4px; right: 4px; border-radius: 3px; padding: 4px 8px; 
-            font-size: 10px; font-weight: 600; cursor: pointer; transition: all 0.3s ease;
+            font-size: 10px; font-weight: 600; cursor: pointer;
             display: flex; flex-direction: column; overflow: hidden; justify-content: center;
         }
-        .event-block:hover { filter: brightness(0.95); transform: scale(1.02); z-index: 20; box-shadow: 0 4px 10px rgba(0,0,0,0.1);}
+        .event-block:hover { border: 1px solid black; } /* Bỏ hiệu ứng nổi lên, chỉ thêm viền đen */
         .ev-title { display: flex; align-items: center; gap: 5px; white-space: nowrap;}
         
         /* Event Colors */
@@ -292,8 +287,6 @@
         .e-purple { background: #D6C8FF; border: 1px solid #A384FF; color: #341D76; }
         .e-yellow { background: #FFEBB7; border: 1px solid #E7C160; color: #684D08; }
         .e-purple-dark { background: #6438E0; border: 1px solid #3A14A8; color: white; }
-
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
     </style>
 </head>
@@ -589,8 +582,8 @@
         // Click nút đăng nhập/đăng ký
         function loginSuccess() {
             authScreen.classList.add('hidden');
-            setTimeout(initChart, 600); // Đợi CSS trượt xong mới render chart
-            initCalendarGrid(); // Khởi tạo lưới lịch
+            initChart(); // Bỏ phần delay mượt mà, render ngay lập tức
+            initCalendarGrid(); 
         }
 
         // Đăng xuất
@@ -720,7 +713,7 @@
         function initCalendarGrid() {
             // Render 24H Time Column
             var timeCol = document.getElementById('time-column');
-            var timeHtml = '<div style="height: 40px;"></div>'; // padding top
+            var timeHtml = '<div style="height: 40px;"></div>'; 
             
             for(var i = 1; i <= 23; i++) {
                 var hour = i < 10 ? '0' + i + ':00' : i + ':00';
