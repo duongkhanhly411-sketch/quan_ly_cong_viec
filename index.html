@@ -42,8 +42,6 @@
         }
 
         /* ================= AUTHENTICATION SCREEN ================= */
-        /* Mẹo: Nếu bạn muốn vừa vào đã TẮT luôn màn hình Login để dễ code, 
-           hãy đổi "display: flex;" ở dưới thành "display: none;" nhé */
         .auth-container {
             position: absolute;
             top: 0; left: 0; right: 0; bottom: 0;
@@ -370,8 +368,12 @@
                 </div>
                 <div class="header-actions">
                     <div class="noti-btn" onclick="toggleDropdown(event, 'drop-noti')"><i class="fa-regular fa-bell"></i></div>
-                    <div class="dropdown noti-drop" id="drop-noti">
-                        <div class="noti-header"><span>Notifications</span><i class="fa-solid fa-xmark" onclick="toggleDropdown(event, 'drop-noti')"></i></div>
+                    
+                    <div class="dropdown noti-drop" id="drop-noti" onclick="event.stopPropagation()">
+                        <div class="noti-header">
+                            <span>Notifications</span>
+                            <i class="fa-solid fa-xmark" style="cursor: pointer;" onclick="closeDropdown('drop-noti')"></i>
+                        </div>
                         <div class="noti-body"><i class="fa-regular fa-circle-question" style="color: #00D1FF;"></i><span>You don't have any notifications</span><i class="fa-regular fa-face-smile"></i></div>
                     </div>
 
@@ -380,7 +382,8 @@
                         <div class="avatar"><i class="fa-regular fa-user"></i></div>
                         <i class="fa-solid fa-caret-down" style="font-size: 12px;"></i>
                     </div>
-                    <div class="dropdown profile-drop" id="drop-profile">
+                    
+                    <div class="dropdown profile-drop" id="drop-profile" onclick="event.stopPropagation()">
                         <div class="drop-item"><i class="fa-regular fa-user-circle"></i> Profile</div>
                         <div class="drop-item"><i class="fa-solid fa-gear"></i> Settings</div>
                         <div class="drop-item" onclick="logout()"><i class="fa-solid fa-arrow-right-from-bracket"></i> Log out</div>
@@ -474,7 +477,8 @@
                             <div class="btn-icon"><i class="fa-solid fa-chevron-left"></i></div>
                             <div class="cal-date" onclick="toggleDropdown(event, 'drop-datepicker')">
                                 Apr 16, 2026 <i class="fa-solid fa-chevron-down" style="font-size:12px;"></i>
-                                <div class="dropdown date-picker-drop" id="drop-datepicker">
+                                
+                                <div class="dropdown date-picker-drop" id="drop-datepicker" onclick="event.stopPropagation()">
                                     <div class="dp-header"><i class="fa-solid fa-chevron-left"></i> Apr 2026 <i class="fa-solid fa-chevron-right"></i></div>
                                     <div class="dp-grid">
                                         <div>Mo</div><div>Tu</div><div>We</div><div>Th</div><div>Fr</div><div>Sa</div><div>Su</div>
@@ -620,9 +624,11 @@
             }
         }
 
-        // 3. Dropdowns Toggle ĐƯỢC FIX LẠI CỰC CHUẨN
+        // ==========================================
+        // 3. DROPDOWNS TOGGLE (ĐÃ ĐƯỢC FIX HOÀN TOÀN)
+        // ==========================================
         function toggleDropdown(event, id) {
-            event.stopPropagation(); // Không cho phép click lọt ra ngoài màn hình
+            event.stopPropagation(); // Ngăn click lọt ra ngoài màn hình
             
             var targetDrop = document.getElementById(id);
             var allDrops = document.getElementsByClassName('dropdown');
@@ -630,7 +636,7 @@
             // Nhớ xem nó đang bật hay tắt
             var isCurrentlyOpen = targetDrop.classList.contains('show');
             
-            // Xóa tất cả các bảng Dropdown đang hiển thị trước
+            // Tắt hết tất cả các bảng trước
             for(var i = 0; i < allDrops.length; i++) {
                 allDrops[i].classList.remove('show');
             }
@@ -641,17 +647,23 @@
             }
         }
 
-        // Sự kiện click ở bất cứ đâu trên màn hình
+        // Nút ấn tắt riêng cho dấu X
+        function closeDropdown(id) {
+            document.getElementById(id).classList.remove('show');
+        }
+
+        // Sự kiện click ở bất cứ đâu trên màn hình thì tắt bảng
         document.onclick = function(event) {
             var allDrops = document.getElementsByClassName('dropdown');
             for(var i = 0; i < allDrops.length; i++) {
-                // Kiểm tra xem chuột vừa click có NẰM TRONG cái dropdown không
-                // Nếu không nằm trong thì mới tắt đi (Fix lỗi bấm bên trong dropdown bị tắt ngang)
+                // Kiểm tra xem chuột vừa click có NẰM TRONG cái bảng không
+                // Nếu không nằm trong thì mới tắt đi (Tránh việc ấn vào chữ bên trong mà bị tắt)
                 if (!allDrops[i].contains(event.target)) {
                     allDrops[i].classList.remove('show');
                 }
             }
         };
+
 
         // 4. Task Checkbox
         function toggleTask(element) {
