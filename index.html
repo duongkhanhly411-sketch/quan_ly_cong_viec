@@ -1,302 +1,585 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Management Dashboard - Group 8</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <title>Group 8 - Dashboard</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <style>
-        /* ================= TỔNG HỢP CSS CHUẨN FIGMA ================= */
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
-        :root { 
-            --bg-color: #f4f7fe; --white: #ffffff; --text-main: #1b2559; 
-            --text-muted: #a3aed0; --primary-blue: #4318ff; --green-success: #05cd99;
-            --border-radius: 20px; --bg-active: #f4f7fe;
+        /* ================= BIẾN MÀU SẮC & CƠ BẢN ================= */
+        :root {
+            --bg-main: #F3F4F8;
+            --white: #FFFFFF;
+            --text-main: #141522;
+            --text-muted: #54577A;
+            --primary: #546FFF;
+            --primary-light: #BAC8FF;
+            --chart-line: #8979FF;
+            --success: #2EB67D;
+            --search-bg: #F5F5F7;
+            --border-radius: 20px;
+            --transition: all 0.3s ease;
         }
 
-        body { background-color: var(--bg-color); color: var(--text-main); height: 100vh; display: flex; overflow: hidden; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
-        /* SIDEBAR */
-        .sidebar { width: 280px; background: var(--white); padding: 40px 20px; display: flex; flex-direction: column; }
-        .logo { font-size: 26px; font-weight: 800; margin-bottom: 50px; display: flex; align-items: center; gap: 12px; padding-left: 10px; }
-        .nav-item { 
-            text-decoration: none; color: var(--text-muted); font-weight: 700; padding: 16px 20px; 
-            border-radius: 12px; display: flex; align-items: center; gap: 15px; margin-bottom: 8px; cursor: pointer; transition: 0.3s;
+        body {
+            background-color: var(--bg-main);
+            font-family: 'Poppins', sans-serif;
+            color: var(--text-main);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
         }
-        .nav-item.active { background: var(--bg-active); color: var(--text-main); }
-        .nav-item i { font-size: 20px; width: 24px; text-align: center; }
 
-        /* MAIN CONTENT */
-        .main-content { flex: 1; padding: 20px 40px; overflow-y: auto; }
+        /* Ẩn thanh cuộn nhưng vẫn cho scroll */
+        ::-webkit-scrollbar { display: none; }
+
+        /* ================= BỐ CỤC TỔNG THỂ ================= */
+        .app-container {
+            width: 1360px;
+            height: 944px;
+            background: var(--bg-main);
+            border-radius: var(--border-radius);
+            display: flex;
+            position: relative;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+            overflow: hidden;
+        }
+
+        /* ================= SIDEBAR ================= */
+        .sidebar {
+            width: 250px;
+            height: 100%;
+            background: var(--white);
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            z-index: 10;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 60px;
+            padding-left: 10px;
+        }
+        .logo i { font-size: 32px; color: var(--text-main); }
+        .logo span { font-family: 'Montserrat', sans-serif; font-size: 32px; font-weight: 600; }
+
+        .nav-menu { display: flex; flex-direction: column; gap: 15px; }
         
-        /* HEADER */
-        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
-        .search-bar { background: var(--white); border-radius: 30px; padding: 12px 20px; display: flex; align-items: center; gap: 12px; width: 400px; box-shadow: 0 4px 10px rgba(0,0,0,0.02); }
-        .search-bar input { border: none; outline: none; width: 100%; font-size: 14px; background: transparent; }
-        .header-actions { display: flex; align-items: center; gap: 25px; }
-        .icon-btn { font-size: 22px; cursor: pointer; color: var(--text-main); }
-        .avatar { width: 45px; height: 45px; border-radius: 50%; border: 2.5px solid var(--text-main); display: flex; align-items: center; justify-content: center; font-size: 24px; }
-
-        /* PAGE VIEWS LOGIC */
-        .page-view { display: none; }
-        .active-view { display: block; animation: fadeIn 0.4s ease; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-        /* --- OVERVIEW COMPONENTS --- */
-        .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-bottom: 30px; }
-        .stat-card { background: var(--white); padding: 25px; border-radius: var(--border-radius); text-align: center; }
-        .stat-title { font-weight: 700; font-size: 15px; margin-bottom: 15px; display: flex; align-items: center; justify-content: center; gap: 10px; }
-        .stat-value { font-size: 36px; font-weight: 800; }
-
-        .main-grid { display: grid; grid-template-columns: 1.8fr 1.2fr; gap: 25px; }
-        .card { background: var(--white); padding: 30px; border-radius: var(--border-radius); box-shadow: 0 4px 20px rgba(0,0,0,0.02); margin-bottom: 25px; }
-        .card h3 { font-size: 18px; font-weight: 800; margin-bottom: 25px; }
-
-        .activity-tags { display: flex; gap: 15px; }
-        .tag { background: #f4f7fe; padding: 12px 20px; border-radius: 12px; font-weight: 700; font-size: 13px; display: flex; align-items: center; gap: 8px; color: var(--primary-blue); }
-        .tag i { background: #e9edf7; padding: 6px; border-radius: 50%; font-size: 12px;}
-
-        .deadline-list { list-style: none; }
-        .deadline-item { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid #f1f4f9; }
-        .deadline-item:last-child { border-bottom: none; }
-        .dl-info { display: flex; align-items: center; gap: 20px; }
-        .dl-num { font-weight: 800; font-size: 16px; min-width: 25px; }
-        .dl-text strong { display: block; font-size: 14px; }
-        .dl-text span { font-size: 12px; color: var(--text-muted); font-weight: 600; }
-        /* --- CẬP NHẬT DEADLINES CSS --- */
-.status-icon { 
-    font-size: 22px; 
-    color: var(--text-muted); 
-    cursor: pointer; /* Thêm con trỏ chuột hình bàn tay */
-    transition: all 0.2s ease; /* Hiệu ứng chuyển màu mượt mà */
-}
-.status-icon.done { color: var(--green-success); }
-.status-icon:hover { opacity: 0.8; transform: scale(1.1); } /* Hiệu ứng phình to nhẹ khi di chuột */
-
-/* Hiệu ứng gạch ngang và làm mờ chữ khi đã click hoàn thành */
-.dl-text.completed strong, 
-.dl-text.completed span { 
-    text-decoration: line-through; 
-    opacity: 0.5; 
-}
-        .status-icon.done { color: var(--green-success); }
-
-        /* --- TASK COMPONENTS --- */
-        .task-section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
-        .btn-primary { background: var(--primary-blue); color: var(--white); border: none; padding: 12px 24px; border-radius: 14px; font-weight: 700; cursor: pointer; }
+        .nav-item {
+            display: flex; align-items: center; gap: 15px;
+            padding: 15px 20px;
+            border-radius: 10px;
+            font-size: 18px; font-weight: 600;
+            color: var(--text-main);
+            cursor: pointer;
+            opacity: 0.6;
+            transition: var(--transition);
+        }
+        .nav-item i { font-size: 24px; transition: transform 0.2s; }
         
-        .cards-row { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 25px; margin-bottom: 40px; }
-        .task-card { background: var(--white); border-radius: 20px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.02); border: 1px solid #f1f4f9; }
-        .card-img { width: 100%; height: 140px; object-fit: cover; }
-        .card-body { padding: 20px; }
-        .card-body h4 { font-size: 16px; font-weight: 700; margin-bottom: 4px; }
-        .card-subtitle { font-size: 12px; color: var(--text-muted); font-weight: 600; margin-bottom: 20px; }
+        /* Hiệu ứng Hover & Active Menu */
+        .nav-item:hover { opacity: 1; background: rgba(245, 245, 247, 0.5); transform: translateX(5px); }
+        .nav-item:active { transform: scale(0.95); }
+        .nav-item.active { background: var(--search-bg); opacity: 1; transform: translateX(0); }
+        .nav-item.active i { transform: scale(1.1); color: var(--primary); }
+
+        /* ================= KHU VỰC CHÍNH (MAIN) ================= */
+        .main-wrapper {
+            flex: 1;
+            position: relative;
+        }
+
+        /* --- HEADER --- */
+        .header {
+            position: absolute;
+            top: 40px; left: 40px; right: 40px;
+            height: 80px;
+            background: var(--white);
+            border-radius: var(--border-radius);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 30px;
+            z-index: 50;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+        }
+
+        .search-bar {
+            background: var(--search-bg);
+            width: 300px; height: 45px;
+            border-radius: 30px;
+            display: flex; align-items: center;
+            padding: 0 20px; gap: 10px;
+            transition: var(--transition);
+        }
+        .search-bar:focus-within { box-shadow: 0 0 0 2px var(--primary-light); width: 320px; }
+        .search-bar i { opacity: 0.6; }
+        .search-bar input { border: none; background: transparent; outline: none; font-family: 'Poppins'; font-size: 16px; width: 100%;}
+
+        .header-actions { display: flex; align-items: center; gap: 30px; position: relative;}
+
+        /* Icon Chuông */
+        .noti-btn { 
+            font-size: 24px; cursor: pointer; position: relative; 
+            width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            transition: var(--transition);
+        }
+        .noti-btn:hover { background: var(--search-bg); transform: translateY(-2px); }
+        .noti-btn:active { transform: scale(0.9); }
+
+        /* Profile */
+        .user-profile { 
+            display: flex; align-items: center; gap: 15px; cursor: pointer; 
+            padding: 5px 10px; border-radius: 30px; transition: var(--transition);
+        }
+        .user-profile:hover { background: var(--search-bg); }
+        .greeting { font-weight: 500; font-size: 18px; }
+        .avatar { width: 50px; height: 50px; background: #e0e0e0; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; }
+
+        /* --- DROPDOWNS --- */
+        .dropdown {
+            position: absolute;
+            background: var(--white);
+            border: 2px solid var(--search-bg);
+            border-radius: var(--border-radius);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            opacity: 0; visibility: hidden; transform: translateY(10px);
+            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            z-index: 100;
+        }
+        .dropdown.show { opacity: 1; visibility: visible; transform: translateY(0); }
+
+        .noti-drop { top: 60px; right: 200px; width: 280px; padding: 15px; }
+        .noti-header { display: flex; justify-content: space-between; font-weight: 700; margin-bottom: 15px; }
+        .noti-header i { cursor: pointer; transition: var(--transition); }
+        .noti-header i:hover { color: red; transform: rotate(90deg); }
+        .noti-body { display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 500;}
+
+        .profile-drop { top: 60px; right: 0; width: 230px; padding: 10px; display: flex; flex-direction: column; gap: 5px;}
+        .drop-item { display: flex; align-items: center; gap: 15px; padding: 12px 15px; font-weight: 600; font-size: 18px; border-radius: 10px; cursor: pointer; transition: var(--transition); }
+        .drop-item:hover { background: var(--search-bg); color: var(--primary); transform: translateX(5px); }
+
+        /* ================= TABS NỘI DUNG ================= */
+        .page-content {
+            position: absolute; top: 140px; left: 40px; right: 40px; bottom: 40px;
+            overflow-y: auto;
+            opacity: 0; visibility: hidden; transition: opacity 0.4s ease;
+        }
+        .page-content.active-view { opacity: 1; visibility: visible; z-index: 5; }
+
+        /* CSS CHUNG CHO CÁC THẺ CARD */
+        .card { 
+            background: var(--white); border-radius: var(--border-radius); 
+            box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+            transition: var(--transition);
+        }
+        .card:hover { box-shadow: 0 10px 20px rgba(0,0,0,0.06); transform: translateY(-5px); }
+
+        /* --- TRANG OVERVIEW --- */
+        .stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px; margin-bottom: 30px; }
+        .stat-card { height: 180px; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 10px; cursor: pointer;}
+        .stat-card:active { transform: scale(0.97); }
+        .stat-title { font-size: 18px; font-weight: 500; display: flex; align-items: center; gap: 10px; }
+        .stat-title i { font-size: 24px; }
+        .stat-num { font-size: 40px; font-weight: 700; }
+
+        .main-grid { display: grid; grid-template-columns: 1.5fr 1fr; gap: 30px; }
         
-        .progress-container { margin-bottom: 15px; }
-        .progress-label { display: flex; justify-content: space-between; font-size: 12px; font-weight: 700; margin-bottom: 8px; }
-        .progress-bar { height: 8px; background: #eff4fb; border-radius: 4px; overflow: hidden; }
-        .progress-fill { height: 100%; background: var(--primary-blue); border-radius: 4px; }
+        .chart-card { padding: 30px; height: 420px; display: flex; flex-direction: column; }
+        .chart-card h3 { font-size: 24px; font-weight: 700; margin-bottom: 20px; }
+        .chart-container { flex: 1; position: relative; width: 100%; }
+
+        .recent-card { margin-top: 30px; padding: 25px 30px; display: flex; align-items: center; gap: 20px; }
+        .recent-card h3 { font-size: 20px; font-weight: 700; white-space: nowrap; }
+        .activity-tags { display: flex; gap: 15px; overflow-x: auto;}
+        .tag { background: #F7F7F7; padding: 8px 20px; border-radius: 20px; font-size: 14px; font-weight: 500; display: flex; align-items: center; gap: 10px; cursor: pointer; transition: var(--transition);}
+        .tag:hover { background: #e2e4ff; color: var(--primary); transform: translateY(-3px);}
+        .tag-icon { width: 28px; height: 28px; background: #7784EE; border-radius: 50%; color: white; display: flex; align-items: center; justify-content: center; font-size: 12px;}
+
+        .deadline-card { padding: 30px; height: 100%; }
+        .deadline-card h3 { font-size: 24px; font-weight: 700; text-align: center; margin-bottom: 20px; }
+        .dl-item { display: flex; align-items: center; gap: 15px; padding: 15px 0; border-bottom: 1px solid rgba(0,0,0,0.05); transition: var(--transition); cursor: pointer;}
+        .dl-item:hover { background: #fafafa; border-radius: 10px; padding: 15px 10px; margin: 0 -10px;}
+        .dl-num { font-weight: 600; font-size: 18px; width: 25px; }
+        .dl-info { flex: 1; }
+        .dl-info strong { font-size: 18px; font-weight: 600; }
+        .dl-info p { font-size: 12px; color: var(--text-muted); }
+        .dl-check { width: 30px; height: 30px; border-radius: 50%; border: 2px solid var(--text-main); display: flex; align-items: center; justify-content: center; transition: var(--transition); }
         
-        .card-footer { font-size: 12px; font-weight: 600; color: var(--text-muted); display: flex; align-items: center; gap: 8px; }
+        /* Hiệu ứng check completed */
+        .dl-item.done .dl-info strong { text-decoration: line-through; color: var(--text-muted); }
+        .dl-item.done .dl-check { background: var(--success); border-color: var(--success); color: white; }
+        .dl-item:not(.done):hover .dl-check { border-color: var(--primary); color: var(--primary); }
+
+        /* --- TRANG TASK --- */
+        .task-section { margin-bottom: 40px; }
+        .ts-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; background: var(--white); padding: 15px 30px; border-radius: var(--border-radius); box-shadow: 0 2px 10px rgba(0,0,0,0.02);}
+        .ts-header h2 { font-size: 24px; font-weight: 700; }
+        .ts-actions { display: flex; align-items: center; gap: 20px; }
+        .sort-text { font-weight: 600; font-size: 16px; cursor: pointer; transition: var(--transition); }
+        .sort-text:hover { color: var(--primary); }
+        
+        /* Nút Button */
+        .btn-primary { 
+            background: var(--primary); color: white; border: none; padding: 10px 20px; 
+            border-radius: 20px; font-weight: 500; font-size: 14px; font-family: 'Poppins'; 
+            cursor: pointer; transition: var(--transition); box-shadow: 0 4px 15px rgba(84, 111, 255, 0.4);
+        }
+        .btn-primary:hover { background: #425adb; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(84, 111, 255, 0.6); }
+        .btn-primary:active { transform: scale(0.95); }
+
+        /* Danh sách thẻ Task vuốt ngang */
+        .task-list { display: flex; gap: 30px; overflow-x: auto; padding-bottom: 20px; padding-top: 10px; }
+        .t-card { 
+            min-width: 300px; height: 300px; background: rgba(243, 244, 248, 0.5); 
+            border-radius: var(--border-radius); padding: 15px; border: 2px solid white;
+            transition: var(--transition); cursor: pointer;
+        }
+        .t-card:hover { transform: translateY(-10px); background: white; box-shadow: 0 15px 30px rgba(0,0,0,0.08); border-color: var(--primary-light);}
+        
+        .t-img { width: 100%; height: 110px; border-radius: 10px; object-fit: cover; margin-bottom: 15px; }
+        .t-title { font-weight: 600; font-size: 16px; margin-bottom: 5px; }
+        .t-sub { font-weight: 500; font-size: 12px; color: var(--text-muted); margin-bottom: 20px; }
+        
+        /* Thanh Progress */
+        .prog-info { display: flex; justify-content: space-between; font-weight: 500; font-size: 16px; margin-bottom: 10px; }
+        .prog-val { color: var(--primary); }
+        .prog-track { width: 100%; height: 8px; background: var(--primary-light); border-radius: 8px; position: relative; }
+        .prog-fill { height: 100%; background: var(--primary); border-radius: 8px; width: 85%; transition: width 1s ease-in-out;}
+        .prog-thumb { width: 16px; height: 16px; background: var(--primary); border: 2px solid white; border-radius: 50%; position: absolute; top: -4px; left: calc(85% - 8px); box-shadow: 0 2px 5px rgba(0,0,0,0.2);}
+        
+        .t-footer { margin-top: 20px; font-weight: 500; font-size: 16px; display: flex; align-items: center; gap: 8px; }
+
     </style>
 </head>
 <body>
 
-    <aside class="sidebar">
-        <div class="logo"><i class="fa-solid fa-list-check"></i> Group 8</div>
-        <nav>
-            <div id="btn-overview" class="nav-item active"><i class="fa-solid fa-grid-2"></i> Overview</div>
-            <div id="btn-task" class="nav-item"><i class="fa-regular fa-square-check"></i> Task</div>
-            <div class="nav-item"><i class="fa-regular fa-calendar"></i> Calendar</div>
-        </nav>
-    </aside>
-
-    <main class="main-content">
-        <header class="header">
-            <div class="search-bar">
-                <i class="fa-solid fa-magnifying-glass"></i>
-                <input type="text" placeholder="Search...">
+    <div class="app-container">
+        
+        <div class="sidebar">
+            <div class="logo">
+                <i class="fa-solid fa-list-check"></i>
+                <span>Group 8</span>
             </div>
-            <div class="header-actions">
-                <i class="fa-regular fa-bell icon-btn"></i>
-                <div class="profile-info">
-                    <span class="greeting">Hello, User!</span>
-                    <div class="avatar"><i class="fa-regular fa-user"></i></div>
+            <div class="nav-menu">
+                <div class="nav-item active" onclick="switchTab('overview')">
+                    <i class="fa-solid fa-border-all"></i> Overview
                 </div>
-            </div>
-        </header>
-
-        <div id="page-overview" class="page-view active-view">
-            <div class="stats-grid">
-                <div class="stat-card"><div class="stat-title"><i class="fa-solid fa-clipboard-list"></i> Total Projects</div><div class="stat-value">100</div></div>
-                <div class="stat-card"><div class="stat-title"><i class="fa-solid fa-clipboard-question"></i> Overdue</div><div class="stat-value">100</div></div>
-                <div class="stat-card"><div class="stat-title"><i class="fa-solid fa-clipboard-check"></i> Completed</div><div class="stat-value">100</div></div>
-                <div class="stat-card"><div class="stat-title"><i class="fa-solid fa-clipboard-xmark"></i> Incomplete</div><div class="stat-value">100</div></div>
-            </div>
-
-            <div class="main-grid">
-                <div class="left-col">
-                    <div class="card">
-                        <h3>Monthly Projects Completed</h3>
-                        <canvas id="projectChart" height="220"></canvas>
-                    </div>
-                    <div class="card">
-                        <h3>Recent Activities</h3>
-                        <div class="activity-tags">
-                            <span class="tag"><i class="fa-solid fa-pen"></i> Activity #1</span>
-                            <span class="tag"><i class="fa-solid fa-pen"></i> Activity #2</span>
-                            <span class="tag"><i class="fa-solid fa-pen"></i> Activity #3</span>
-                        </div>
-                    </div>
+                <div class="nav-item" onclick="switchTab('task')">
+                    <i class="fa-regular fa-file-lines"></i> Task
                 </div>
-                <div class="right-col">
-                    <div class="card">
-                        <h3>Upcoming Deadlines</h3>
-                        <ul class="deadline-list">
-                            <li class="deadline-item"><div class="dl-info"><span class="dl-num">01</span><div class="dl-text"><strong>Deadline #1</strong><span>dd/mm/yyyy</span></div></div><i class="fa-regular fa-circle-check status-icon"></i></li>
-                            <li class="deadline-item"><div class="dl-info"><span class="dl-num">02</span><div class="dl-text"><strong>Deadline #2</strong><span>dd/mm/yyyy</span></div></div><i class="fa-regular fa-circle-check status-icon"></i></li>
-                            <li class="deadline-item"><div class="dl-info"><span class="dl-num">03</span><div class="dl-text"><strong>Deadline #3</strong><span>dd/mm/yyyy</span></div></div><i class="fa-regular fa-circle-check status-icon"></i></li>
-                           <li class="deadline-item"><div class="dl-info"><span class="dl-num">04</span><div class="dl-text completed"><strong>Deadline #4</strong><span>dd/mm/yyyy</span></div></div><i class="fa-solid fa-circle-check status-icon done"></i></li>
-<li class="deadline-item"><div class="dl-info"><span class="dl-num">05</span><div class="dl-text completed"><strong>Deadline #5</strong><span>dd/mm/yyyy</span></div></div><i class="fa-solid fa-circle-check status-icon done"></i></li>
-                            <li class="deadline-item"><div class="dl-info"><span class="dl-num">06</span><div class="dl-text"><strong>Deadline #6</strong><span>dd/mm/yyyy</span></div></div><i class="fa-regular fa-circle-check status-icon"></i></li>
-                            <li class="deadline-item"><div class="dl-info"><span class="dl-num">07</span><div class="dl-text"><strong>Deadline #7</strong><span>dd/mm/yyyy</span></div></div><i class="fa-regular fa-circle-check status-icon"></i></li>
-                        </ul>
-                    </div>
+                <div class="nav-item">
+                    <i class="fa-regular fa-calendar"></i> Calendar
                 </div>
             </div>
         </div>
 
-        <div id="page-task" class="page-view">
-            <div class="task-section">
-                <div class="task-section-header">
-                    <h3>Tasks</h3>
-                    <button class="btn-primary">+ New Task</button>
+        <div class="main-wrapper">
+            
+            <div class="header">
+                <div class="search-bar">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" placeholder="Search...">
                 </div>
-                <div class="cards-row">
-                    <div class="task-card">
-                        <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=400" class="card-img">
-                        <div class="card-body">
-                            <h4>Creating Web UI</h4>
-                            <p class="card-subtitle">Web Developer</p>
-                            <div class="progress-container">
-                                <div class="progress-label"><span>Progress</span><span>85%</span></div>
-                                <div class="progress-bar"><div class="progress-fill" style="width: 85%;"></div></div>
-                            </div>
-                            <div class="card-footer"><i class="fa-regular fa-clock"></i> 4 Hours Left</div>
+                
+                <div class="header-actions">
+                    <div class="noti-btn" onclick="toggleDropdown(event, 'drop-noti')">
+                        <i class="fa-regular fa-bell"></i>
+                    </div>
+                    <div class="dropdown noti-drop" id="drop-noti">
+                        <div class="noti-header">
+                            <span>Notifications</span>
+                            <i class="fa-solid fa-xmark" onclick="toggleDropdown(event, 'drop-noti')"></i>
+                        </div>
+                        <div class="noti-body">
+                            <i class="fa-regular fa-circle-question" style="color: #00D1FF;"></i>
+                            <span>You don't have any notifications</span>
+                            <i class="fa-regular fa-face-smile"></i>
                         </div>
                     </div>
-                    <div class="task-card">
-                        <img src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=400" class="card-img">
-                        <div class="card-body">
-                            <h4>Creating Web UI</h4>
-                            <p class="card-subtitle">Web Developer</p>
-                            <div class="progress-container">
-                                <div class="progress-label"><span>Progress</span><span>85%</span></div>
-                                <div class="progress-bar"><div class="progress-fill" style="width: 85%;"></div></div>
-                            </div>
-                            <div class="card-footer"><i class="fa-regular fa-clock"></i> 4 Hours Left</div>
-                        </div>
+
+                    <div class="user-profile" onclick="toggleDropdown(event, 'drop-profile')">
+                        <span class="greeting">Hello, User!</span>
+                        <div class="avatar"><i class="fa-regular fa-user"></i></div>
+                        <i class="fa-solid fa-chevron-down" style="font-size: 12px;"></i>
+                    </div>
+                    <div class="dropdown profile-drop" id="drop-profile">
+                        <div class="drop-item"><i class="fa-regular fa-user-circle"></i> Profile</div>
+                        <div class="drop-item"><i class="fa-solid fa-gear"></i> Settings</div>
+                        <div class="drop-item"><i class="fa-solid fa-arrow-right-from-bracket"></i> Log out</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="page-content active-view" id="page-overview">
+                <div class="stats-row">
+                    <div class="card stat-card">
+                        <div class="stat-title"><i class="fa-solid fa-layer-group"></i> Total Projects</div>
+                        <div class="stat-num">100</div>
+                    </div>
+                    <div class="card stat-card">
+                        <div class="stat-title"><i class="fa-solid fa-triangle-exclamation"></i> Overdue</div>
+                        <div class="stat-num">100</div>
+                    </div>
+                    <div class="card stat-card">
+                        <div class="stat-title"><i class="fa-solid fa-check-double"></i> Completed</div>
+                        <div class="stat-num">100</div>
+                    </div>
+                    <div class="card stat-card">
+                        <div class="stat-title"><i class="fa-solid fa-xmark"></i> Incomplete</div>
+                        <div class="stat-num">100</div>
                     </div>
                 </div>
 
-                <div class="task-section-header">
-                    <h3>Projects</h3>
-                    <button class="btn-primary">+ New Project</button>
-                </div>
-                <div class="cards-row">
-                    <div class="task-card">
-                        <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=400" class="card-img">
-                        <div class="card-body">
-                            <h4>Creating Perfect Website</h4>
-                            <p class="card-subtitle">Web Developer</p>
-                            <div class="progress-container">
-                                <div class="progress-label"><span>Progress</span><span>85%</span></div>
-                                <div class="progress-bar"><div class="progress-fill" style="width: 85%;"></div></div>
+                <div class="main-grid">
+                    <div class="grid-left">
+                        <div class="card chart-card">
+                            <h3>Monthly Projects Completed</h3>
+                            <div class="chart-container">
+                                <canvas id="projectChart"></canvas>
                             </div>
-                            <div class="card-footer"><i class="fa-regular fa-clock"></i> 4 Days Left</div>
+                        </div>
+                        
+                        <div class="card recent-card">
+                            <h3>Recent Activities</h3>
+                            <div class="activity-tags">
+                                <div class="tag"><div class="tag-icon"><i class="fa-solid fa-pen"></i></div> Activity #1</div>
+                                <div class="tag"><div class="tag-icon"><i class="fa-solid fa-pen"></i></div> Activity #2</div>
+                                <div class="tag"><div class="tag-icon"><i class="fa-solid fa-pen"></i></div> Activity #3</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="grid-right">
+                        <div class="card deadline-card">
+                            <h3>Upcoming Deadlines</h3>
+                            <div class="deadline-list">
+                                <div class="dl-item" onclick="toggleTask(this)">
+                                    <div class="dl-num">01</div>
+                                    <div class="dl-info"><strong>Create Wireframe</strong><p>dd/mm/yyyy</p></div>
+                                    <div class="dl-check"><i class="fa-solid fa-check" style="opacity: 0;"></i></div>
+                                </div>
+                                <div class="dl-item" onclick="toggleTask(this)">
+                                    <div class="dl-num">02</div>
+                                    <div class="dl-info"><strong>Create Wireframe</strong><p>dd/mm/yyyy</p></div>
+                                    <div class="dl-check"><i class="fa-solid fa-check" style="opacity: 0;"></i></div>
+                                </div>
+                                <div class="dl-item" onclick="toggleTask(this)">
+                                    <div class="dl-num">03</div>
+                                    <div class="dl-info"><strong>Create Wireframe</strong><p>dd/mm/yyyy</p></div>
+                                    <div class="dl-check"><i class="fa-solid fa-check" style="opacity: 0;"></i></div>
+                                </div>
+                                <div class="dl-item done" onclick="toggleTask(this)">
+                                    <div class="dl-num">04</div>
+                                    <div class="dl-info"><strong>Create Wireframe</strong><p>dd/mm/yyyy</p></div>
+                                    <div class="dl-check"><i class="fa-solid fa-check"></i></div>
+                                </div>
+                                <div class="dl-item done" onclick="toggleTask(this)">
+                                    <div class="dl-num">05</div>
+                                    <div class="dl-info"><strong>Create Wireframe</strong><p>dd/mm/yyyy</p></div>
+                                    <div class="dl-check"><i class="fa-solid fa-check"></i></div>
+                                </div>
+                                <div class="dl-item done" onclick="toggleTask(this)">
+                                    <div class="dl-num">06</div>
+                                    <div class="dl-info"><strong>Create Wireframe</strong><p>dd/mm/yyyy</p></div>
+                                    <div class="dl-check"><i class="fa-solid fa-check"></i></div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+
+            <div class="page-content" id="page-task">
+                
+                <div class="task-section">
+                    <div class="ts-header">
+                        <h2>Personal Projects</h2>
+                        <div class="ts-actions">
+                            <div class="sort-text"><i class="fa-solid fa-arrow-down-short-wide"></i> Sort By : Deadline</div>
+                            <button class="btn-primary"><i class="fa-solid fa-plus"></i> New Task</button>
+                        </div>
+                    </div>
+                    <div class="task-list">
+                        <div class="t-card">
+                            <img class="t-img" src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=300&q=80" alt="Code">
+                            <div class="t-title">Creating Web UI</div>
+                            <div class="t-sub">Your job as a UX Des</div>
+                            <div class="prog-info"><span>Progress</span><span class="prog-val">85%</span></div>
+                            <div class="prog-track"><div class="prog-fill"></div><div class="prog-thumb"></div></div>
+                            <div class="t-footer"><i class="fa-regular fa-clock"></i> 4 Hours Left</div>
+                        </div>
+                        <div class="t-card">
+                            <img class="t-img" src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=300&q=80" alt="Code">
+                            <div class="t-title">Creating Web UI</div>
+                            <div class="t-sub">Your job as a UX Des</div>
+                            <div class="prog-info"><span>Progress</span><span class="prog-val">85%</span></div>
+                            <div class="prog-track"><div class="prog-fill"></div><div class="prog-thumb"></div></div>
+                            <div class="t-footer"><i class="fa-regular fa-clock"></i> 4 Hours Left</div>
+                        </div>
+                        <div class="t-card">
+                            <img class="t-img" src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=300&q=80" alt="Code">
+                            <div class="t-title">Creating Web UI</div>
+                            <div class="t-sub">Your job as a UX Des</div>
+                            <div class="prog-info"><span>Progress</span><span class="prog-val">85%</span></div>
+                            <div class="prog-track"><div class="prog-fill"></div><div class="prog-thumb"></div></div>
+                            <div class="t-footer"><i class="fa-regular fa-clock"></i> 4 Days Left</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="task-section">
+                    <div class="ts-header">
+                        <h2>Team Projects</h2>
+                        <div class="ts-actions">
+                            <div class="sort-text"><i class="fa-solid fa-arrow-down-short-wide"></i> Sort By : Deadline</div>
+                            <button class="btn-primary"><i class="fa-solid fa-plus"></i> New Project</button>
+                        </div>
+                    </div>
+                    <div class="task-list">
+                        <div class="t-card">
+                            <img class="t-img" src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=300&q=80" alt="Code">
+                            <div class="t-title">Creating Perfect Website</div>
+                            <div class="t-sub">Your job as a UX Des</div>
+                            <div class="prog-info"><span>Progress</span><span class="prog-val">85%</span></div>
+                            <div class="prog-track"><div class="prog-fill"></div><div class="prog-thumb"></div></div>
+                            <div class="t-footer"><i class="fa-regular fa-clock"></i> 4 Days Left</div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
         </div>
-    </main>
+    </div>
 
     <script>
-        // 1. KHỞI TẠO BIỂU ĐỒ TRANG OVERVIEW
-        const ctx = document.getElementById('projectChart').getContext('2d');
-        const gradient = ctx.createLinearGradient(0, 0, 0, 400);
-        gradient.addColorStop(0, 'rgba(67, 24, 255, 0.2)');
-        gradient.addColorStop(1, 'rgba(67, 24, 255, 0)');
+        // 1. XỬ LÝ CHUYỂN TAB (SPA)
+        function switchTab(tabName) {
+            // Lấy elements
+            const navOverview = document.querySelectorAll('.nav-item')[0];
+            const navTask = document.querySelectorAll('.nav-item')[1];
+            const pageOverview = document.getElementById('page-overview');
+            const pageTask = document.getElementById('page-task');
 
-        new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-                datasets: [{
-                    data: [8, 10, 15, 12, 11, 15, 18, 19, 23, 19, 16, 14],
-                    borderColor: '#4318ff',
-                    borderWidth: 3,
-                    tension: 0.4,
-                    fill: true,
-                    backgroundColor: gradient,
-                    pointBackgroundColor: '#4318ff',
-                    pointRadius: 4
-                }]
-            },
-            options: {
-                responsive: true,
-                plugins: { legend: { display: false } },
-                scales: {
-                    y: { grid: { color: '#f1f4f9' }, ticks: { stepSize: 5 } },
-                    x: { grid: { display: false } }
-                }
+            // Reset
+            navOverview.classList.remove('active');
+            navTask.classList.remove('active');
+            pageOverview.classList.remove('active-view');
+            pageTask.classList.remove('active-view');
+
+            // Set active
+            if(tabName === 'overview') {
+                navOverview.classList.add('active');
+                pageOverview.classList.add('active-view');
+            } else {
+                navTask.classList.add('active');
+                pageTask.classList.add('active-view');
             }
-        });
-
-        // 2. LOGIC CHUYỂN TRANG MƯỢT MÀ
-        const btnOverview = document.getElementById('btn-overview');
-        const btnTask = document.getElementById('btn-task');
-        const pageOverview = document.getElementById('page-overview');
-        const pageTask = document.getElementById('page-task');
-
-        // Hàm ẩn hiện trang
-        function showPage(pageId) {
-            // Ẩn tất cả view
-            document.querySelectorAll('.page-view').forEach(view => view.classList.remove('active-view'));
-            // Hiện view được chọn
-            document.getElementById(pageId).classList.add('active-view');
         }
 
-        btnOverview.addEventListener('click', () => {
-            btnOverview.classList.add('active');
-            btnTask.classList.remove('active');
-            showPage('page-overview');
-        });
-        
-        btnTask.addEventListener('click', () => {
-            btnTask.classList.add('active');
-            btnOverview.classList.remove('active');
-            showPage('page-task');
-        });
-        // 3. LOGIC CLICK HOÀN THÀNH DEADLINE
-        const checkmarkIcons = document.querySelectorAll('.status-icon');
+        // 2. XỬ LÝ ĐÓNG MỞ DROPDOWN
+        function toggleDropdown(event, id) {
+            event.stopPropagation();
+            const targetDrop = document.getElementById(id);
+            const allDrops = document.querySelectorAll('.dropdown');
+            
+            // Đóng các cái khác đang mở
+            allDrops.forEach(drop => {
+                if(drop.id !== id) drop.classList.remove('show');
+            });
 
-        checkmarkIcons.forEach(icon => {
-            icon.addEventListener('click', function() {
-                // 1. Đổi icon từ viền (regular) sang đặc (solid) và ngược lại
-                this.classList.toggle('fa-regular');
-                this.classList.toggle('fa-solid');
-                
-                // 2. Thêm/bớt class 'done' để đổi sang màu xanh
-                this.classList.toggle('done');
+            // Mở cái được click
+            targetDrop.classList.toggle('show');
+        }
 
-                // 3. Tìm phần text bên cạnh để gạch ngang chữ (Cải thiện UI/UX)
-                const textBlock = this.closest('.deadline-item').querySelector('.dl-text');
-                if (textBlock) {
-                    textBlock.classList.toggle('completed');
+        // Click ra ngoài để đóng dropdown
+        document.addEventListener('click', () => {
+            document.querySelectorAll('.dropdown').forEach(drop => {
+                drop.classList.remove('show');
+            });
+        });
+
+        // 3. HIỆU ỨNG CLICK CHECK DEADLINE
+        function toggleTask(element) {
+            element.classList.toggle('done');
+            const icon = element.querySelector('.dl-check i');
+            if(element.classList.contains('done')) {
+                icon.style.opacity = '1';
+            } else {
+                icon.style.opacity = '0';
+            }
+        }
+
+        // 4. VẼ BIỂU ĐỒ BẰNG CHART.JS (Giống hệt file Figma)
+        document.addEventListener('DOMContentLoaded', function() {
+            const ctx = document.getElementById('projectChart').getContext('2d');
+            
+            // Tạo màu Gradient cho Line Chart
+            let gradientFill = ctx.createLinearGradient(0, 0, 0, 300);
+            gradientFill.addColorStop(0, 'rgba(137, 121, 255, 0.5)'); // Tím nhạt ở trên
+            gradientFill.addColorStop(1, 'rgba(137, 121, 255, 0.0)'); // Mờ dần xuống dưới
+
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+                    datasets: [{
+                        label: 'Tasks done',
+                        data: [63, 78, 118, 98, 94, 124, 144, 153, 182, 153, 127, 113], // Số liệu trích xuất từ Figma
+                        borderColor: '#8979FF',
+                        backgroundColor: gradientFill,
+                        borderWidth: 3,
+                        pointBackgroundColor: '#8979FF',
+                        pointBorderColor: '#FFFFFF',
+                        pointBorderWidth: 2,
+                        pointRadius: 5,
+                        pointHoverRadius: 8,
+                        fill: true,
+                        tension: 0.4 // Tạo đường cong mềm mại giống Figma
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            backgroundColor: '#141522',
+                            padding: 10,
+                            titleFont: { family: 'Poppins', size: 14 },
+                            bodyFont: { family: 'Poppins', size: 14 },
+                            displayColors: false,
+                            cornerRadius: 10,
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: { color: 'rgba(0,0,0,0.05)', borderDash: [5, 5] }, // Lưới đứt đoạn
+                            border: { display: false },
+                            ticks: { font: { family: 'Poppins', size: 12 }, color: 'rgba(0,0,0,0.5)' }
+                        },
+                        x: {
+                            grid: { display: false },
+                            border: { display: false },
+                            ticks: { font: { family: 'Poppins', size: 12 }, color: 'rgba(0,0,0,0.5)' }
+                        }
+                    },
+                    interaction: { mode: 'index', intersect: false }
                 }
             });
         });
