@@ -66,7 +66,22 @@
         .dl-num { font-weight: 800; font-size: 16px; min-width: 25px; }
         .dl-text strong { display: block; font-size: 14px; }
         .dl-text span { font-size: 12px; color: var(--text-muted); font-weight: 600; }
-        .status-icon { font-size: 22px; color: var(--text-muted); }
+        /* --- CẬP NHẬT DEADLINES CSS --- */
+.status-icon { 
+    font-size: 22px; 
+    color: var(--text-muted); 
+    cursor: pointer; /* Thêm con trỏ chuột hình bàn tay */
+    transition: all 0.2s ease; /* Hiệu ứng chuyển màu mượt mà */
+}
+.status-icon.done { color: var(--green-success); }
+.status-icon:hover { opacity: 0.8; transform: scale(1.1); } /* Hiệu ứng phình to nhẹ khi di chuột */
+
+/* Hiệu ứng gạch ngang và làm mờ chữ khi đã click hoàn thành */
+.dl-text.completed strong, 
+.dl-text.completed span { 
+    text-decoration: line-through; 
+    opacity: 0.5; 
+}
         .status-icon.done { color: var(--green-success); }
 
         /* --- TASK COMPONENTS --- */
@@ -265,6 +280,25 @@
             btnTask.classList.add('active');
             btnOverview.classList.remove('active');
             showPage('page-task');
+        });
+        // 3. LOGIC CLICK HOÀN THÀNH DEADLINE
+        const checkmarkIcons = document.querySelectorAll('.status-icon');
+
+        checkmarkIcons.forEach(icon => {
+            icon.addEventListener('click', function() {
+                // 1. Đổi icon từ viền (regular) sang đặc (solid) và ngược lại
+                this.classList.toggle('fa-regular');
+                this.classList.toggle('fa-solid');
+                
+                // 2. Thêm/bớt class 'done' để đổi sang màu xanh
+                this.classList.toggle('done');
+
+                // 3. Tìm phần text bên cạnh để gạch ngang chữ (Cải thiện UI/UX)
+                const textBlock = this.closest('.deadline-item').querySelector('.dl-text');
+                if (textBlock) {
+                    textBlock.classList.toggle('completed');
+                }
+            });
         });
     </script>
 </body>
