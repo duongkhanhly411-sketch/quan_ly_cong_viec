@@ -3,18 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Group 8 - Final Version</title>
+    <title>Management Dashboard - Group 8</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <style>
-        /* ================= CSS CHUẨN FIGMA ================= */
+        /* ================= TỔNG HỢP CSS CHUẨN FIGMA ================= */
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
         :root { 
             --bg-color: #f4f7fe; --white: #ffffff; --text-main: #1b2559; 
             --text-muted: #a3aed0; --primary-blue: #4318ff; --green-success: #05cd99;
-            --border-radius: 20px;
+            --border-radius: 20px; --bg-active: #f4f7fe;
         }
 
         body { background-color: var(--bg-color); color: var(--text-main); height: 100vh; display: flex; overflow: hidden; }
@@ -26,36 +26,39 @@
             text-decoration: none; color: var(--text-muted); font-weight: 700; padding: 16px 20px; 
             border-radius: 12px; display: flex; align-items: center; gap: 15px; margin-bottom: 8px; cursor: pointer; transition: 0.3s;
         }
-        .nav-item.active { background: #f4f7fe; color: var(--text-main); }
-        .nav-item i { font-size: 20px; }
+        .nav-item.active { background: var(--bg-active); color: var(--text-main); }
+        .nav-item i { font-size: 20px; width: 24px; text-align: center; }
 
         /* MAIN CONTENT */
         .main-content { flex: 1; padding: 20px 40px; overflow-y: auto; }
         
         /* HEADER */
         .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
-        .search-bar { background: var(--white); border-radius: 30px; padding: 12px 20px; display: flex; align-items: center; gap: 12px; width: 400px; }
+        .search-bar { background: var(--white); border-radius: 30px; padding: 12px 20px; display: flex; align-items: center; gap: 12px; width: 400px; box-shadow: 0 4px 10px rgba(0,0,0,0.02); }
         .search-bar input { border: none; outline: none; width: 100%; font-size: 14px; background: transparent; }
         .header-actions { display: flex; align-items: center; gap: 25px; }
-        .avatar { width: 45px; height: 45px; border-radius: 50%; border: 2px solid var(--text-main); display: flex; align-items: center; justify-content: center; font-size: 24px; }
+        .icon-btn { font-size: 22px; cursor: pointer; color: var(--text-main); }
+        .avatar { width: 45px; height: 45px; border-radius: 50%; border: 2.5px solid var(--text-main); display: flex; align-items: center; justify-content: center; font-size: 24px; }
 
-        /* STATS GRID */
+        /* PAGE VIEWS LOGIC */
+        .page-view { display: none; }
+        .active-view { display: block; animation: fadeIn 0.4s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* --- OVERVIEW COMPONENTS --- */
         .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-bottom: 30px; }
-        .stat-card { background: var(--white); padding: 25px; border-radius: var(--border-radius); text-align: center; box-shadow: 0 4px 20px rgba(0,0,0,0.02); }
+        .stat-card { background: var(--white); padding: 25px; border-radius: var(--border-radius); text-align: center; }
         .stat-title { font-weight: 700; font-size: 15px; margin-bottom: 15px; display: flex; align-items: center; justify-content: center; gap: 10px; }
         .stat-value { font-size: 36px; font-weight: 800; }
 
-        /* LAYOUT CHÍNH */
         .main-grid { display: grid; grid-template-columns: 1.8fr 1.2fr; gap: 25px; }
         .card { background: var(--white); padding: 30px; border-radius: var(--border-radius); box-shadow: 0 4px 20px rgba(0,0,0,0.02); margin-bottom: 25px; }
         .card h3 { font-size: 18px; font-weight: 800; margin-bottom: 25px; }
 
-        /* TAGS */
         .activity-tags { display: flex; gap: 15px; }
         .tag { background: #f4f7fe; padding: 12px 20px; border-radius: 12px; font-weight: 700; font-size: 13px; display: flex; align-items: center; gap: 8px; color: var(--primary-blue); }
-        .tag i { background: #e9edf7; padding: 6px; border-radius: 50%; }
+        .tag i { background: #e9edf7; padding: 6px; border-radius: 50%; font-size: 12px;}
 
-        /* DEADLINES */
         .deadline-list { list-style: none; }
         .deadline-item { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid #f1f4f9; }
         .deadline-item:last-child { border-bottom: none; }
@@ -66,10 +69,23 @@
         .status-icon { font-size: 22px; color: var(--text-muted); }
         .status-icon.done { color: var(--green-success); }
 
-        /* CSS TRANG TASK */
-        .page-view { display: none; }
-        .active-view { display: block; animation: fadeIn 0.4s ease; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        /* --- TASK COMPONENTS --- */
+        .task-section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .btn-primary { background: var(--primary-blue); color: var(--white); border: none; padding: 12px 24px; border-radius: 14px; font-weight: 700; cursor: pointer; }
+        
+        .cards-row { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 25px; margin-bottom: 40px; }
+        .task-card { background: var(--white); border-radius: 20px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.02); border: 1px solid #f1f4f9; }
+        .card-img { width: 100%; height: 140px; object-fit: cover; }
+        .card-body { padding: 20px; }
+        .card-body h4 { font-size: 16px; font-weight: 700; margin-bottom: 4px; }
+        .card-subtitle { font-size: 12px; color: var(--text-muted); font-weight: 600; margin-bottom: 20px; }
+        
+        .progress-container { margin-bottom: 15px; }
+        .progress-label { display: flex; justify-content: space-between; font-size: 12px; font-weight: 700; margin-bottom: 8px; }
+        .progress-bar { height: 8px; background: #eff4fb; border-radius: 4px; overflow: hidden; }
+        .progress-fill { height: 100%; background: var(--primary-blue); border-radius: 4px; }
+        
+        .card-footer { font-size: 12px; font-weight: 600; color: var(--text-muted); display: flex; align-items: center; gap: 8px; }
     </style>
 </head>
 <body>
@@ -85,7 +101,10 @@
 
     <main class="main-content">
         <header class="header">
-            <div class="search-bar"><i class="fa-solid fa-magnifying-glass"></i><input type="text" placeholder="Search..."></div>
+            <div class="search-bar">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" placeholder="Search...">
+            </div>
             <div class="header-actions">
                 <i class="fa-regular fa-bell icon-btn"></i>
                 <div class="profile-info">
@@ -134,10 +153,64 @@
                 </div>
             </div>
         </div>
-    </div>
+
+        <div id="page-task" class="page-view">
+            <div class="task-section">
+                <div class="task-section-header">
+                    <h3>Tasks</h3>
+                    <button class="btn-primary">+ New Task</button>
+                </div>
+                <div class="cards-row">
+                    <div class="task-card">
+                        <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=400" class="card-img">
+                        <div class="card-body">
+                            <h4>Creating Web UI</h4>
+                            <p class="card-subtitle">Web Developer</p>
+                            <div class="progress-container">
+                                <div class="progress-label"><span>Progress</span><span>85%</span></div>
+                                <div class="progress-bar"><div class="progress-fill" style="width: 85%;"></div></div>
+                            </div>
+                            <div class="card-footer"><i class="fa-regular fa-clock"></i> 4 Hours Left</div>
+                        </div>
+                    </div>
+                    <div class="task-card">
+                        <img src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=400" class="card-img">
+                        <div class="card-body">
+                            <h4>Creating Web UI</h4>
+                            <p class="card-subtitle">Web Developer</p>
+                            <div class="progress-container">
+                                <div class="progress-label"><span>Progress</span><span>85%</span></div>
+                                <div class="progress-bar"><div class="progress-fill" style="width: 85%;"></div></div>
+                            </div>
+                            <div class="card-footer"><i class="fa-regular fa-clock"></i> 4 Hours Left</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="task-section-header">
+                    <h3>Projects</h3>
+                    <button class="btn-primary">+ New Project</button>
+                </div>
+                <div class="cards-row">
+                    <div class="task-card">
+                        <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=400" class="card-img">
+                        <div class="card-body">
+                            <h4>Creating Perfect Website</h4>
+                            <p class="card-subtitle">Web Developer</p>
+                            <div class="progress-container">
+                                <div class="progress-label"><span>Progress</span><span>85%</span></div>
+                                <div class="progress-bar"><div class="progress-fill" style="width: 85%;"></div></div>
+                            </div>
+                            <div class="card-footer"><i class="fa-regular fa-clock"></i> 4 Days Left</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
 
     <script>
-        // VẼ BIỂU ĐỒ BẰNG CHART.JS
+        // 1. KHỞI TẠO BIỂU ĐỒ TRANG OVERVIEW
         const ctx = document.getElementById('projectChart').getContext('2d');
         const gradient = ctx.createLinearGradient(0, 0, 0, 400);
         gradient.addColorStop(0, 'rgba(67, 24, 255, 0.2)');
@@ -148,11 +221,10 @@
             data: {
                 labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
                 datasets: [{
-                    label: 'Projects',
                     data: [8, 10, 15, 12, 11, 15, 18, 19, 23, 19, 16, 14],
                     borderColor: '#4318ff',
                     borderWidth: 3,
-                    tension: 0.4, // Tạo độ cong cho đường
+                    tension: 0.4,
                     fill: true,
                     backgroundColor: gradient,
                     pointBackgroundColor: '#4318ff',
@@ -163,27 +235,36 @@
                 responsive: true,
                 plugins: { legend: { display: false } },
                 scales: {
-                    y: { beginAtZero: true, grid: { display: true, color: '#f1f4f9' }, ticks: { stepSize: 5 } },
+                    y: { grid: { color: '#f1f4f9' }, ticks: { stepSize: 5 } },
                     x: { grid: { display: false } }
                 }
             }
         });
 
-        // CHUYỂN TAB
+        // 2. LOGIC CHUYỂN TRANG MƯỢT MÀ
         const btnOverview = document.getElementById('btn-overview');
         const btnTask = document.getElementById('btn-task');
         const pageOverview = document.getElementById('page-overview');
+        const pageTask = document.getElementById('page-task');
+
+        // Hàm ẩn hiện trang
+        function showPage(pageId) {
+            // Ẩn tất cả view
+            document.querySelectorAll('.page-view').forEach(view => view.classList.remove('active-view'));
+            // Hiện view được chọn
+            document.getElementById(pageId).classList.add('active-view');
+        }
 
         btnOverview.addEventListener('click', () => {
             btnOverview.classList.add('active');
             btnTask.classList.remove('active');
-            pageOverview.classList.add('active-view');
+            showPage('page-overview');
         });
         
         btnTask.addEventListener('click', () => {
             btnTask.classList.add('active');
             btnOverview.classList.remove('active');
-            // Thêm logic hiện trang Task ở đây nếu muốn
+            showPage('page-task');
         });
     </script>
 </body>
