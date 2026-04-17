@@ -12,7 +12,6 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <style>
-        /* ================= BIẾN MÀU SẮC & CƠ BẢN ================= */
         :root {
             --bg-main: #F3F4F8;
             --white: #FFFFFF;
@@ -39,11 +38,7 @@
             align-items: center;
             overflow: hidden;
         }
-
-        /* Ẩn thanh cuộn nhưng vẫn cho scroll */
         ::-webkit-scrollbar { display: none; }
-
-        /* ================= BỐ CỤC TỔNG THỂ ================= */
         .app-container {
             width: 1360px;
             height: 944px;
@@ -55,7 +50,7 @@
             overflow: hidden;
         }
 
-        /* ================= SIDEBAR ================= */
+        /* --- Thanh bar----- */
         .sidebar {
             width: 250px;
             height: 100%;
@@ -89,20 +84,16 @@
             transition: var(--transition);
         }
         .nav-item i { font-size: 24px; transition: transform 0.2s; }
-        
-        /* Hiệu ứng Hover & Active Menu */
+    
         .nav-item:hover { opacity: 1; background: rgba(245, 245, 247, 0.5); transform: translateX(5px); }
         .nav-item:active { transform: scale(0.95); }
         .nav-item.active { background: var(--search-bg); opacity: 1; transform: translateX(0); }
         .nav-item.active i { transform: scale(1.1); color: var(--primary); }
 
-        /* ================= KHU VỰC CHÍNH (MAIN) ================= */
         .main-wrapper {
             flex: 1;
             position: relative;
         }
-
-        /* --- HEADER --- */
         .header {
             position: absolute;
             top: 40px; left: 40px; right: 40px;
@@ -131,7 +122,6 @@
 
         .header-actions { display: flex; align-items: center; gap: 30px; position: relative;}
 
-        /* Icon Chuông */
         .noti-btn { 
             font-size: 24px; cursor: pointer; position: relative; 
             width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
@@ -149,7 +139,6 @@
         .greeting { font-weight: 500; font-size: 18px; }
         .avatar { width: 50px; height: 50px; background: #e0e0e0; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; }
 
-        /* --- DROPDOWNS --- */
         .dropdown {
             position: absolute;
             background: var(--white);
@@ -172,15 +161,12 @@
         .drop-item { display: flex; align-items: center; gap: 15px; padding: 12px 15px; font-weight: 600; font-size: 18px; border-radius: 10px; cursor: pointer; transition: var(--transition); }
         .drop-item:hover { background: var(--search-bg); color: var(--primary); transform: translateX(5px); }
 
-        /* ================= TABS NỘI DUNG ================= */
         .page-content {
             position: absolute; top: 140px; left: 40px; right: 40px; bottom: 40px;
             overflow-y: auto;
             opacity: 0; visibility: hidden; transition: opacity 0.4s ease;
         }
         .page-content.active-view { opacity: 1; visibility: visible; z-index: 5; }
-
-        /* CSS CHUNG CHO CÁC THẺ CARD */
         .card { 
             background: var(--white); border-radius: var(--border-radius); 
             box-shadow: 0 2px 10px rgba(0,0,0,0.02);
@@ -188,7 +174,6 @@
         }
         .card:hover { box-shadow: 0 10px 20px rgba(0,0,0,0.06); transform: translateY(-5px); }
 
-        /* --- TRANG OVERVIEW --- */
         .stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px; margin-bottom: 30px; }
         .stat-card { height: 180px; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 10px; cursor: pointer;}
         .stat-card:active { transform: scale(0.97); }
@@ -218,21 +203,19 @@
         .dl-info strong { font-size: 18px; font-weight: 600; }
         .dl-info p { font-size: 12px; color: var(--text-muted); }
         .dl-check { width: 30px; height: 30px; border-radius: 50%; border: 2px solid var(--text-main); display: flex; align-items: center; justify-content: center; transition: var(--transition); }
-        
-        /* Hiệu ứng check completed */
+ 
         .dl-item.done .dl-info strong { text-decoration: line-through; color: var(--text-muted); }
         .dl-item.done .dl-check { background: var(--success); border-color: var(--success); color: white; }
         .dl-item:not(.done):hover .dl-check { border-color: var(--primary); color: var(--primary); }
 
-        /* --- TRANG TASK --- */
+        /* ----------------------------- */
         .task-section { margin-bottom: 40px; }
         .ts-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; background: var(--white); padding: 15px 30px; border-radius: var(--border-radius); box-shadow: 0 2px 10px rgba(0,0,0,0.02);}
         .ts-header h2 { font-size: 24px; font-weight: 700; }
         .ts-actions { display: flex; align-items: center; gap: 20px; }
         .sort-text { font-weight: 600; font-size: 16px; cursor: pointer; transition: var(--transition); }
         .sort-text:hover { color: var(--primary); }
-        
-        /* Nút Button */
+  
         .btn-primary { 
             background: var(--primary); color: white; border: none; padding: 10px 20px; 
             border-radius: 20px; font-weight: 500; font-size: 14px; font-family: 'Poppins'; 
@@ -241,7 +224,6 @@
         .btn-primary:hover { background: #425adb; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(84, 111, 255, 0.6); }
         .btn-primary:active { transform: scale(0.95); }
 
-        /* Danh sách thẻ Task vuốt ngang */
         .task-list { display: flex; gap: 30px; overflow-x: auto; padding-bottom: 20px; padding-top: 10px; }
         .t-card { 
             min-width: 300px; height: 300px; background: rgba(243, 244, 248, 0.5); 
@@ -254,7 +236,6 @@
         .t-title { font-weight: 600; font-size: 16px; margin-bottom: 5px; }
         .t-sub { font-weight: 500; font-size: 12px; color: var(--text-muted); margin-bottom: 20px; }
         
-        /* Thanh Progress */
         .prog-info { display: flex; justify-content: space-between; font-weight: 500; font-size: 16px; margin-bottom: 10px; }
         .prog-val { color: var(--primary); }
         .prog-track { width: 100%; height: 8px; background: var(--primary-light); border-radius: 8px; position: relative; }
@@ -467,21 +448,18 @@
     </div>
 
     <script>
-        // 1. XỬ LÝ CHUYỂN TAB (SPA)
         function switchTab(tabName) {
-            // Lấy elements
+
             const navOverview = document.querySelectorAll('.nav-item')[0];
             const navTask = document.querySelectorAll('.nav-item')[1];
             const pageOverview = document.getElementById('page-overview');
             const pageTask = document.getElementById('page-task');
 
-            // Reset
             navOverview.classList.remove('active');
             navTask.classList.remove('active');
             pageOverview.classList.remove('active-view');
             pageTask.classList.remove('active-view');
 
-            // Set active
             if(tabName === 'overview') {
                 navOverview.classList.add('active');
                 pageOverview.classList.add('active-view');
@@ -491,29 +469,23 @@
             }
         }
 
-        // 2. XỬ LÝ ĐÓNG MỞ DROPDOWN
         function toggleDropdown(event, id) {
             event.stopPropagation();
             const targetDrop = document.getElementById(id);
             const allDrops = document.querySelectorAll('.dropdown');
-            
-            // Đóng các cái khác đang mở
+          
             allDrops.forEach(drop => {
                 if(drop.id !== id) drop.classList.remove('show');
             });
 
-            // Mở cái được click
             targetDrop.classList.toggle('show');
         }
-
-        // Click ra ngoài để đóng dropdown
         document.addEventListener('click', () => {
             document.querySelectorAll('.dropdown').forEach(drop => {
                 drop.classList.remove('show');
             });
         });
 
-        // 3. HIỆU ỨNG CLICK CHECK DEADLINE
         function toggleTask(element) {
             element.classList.toggle('done');
             const icon = element.querySelector('.dl-check i');
@@ -524,14 +496,12 @@
             }
         }
 
-        // 4. VẼ BIỂU ĐỒ BẰNG CHART.JS (Giống hệt file Figma)
         document.addEventListener('DOMContentLoaded', function() {
             const ctx = document.getElementById('projectChart').getContext('2d');
             
-            // Tạo màu Gradient cho Line Chart
             let gradientFill = ctx.createLinearGradient(0, 0, 0, 300);
-            gradientFill.addColorStop(0, 'rgba(137, 121, 255, 0.5)'); // Tím nhạt ở trên
-            gradientFill.addColorStop(1, 'rgba(137, 121, 255, 0.0)'); // Mờ dần xuống dưới
+            gradientFill.addColorStop(0, 'rgba(137, 121, 255, 0.5)'); 
+            gradientFill.addColorStop(1, 'rgba(137, 121, 255, 0.0)'); 
 
             new Chart(ctx, {
                 type: 'line',
@@ -539,7 +509,7 @@
                     labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
                     datasets: [{
                         label: 'Tasks done',
-                        data: [63, 78, 118, 98, 94, 124, 144, 153, 182, 153, 127, 113], // Số liệu trích xuất từ Figma
+                        data: [63, 78, 118, 98, 94, 124, 144, 153, 182, 153, 127, 113], 
                         borderColor: '#8979FF',
                         backgroundColor: gradientFill,
                         borderWidth: 3,
@@ -549,7 +519,7 @@
                         pointRadius: 5,
                         pointHoverRadius: 8,
                         fill: true,
-                        tension: 0.4 // Tạo đường cong mềm mại giống Figma
+                        tension: 0.4 
                     }]
                 },
                 options: {
@@ -569,7 +539,7 @@
                     scales: {
                         y: {
                             beginAtZero: true,
-                            grid: { color: 'rgba(0,0,0,0.05)', borderDash: [5, 5] }, // Lưới đứt đoạn
+                            grid: { color: 'rgba(0,0,0,0.05)', borderDash: [5, 5] }, 
                             border: { display: false },
                             ticks: { font: { family: 'Poppins', size: 12 }, color: 'rgba(0,0,0,0.5)' }
                         },
