@@ -83,8 +83,9 @@
         .dropdown {
             position: absolute; background: #FFFFFF; border: 2px solid #F5F5F7;
             border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            display: none; /* Ẩn mặc định */ z-index: 100; 
+            display: none; z-index: 100; 
         }
+        .dropdown.show { display: block; }
         
         .noti-drop { top: 60px; right: 200px; width: 280px; padding: 15px; }
         .noti-header { display: flex; justify-content: space-between; font-weight: 700; margin-bottom: 15px; }
@@ -334,6 +335,13 @@
                             <div class="prog-track"><div class="prog-fill" style="width:85%;"></div><div class="prog-thumb" style="left:calc(85% - 8px);"></div></div>
                             <div class="t-footer"><i class="fa-regular fa-clock"></i> 4 Hours Left</div>
                         </div>
+                        <div class="t-card">
+                            <img class="t-img" src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=300&q=80" alt="Code">
+                            <div class="t-title">Fixing Bugs</div><div class="t-sub">Frontend team</div>
+                            <div class="prog-info"><span>Progress</span><span class="prog-val">40%</span></div>
+                            <div class="prog-track"><div class="prog-fill" style="width: 40%;"></div><div class="prog-thumb" style="left: calc(40% - 8px);"></div></div>
+                            <div class="t-footer"><i class="fa-regular fa-clock"></i> 2 Days Left</div>
+                        </div>
                     </div>
                 </div>
 
@@ -349,6 +357,13 @@
                             <div class="prog-info"><span>Progress</span><span class="prog-val">85%</span></div>
                             <div class="prog-track"><div class="prog-fill" style="width:85%;"></div><div class="prog-thumb" style="left:calc(85% - 8px);"></div></div>
                             <div class="t-footer"><i class="fa-regular fa-clock"></i> 4 Days Left</div>
+                        </div>
+                        <div class="t-card">
+                            <img class="t-img" src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=300&q=80" alt="Code">
+                            <div class="t-title">Backend API Setup</div><div class="t-sub">Backend Developer</div>
+                            <div class="prog-info"><span>Progress</span><span class="prog-val">60%</span></div>
+                            <div class="prog-track"><div class="prog-fill" style="width:60%;"></div><div class="prog-thumb" style="left:calc(60% - 8px);"></div></div>
+                            <div class="t-footer"><i class="fa-regular fa-clock"></i> 6 Days Left</div>
                         </div>
                     </div>
                 </div>
@@ -466,46 +481,36 @@
             else { icon.style.opacity = '0'; }
         }
 
-        // ==============================================================
-        // CODE QUẢN LÝ ẨN HIỆN MENU (CHỈ DÙNG document.onclick DUY NHẤT)
-        // ==============================================================
+        // Quản lý menu Ẩn/Hiện
         document.onclick = function(event) {
-            // Khai báo các Nút bấm
             var btnNoti = document.getElementById('btn-noti');
             var btnProfile = document.getElementById('btn-profile');
             var btnDate = document.getElementById('btn-date');
             var btnCloseNoti = document.getElementById('btn-close-noti');
 
-            // Khai báo các Bảng menu
             var dropNoti = document.getElementById('drop-noti');
             var dropProfile = document.getElementById('drop-profile');
             var dropDate = document.getElementById('drop-datepicker');
 
-            // Kiểm tra xem chuột có click trúng vào các nút bấm đó không
             var isClickNotiBtn = btnNoti && btnNoti.contains(event.target);
             var isClickProfileBtn = btnProfile && btnProfile.contains(event.target);
             var isClickDateBtn = btnDate && btnDate.contains(event.target);
             var isClickCloseNoti = btnCloseNoti && btnCloseNoti.contains(event.target);
 
-            // Xử lý Bảng Profile
             if (isClickProfileBtn) {
-                // Nếu bấm vào User Avatar -> Hiện lên, tắt nếu đang mở
                 dropProfile.style.display = (dropProfile.style.display === 'block') ? 'none' : 'block';
             } else if (dropProfile && !dropProfile.contains(event.target)) {
-                // Bấm ra ngoài khoảng trắng -> Bảng sẽ tự giấu đi
                 dropProfile.style.display = 'none';
             }
 
-            // Xử lý Bảng Thông Báo
             if (isClickCloseNoti) {
-                dropNoti.style.display = 'none'; // Bấm dấu X -> Tắt
+                dropNoti.style.display = 'none'; 
             } else if (isClickNotiBtn) {
                 dropNoti.style.display = (dropNoti.style.display === 'block') ? 'none' : 'block';
             } else if (dropNoti && !dropNoti.contains(event.target)) {
                 dropNoti.style.display = 'none';
             }
 
-            // Xử lý Bảng Lịch
             if (isClickDateBtn) {
                 dropDate.style.display = (dropDate.style.display === 'block') ? 'none' : 'block';
             } else if (dropDate && !dropDate.contains(event.target)) {
@@ -513,7 +518,7 @@
             }
         };
 
-        // Code Vẽ Biểu đồ Chart.js
+        // Biểu đồ
         var chartRendered = false;
         function initChart() {
             if(chartRendered) return;
@@ -546,6 +551,7 @@
             chartRendered = true;
         }
 
+        // Lịch
         function switchCalView(type, btnObj) {
             var viewBtns = document.getElementsByClassName('view-btn');
             for(var i = 0; i < viewBtns.length; i++) viewBtns[i].classList.remove('active');
@@ -582,6 +588,11 @@
                 var isWeekend = (d === 5 || d === 6) ? 'weekend' : '';
                 weekHtml += '<div class="day-column ' + isWeekend + '">';
                 for(var h = 0; h < 24; h++) weekHtml += '<div class="grid-cell"></div>';
+                
+                if(d === 0) weekHtml += '<div class="event-block e-green" style="top: 160px; height: 60px;"><div class="ev-title">🧟‍♂️ Design Sync</div></div>';
+                if(d === 3) weekHtml += '<div class="event-block e-blue" style="top: 320px; height: 120px;"><div class="ev-title">🧠 Client Present</div></div>';
+                if(d === 4) weekHtml += '<div class="event-block e-red" style="top: 560px; height: 80px;"><div class="ev-title">🚨 Fix Bugs</div></div>';
+                
                 weekHtml += '</div>';
             }
             weekGrid.innerHTML = weekHtml;
