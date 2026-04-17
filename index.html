@@ -1,753 +1,809 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Group 8 - Full Application Dashboard</title>
+    <title>Quản lý dự án - Nhóm 8</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    
     <style>
-        /* ================= RESET & VARIABLES ================= */
-        :root {
-            --bg-main: #F3F4F8;
-            --white: #FFFFFF;
-            --text-main: #141522;
-            --text-gray: #3B3E45;
-            --text-muted: #54577A;
-            --text-light: #666666;
-            --primary: #546FFF;
-            --primary-light: #BAC8FF;
-            --search-bg: #F5F5F7;
-            --border-color: #DADCE0;
-            --border-radius: 20px;
-            --transition: all 0.3s ease;
-
-            /* Event Colors (Figma Specs) */
-            --e-green-bg: #BDFFDB; --e-green-bd: #8FDCB2; --e-green-txt: #2C5A41;
-            --e-red-bg: #FFDDDD; --e-red-bd: #FDB7B7; --e-red-txt: #721818;
-            --e-blue-bg: #BFC6FF; --e-blue-bd: #939EFF; --e-blue-txt: #131C6D;
-            --e-purple-bg: #D6C8FF; --e-purple-bd: #A384FF; --e-purple-txt: #341D76;
-            --e-yellow-bg: #FFEBB7; --e-yellow-bd: #E7C160; --e-yellow-txt: #684D08;
-            --e-purple-dark: #6438E0; --e-purple-dark-bd: #3A14A8;
+        /* =================== CSS CƠ BẢN =================== */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background-color: #F3F4F8;
+            color: #333333;
+        }
+        a {
+            text-decoration: none;
+            color: #111;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-
-        body {
-            background-color: #e5e5e5;
-            font-family: 'Poppins', sans-serif;
-            color: var(--text-main);
-            height: 100vh;
+        /* =================== MÀN HÌNH ĐĂNG NHẬP / ĐĂNG KÝ =================== */
+        #trang-xacthuc {
             display: flex;
             justify-content: center;
             align-items: center;
-            overflow: hidden;
+            height: 100vh;
         }
-        ::-webkit-scrollbar { display: none; }
-
-        /* ================= MAIN APP CONTAINER ================= */
-        .app-container {
-            width: 1440px; height: 944px;
-            background: var(--bg-main);
-            border-radius: var(--border-radius);
-            position: relative;
-            box-shadow: 0 15px 50px rgba(0,0,0,0.15);
-            overflow: hidden;
-            display: flex;
+        .hop-xacthuc {
+            background-color: #FFFFFF;
+            width: 550px;
+            padding: 40px;
+            border-radius: 20px;
+            border: 1px solid #ccc;
+            text-align: center;
+            box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
         }
-
-        /* ================= AUTHENTICATION SCREEN ================= */
-        .auth-container {
-            position: absolute; inset: 0;
-            background: var(--bg-main);
-            display: flex; justify-content: center; align-items: center;
-            z-index: 1000; transition: transform 0.7s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        .hop-xacthuc h2 {
+            margin-bottom: 20px;
+            font-size: 32px;
+            color: #333;
         }
-        .auth-container.hidden { transform: translateY(-100%); }
-
-        .auth-box {
-            background: var(--white);
-            border: 1px solid rgba(102, 102, 102, 0.3);
-            border-radius: 24px;
-            width: 640px; padding: 40px 56px;
-            display: flex; flex-direction: column; align-items: center;
-            position: relative; box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
         }
-        .auth-box h2 { font-size: 32px; font-weight: 500; color: #333; margin: 20px 0 40px 0; text-align: center;}
-        .form-group { width: 100%; margin-bottom: 24px; position: relative; }
-        .form-group label { display: block; font-size: 16px; color: var(--text-light); margin-bottom: 5px; }
-        .form-group input { 
-            width: 100%; height: 56px; border: 1px solid rgba(102, 102, 102, 0.35);
-            border-radius: 12px; padding: 0 20px; font-family: 'Poppins'; font-size: 16px;
-            transition: var(--transition);
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #666666;
+            font-size: 16px;
         }
-        .form-group input:focus { border-color: var(--primary); outline: none; box-shadow: 0 0 0 3px rgba(84,111,255,0.2);}
+        .form-group input[type="text"],
+        .form-group input[type="email"],
+        .form-group input[type="password"] {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            font-size: 16px;
+        }
+        .btn-chinh {
+            width: 100%;
+            padding: 15px;
+            background-color: #111111;
+            color: white;
+            border: none;
+            border-radius: 30px;
+            font-size: 18px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        .btn-chinh:hover {
+            background-color: #333333;
+        }
+        .btn-phu {
+            width: 100%;
+            padding: 15px;
+            background-color: #FFFFFF;
+            color: #111111;
+            border: 1px solid #ccc;
+            border-radius: 30px;
+            font-size: 18px;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+        .btn-phu:hover {
+            background-color: #f9f9f9;
+        }
+        .duong-ke {
+            margin: 25px 0;
+            color: #666;
+            font-size: 18px;
+        }
         
-        .check-group { display: flex; align-items: center; gap: 10px; width: 100%; font-size: 14px; margin-top: -10px; margin-bottom: 20px;}
-        .check-group input { width: 20px; height: 20px; cursor: pointer; }
-
-        .btn-auth {
-            width: 100%; height: 64px; border-radius: 40px; border: none;
-            background: #111; color: white; font-size: 20px; font-weight: 500; font-family: 'Poppins';
-            cursor: pointer; transition: var(--transition); margin-top: 10px;
+        #form-dangky {
+            display: none; /* Ẩn form đăng ký mặc định */
         }
-        .btn-auth:hover { background: var(--primary); box-shadow: 0 10px 20px rgba(84,111,255,0.3);}
-        .btn-auth:active { transform: scale(0.98); }
 
-        .auth-divider { display: flex; align-items: center; gap: 20px; width: 100%; margin: 30px 0;}
-        .auth-divider span { height: 1px; flex: 1; background: rgba(102,102,102,0.25);}
-        .auth-divider p { color: #666; font-size: 20px; font-weight: 500;}
-
-        .btn-outline {
-            width: 100%; height: 64px; border-radius: 40px; border: 1px solid rgba(102,102,102,0.5);
-            background: white; color: #111; font-size: 20px; font-weight: 500; font-family: 'Poppins';
-            cursor: pointer; transition: var(--transition); display: flex; justify-content: center; align-items: center;
+        /* =================== MÀN HÌNH DASHBOARD =================== */
+        #trang-dashboard {
+            display: none; /* Ẩn trang dashboard mặc định */
         }
-        .btn-outline:hover { background: #f5f5f5; }
-
-        .auth-form { width: 100%; display: none; flex-direction: column; align-items: center; animation: fadeIn 0.4s; }
-        .auth-form.active-form { display: flex; }
-
-        .auth-footer { position: absolute; bottom: 0; left: 0; width: 100%; height: 56px; background: white; border-top: 1px solid rgba(102,102,102,0.25); display: flex; justify-content: center; align-items: center; gap: 40px; font-size: 14px; color: #666;}
-
-
-        /* ================= SIDEBAR ================= */
-        .sidebar {
-            width: 250px; background: var(--white);
-            padding: 40px 20px; display: flex; flex-direction: column;
-            border-radius: 20px 0 0 20px; z-index: 10;
-        }
-        .logo { display: flex; align-items: center; gap: 15px; margin-bottom: 60px; padding-left: 10px; }
-        .logo i { font-size: 32px; color: var(--text-main); }
-        .logo span { font-family: 'Montserrat'; font-size: 32px; font-weight: 600; }
         
-        .nav-menu { display: flex; flex-direction: column; gap: 15px; }
-        .nav-item {
-            display: flex; align-items: center; gap: 15px; padding: 15px 20px; border-radius: 10px;
-            font-size: 18px; font-weight: 600; cursor: pointer; opacity: 0.6; transition: var(--transition);
+        /* THANH ĐIỀU HƯỚNG BÊN TRÁI (SIDEBAR) */
+        aside {
+            width: 250px;
+            background-color: #FFFFFF;
+            height: 100vh;
+            float: left;
+            padding: 30px 20px;
+            border-right: 1px solid #ddd;
         }
-        .nav-item:hover { opacity: 1; background: rgba(245, 245, 247, 0.5); transform: translateX(5px); }
-        .nav-item.active { background: var(--search-bg); opacity: 1; transform: translateX(0); }
-        .nav-item.active i { color: var(--primary); }
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 50px;
+            color: #333;
+        }
+        .menu-item {
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 10px;
+            cursor: pointer;
+            color: #666;
+            font-weight: bold;
+            font-size: 18px;
+        }
+        .menu-item:hover {
+            background-color: #F3F4F6;
+        }
+        .menu-item.active {
+            background-color: #F5F5F7;
+            color: #546FFF;
+        }
 
-        /* ================= MAIN CONTENT ================= */
-        .main-wrapper { flex: 1; position: relative; padding: 40px; display: flex; flex-direction: column;}
+        /* KHU VỰC NỘI DUNG CHÍNH (MAIN) */
+        main {
+            margin-left: 250px;
+            padding: 30px;
+            height: 100vh;
+            overflow-y: auto;
+        }
 
         /* HEADER */
-        .header {
-            height: 80px; background: var(--white); border-radius: var(--border-radius);
-            display: flex; justify-content: space-between; align-items: center; padding: 0 30px;
-            margin-bottom: 40px; position: relative; z-index: 50; box-shadow: 0 2px 10px rgba(0,0,0,0.02);
-            flex-shrink: 0;
+        header {
+            background-color: #FFFFFF;
+            padding: 15px 30px;
+            border-radius: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            border: 1px solid #eee;
         }
-        .search-bar { background: var(--search-bg); width: 300px; height: 45px; border-radius: 30px; display: flex; align-items: center; padding: 0 20px; gap: 10px; transition: var(--transition);}
-        .search-bar:focus-within { width: 320px; box-shadow: 0 0 0 2px var(--primary-light); }
-        .search-bar input { border: none; background: transparent; outline: none; font-family: 'Poppins'; font-size: 16px; width: 100%;}
-        
-        .header-actions { display: flex; align-items: center; gap: 30px; position: relative;}
-        .noti-btn { width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: var(--transition); font-size: 24px;}
-        .noti-btn:hover { background: var(--search-bg); }
-        
-        .user-profile { display: flex; align-items: center; gap: 15px; cursor: pointer; padding: 5px 10px; border-radius: 30px; transition: var(--transition);}
-        .user-profile:hover { background: var(--search-bg); }
-        .avatar { width: 45px; height: 45px; background: #e0e0e0; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px; }
-
-        /* DROPDOWNS */
-        .dropdown {
-            position: absolute; background: var(--white); border: 2px solid var(--search-bg);
-            border-radius: var(--border-radius); box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            opacity: 0; visibility: hidden; transform: translateY(10px); transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55); z-index: 100;
+        .search-box input {
+            padding: 12px 20px;
+            border-radius: 30px;
+            border: none;
+            background-color: #F5F5F7;
+            width: 300px;
+            font-size: 16px;
         }
-        .dropdown.show { opacity: 1; visibility: visible; transform: translateY(0); }
-        
-        .noti-drop { top: 60px; right: 200px; width: 280px; padding: 15px; }
-        .noti-header { display: flex; justify-content: space-between; font-weight: 700; margin-bottom: 15px; }
-        .noti-header i { cursor: pointer; transition: var(--transition); }
-        .noti-header i:hover { color: red; transform: rotate(90deg); }
-        .noti-body { display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 500;}
-
-        .profile-drop { top: 60px; right: 0; width: 230px; padding: 10px; display: flex; flex-direction: column; gap: 5px;}
-        .drop-item { display: flex; align-items: center; gap: 15px; padding: 12px 15px; font-weight: 600; font-size: 18px; border-radius: 10px; cursor: pointer; transition: var(--transition); }
-        .drop-item:hover { background: var(--search-bg); color: var(--primary); transform: translateX(5px); }
-
-
-        /* ================= TABS CHÍNH ================= */
-        .page-content {
-            flex: 1; position: relative;
-            overflow-y: auto; opacity: 0; visibility: hidden; transition: opacity 0.4s ease;
-            display: none; padding-bottom: 20px;
+        .header-right {
+            display: flex;
+            align-items: center;
+            position: relative;
         }
-        .page-content.active-view { opacity: 1; visibility: visible; display: block; animation: fadeIn 0.4s ease;}
+        .btn-thongbao {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            margin-right: 25px;
+            color: #666;
+        }
+        .ho-so {
+            cursor: pointer;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            font-size: 18px;
+        }
+        .anh-daidien {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background-color: #ddd;
+            margin-left: 15px;
+        }
 
-        .card { background: var(--white); border-radius: var(--border-radius); transition: var(--transition); }
-        .card:hover { box-shadow: 0 10px 20px rgba(0,0,0,0.05); transform: translateY(-3px); }
-
-        /* --- TAB OVERVIEW --- */
-        .stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px; margin-bottom: 30px; }
-        .stat-card { height: 160px; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 10px; cursor: pointer;}
-        .stat-card:active { transform: scale(0.97); }
-        .stat-title { font-size: 18px; font-weight: 500; display: flex; align-items: center; gap: 10px; color: var(--text-main);}
-        .stat-num { font-size: 36px; font-weight: 700; }
-
-        .main-grid { display: grid; grid-template-columns: 1.5fr 1fr; gap: 30px; }
-        .chart-card { padding: 30px; height: 380px; display: flex; flex-direction: column; }
-        .chart-card h3 { font-size: 22px; font-weight: 700; margin-bottom: 20px; }
-        
-        .recent-card { margin-top: 30px; padding: 25px 30px; display: flex; align-items: center; gap: 20px; height: 120px;}
-        .recent-card h3 { font-size: 20px; font-weight: 700; white-space: nowrap; }
-        .activity-tags { display: flex; gap: 15px; overflow-x: auto;}
-        .tag { background: #F7F7F7; padding: 8px 20px; border-radius: 20px; font-size: 14px; font-weight: 500; display: flex; align-items: center; gap: 10px; cursor: pointer; transition: var(--transition);}
-        .tag:hover { background: #e2e4ff; color: var(--primary); transform: translateY(-3px);}
-        .tag-icon { width: 28px; height: 28px; background: #7784EE; border-radius: 50%; color: white; display: flex; align-items: center; justify-content: center; font-size: 12px;}
-
-        .deadline-card { padding: 30px; height: 530px; }
-        .deadline-card h3 { font-size: 22px; font-weight: 700; text-align: center; margin-bottom: 20px; }
-        .dl-item { display: flex; align-items: center; gap: 15px; padding: 12px 0; border-bottom: 1px solid rgba(0,0,0,0.05); transition: var(--transition); cursor: pointer;}
-        .dl-item:hover { background: #fafafa; border-radius: 10px; padding: 12px 10px; margin: 0 -10px;}
-        .dl-num { font-weight: 600; font-size: 18px; width: 25px; }
-        .dl-info { flex: 1; }
-        .dl-info strong { font-size: 16px; font-weight: 600; }
-        .dl-info p { font-size: 12px; color: var(--text-muted); }
-        .dl-check { width: 26px; height: 26px; border-radius: 50%; border: 2px solid var(--text-main); display: flex; align-items: center; justify-content: center; transition: var(--transition); font-size: 12px;}
-        .dl-item.done .dl-info strong { text-decoration: line-through; color: var(--text-muted); }
-        .dl-item.done .dl-check { background: var(--success); border-color: var(--success); color: white; }
-
-        /* --- TAB TASK --- */
-        .task-section { background: var(--white); border-radius: var(--border-radius); padding: 30px; margin-bottom: 30px;}
-        .ts-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
-        .ts-header h2 { font-size: 24px; font-weight: 700; }
-        .ts-actions { display: flex; align-items: center; gap: 20px; }
-        .btn-primary { background: var(--primary); color: white; border: none; padding: 10px 20px; border-radius: 20px; font-weight: 500; font-size: 14px; cursor: pointer; transition: var(--transition); box-shadow: 0 4px 15px rgba(84, 111, 255, 0.4);}
-        .btn-primary:hover { background: #425adb; transform: translateY(-2px); }
-        
-        .task-list { display: flex; gap: 30px; overflow-x: auto; padding: 10px 0 20px 0; }
-        .t-card { min-width: 300px; height: 280px; background: rgba(243, 244, 248, 0.5); border-radius: var(--border-radius); padding: 15px; border: 2px solid transparent; transition: var(--transition); cursor: pointer;}
-        .t-card:hover { transform: translateY(-5px); background: white; box-shadow: 0 15px 30px rgba(0,0,0,0.08); border-color: var(--primary-light);}
-        .t-img { width: 100%; height: 110px; border-radius: 10px; object-fit: cover; margin-bottom: 15px; }
-        .t-title { font-weight: 600; font-size: 16px; margin-bottom: 2px; }
-        .t-sub { font-weight: 500; font-size: 12px; color: var(--text-muted); margin-bottom: 20px; }
-        .prog-info { display: flex; justify-content: space-between; font-weight: 500; font-size: 14px; margin-bottom: 8px; }
-        .prog-track { width: 100%; height: 8px; background: var(--primary-light); border-radius: 8px; position: relative; }
-        .prog-fill { height: 100%; background: var(--primary); border-radius: 8px;}
-        .prog-thumb { width: 16px; height: 16px; background: var(--primary); border: 2px solid white; border-radius: 50%; position: absolute; top: -4px;}
-        .t-footer { margin-top: 15px; font-weight: 500; font-size: 14px; display: flex; align-items: center; gap: 8px; }
-
-        /* --- TAB CALENDAR --- */
-        .calendar-wrapper { background: var(--white); border-radius: var(--border-radius); height: 100%; display: flex; flex-direction: column; overflow: hidden;}
-        
-        .cal-header { display: flex; justify-content: space-between; padding: 20px 30px; align-items: center; border-bottom: 1px solid var(--border-color); position: relative;}
-        .cal-nav { display: flex; align-items: center; gap: 15px; font-weight: 600;}
-        .btn-icon { width: 44px; height: 36px; border: 1px solid var(--border-color); border-radius: 20px; display: flex; align-items: center; justify-content: center; cursor: pointer; background: white; transition: var(--transition);}
-        .btn-icon:hover { background: var(--search-bg); }
-        .cal-date { display: flex; align-items: center; gap: 5px; cursor: pointer; position: relative;}
-        
-        /* Dropdown Date Picker */
-        .date-picker-drop {
-            position: absolute; top: 50px; left: 0; background: white; border-radius: 20px;
-            padding: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); display: none; z-index: 100;
+        /* POPUP ĐƠN GIẢN CỦA HEADER */
+        .popup {
+            display: none;
+            position: absolute;
+            background-color: #FFFFFF;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow: 0px 4px 8px rgba(0,0,0,0.1);
+            z-index: 100;
+        }
+        #popup-thongbao {
+            top: 60px;
+            right: 180px;
             width: 250px;
         }
-        .date-picker-drop.show { display: block; animation: fadeIn 0.2s;}
-        .dp-header { display: flex; justify-content: space-between; font-weight: 600; margin-bottom: 10px; font-size: 14px;}
-        .dp-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; text-align: center; font-size: 14px;}
-        .dp-day { padding: 5px; cursor: pointer; border-radius: 4px; font-weight: 500;}
-        .dp-day:hover { background: #eee;}
-        .dp-day.muted { opacity: 0.3;}
-        .dp-day.active { background: var(--search-bg); border: 1px solid black;}
-
-        .cal-view-switch { display: flex; background: #F3F4F6; border: 1px solid var(--border-color); border-radius: 20px; padding: 2px;}
-        .view-btn { padding: 6px 12px; font-size: 14px; cursor: pointer; border-radius: 18px; transition: var(--transition);}
-        .view-btn.active { background: white; box-shadow: 0 2px 5px rgba(0,0,0,0.05); font-weight: 600;}
-
-        /* Lịch View */
-        .cal-body { display: flex; flex: 1; overflow-y: auto; position: relative;}
-        
-        /* Picker Nhỏ bên trái (Chỉ hiện ở Day view hoặc tuỳ chỉnh) */
-        .cal-sidebar { width: 280px; padding: 20px; border-right: 1px solid var(--border-color); display: flex; flex-direction: column; align-items: center; flex-shrink: 0;}
-        .mini-cal-header { font-weight: 600; margin-bottom: 15px; width: 100%; display: flex; justify-content: space-between; align-items: center;}
-        .mini-grid { display: grid; grid-template-columns: repeat(7, 33px); gap: 2px; text-align: center; font-size: 14px; font-weight: 500;}
-        .m-day { width: 33px; height: 33px; display: flex; justify-content: center; align-items: center; border-radius: 4px; cursor: pointer; transition: var(--transition);}
-        .m-day:hover { background: #eee; }
-        .m-day.muted { opacity: 0.3; }
-        .m-day.active { background: var(--search-bg); border: 1px solid black;}
-
-        /* Lưới Lịch */
-        .cal-main-area { flex: 1; display: flex; flex-direction: column; overflow: hidden;}
-        
-        /* Header của Week View */
-        .week-header { display: flex; height: 60px; border-bottom: 1px solid var(--border-color); background: white; z-index: 10;}
-        .wh-time-gap { width: 60px; border-right: 1px solid var(--border-color); }
-        .wh-day { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; border-right: 1px solid var(--border-color); font-size: 12px; font-weight: 500;}
-        .wh-day span.num { font-size: 20px; font-weight: 600; color: var(--text-main);}
-        .wh-day.active { background: var(--search-bg); }
-        .wh-day.weekend { background: #F2F2F2; }
-
-        .cal-scroll-area { flex: 1; overflow-y: auto; display: flex; position: relative; }
-        
-        .time-col { width: 60px; border-right: 1px solid var(--border-color); display: flex; flex-direction: column; flex-shrink: 0; background: white;}
-        .time-label { height: 80px; font-size: 12px; color: var(--text-gray); font-weight: 500; text-align: center; transform: translateY(-8px);}
-
-        .grid-wrapper { flex: 1; position: relative; display: flex; background: white;}
-        
-        /* Lưới Day */
-        .day-column { flex: 1; position: relative; border-right: 1px solid var(--border-color); display: flex; flex-direction: column;}
-        .day-column.weekend { background: #F2F2F2; }
-        .grid-cell { height: 80px; border-bottom: 1px solid var(--border-color); width: 100%;}
-
-        /* Event Blocks */
-        .event-block { 
-            position: absolute; left: 4px; right: 4px; border-radius: 3px; padding: 4px 8px; 
-            font-size: 10px; font-weight: 600; cursor: pointer; transition: var(--transition);
-            display: flex; flex-direction: column; overflow: hidden; justify-content: center;
+        #popup-canhan {
+            top: 60px;
+            right: 0;
+            width: 150px;
         }
-        .event-block:hover { filter: brightness(0.95); transform: scale(1.02); z-index: 20; box-shadow: 0 4px 10px rgba(0,0,0,0.1);}
-        .ev-title { display: flex; align-items: center; gap: 5px; white-space: nowrap;}
+        .popup ul {
+            list-style-type: none;
+        }
+        .popup ul li {
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+            cursor: pointer;
+        }
+        .popup ul li:last-child {
+            border-bottom: none;
+        }
+        .popup ul li:hover {
+            color: #546FFF;
+        }
+
+        /* =================== CÁC TAB NỘI DUNG =================== */
+        .tab-noidung {
+            display: none;
+        }
+        .tab-noidung.active {
+            display: block;
+        }
+
+        /* BỐ CỤC LƯỚI (GRID/FLEX) CƠ BẢN */
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            margin-left: -15px;
+            margin-right: -15px;
+        }
+        .col-25 { width: 25%; padding: 15px; }
+        .col-33 { width: 33.33%; padding: 15px; }
+        .col-66 { width: 66.66%; padding: 15px; }
+
+        .card {
+            background-color: #FFFFFF;
+            border-radius: 20px;
+            padding: 25px;
+            border: 1px solid #eee;
+            height: 100%;
+        }
+        .card h3 {
+            margin-bottom: 15px;
+            font-size: 20px;
+            color: #333;
+        }
         
-        /* Colors */
-        .e-green { background: var(--e-green-bg); border: 1px solid var(--e-green-bd); color: var(--e-green-txt); }
-        .e-red { background: var(--e-red-bg); border: 1px solid var(--e-red-bd); color: var(--e-red-txt); }
-        .e-blue { background: var(--e-blue-bg); border: 1px solid var(--e-blue-bd); color: var(--e-blue-txt); }
-        .e-purple { background: var(--e-purple-bg); border: 1px solid var(--e-purple-bd); color: var(--e-purple-txt); }
-        .e-yellow { background: var(--e-yellow-bg); border: 1px solid var(--e-yellow-bd); color: var(--e-yellow-txt); }
-        .e-purple-dark { background: var(--e-purple-dark); border: 1px solid var(--e-purple-dark-bd); color: white; }
+        /* TRANG OVERVIEW */
+        .thongke-box {
+            text-align: center;
+        }
+        .thongke-box h4 {
+            font-size: 16px;
+            color: #666;
+            font-weight: normal;
+        }
+        .thongke-box .so-luong {
+            font-size: 40px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        .deadline-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px 0;
+            border-bottom: 1px solid #eee;
+        }
+        .deadline-item.hoanthanh {
+            text-decoration: line-through;
+            color: #999;
+        }
+        .btn-check {
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            border: 2px solid #ccc;
+            cursor: pointer;
+        }
+        .hoanthanh .btn-check {
+            background-color: #2EB67D;
+            border-color: #2EB67D;
+        }
 
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        /* TRANG TASK */
+        .nut-them {
+            background-color: #546FFF;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            float: right;
+            margin-top: -40px;
+        }
+        .danhsach-task {
+            display: flex;
+            gap: 20px;
+            overflow-x: auto;
+            padding: 10px 0;
+        }
+        .the-task {
+            background-color: #F9F9F9;
+            border: 1px solid #eee;
+            border-radius: 15px;
+            padding: 15px;
+            min-width: 280px;
+        }
+        .the-task img {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 10px;
+            background-color: #ddd;
+        }
+        .thanh-tiendo {
+            background-color: #BAC8FF;
+            border-radius: 5px;
+            height: 10px;
+            margin-top: 15px;
+        }
+        .tiendo-hoanthanh {
+            background-color: #546FFF;
+            height: 100%;
+            border-radius: 5px;
+        }
 
+        /* TRANG CALENDAR */
+        .lich-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: #fff;
+            border-radius: 10px;
+            border: 1px solid #eee;
+        }
+        .lich-header button {
+            padding: 10px 20px;
+            border: 1px solid #ccc;
+            background-color: #fff;
+            border-radius: 20px;
+            cursor: pointer;
+        }
+        .lich-header button.active {
+            background-color: #F3F4F6;
+            font-weight: bold;
+        }
+
+        .khung-lich {
+            display: flex;
+            border: 1px solid #ddd;
+            background-color: #fff;
+            height: 600px;
+            overflow-y: auto;
+        }
+        .cot-thoigian {
+            width: 80px;
+            border-right: 1px solid #ddd;
+            background-color: #fff;
+        }
+        .o-thoigian {
+            height: 60px;
+            border-bottom: 1px solid #eee;
+            text-align: center;
+            padding-top: 5px;
+            color: #666;
+            font-size: 14px;
+        }
+        
+        /* Chế độ xem Ngày (Day) */
+        #che-do-ngay {
+            flex: 1;
+            position: relative;
+        }
+        
+        /* Chế độ xem Tuần (Week) */
+        #che-do-tuan {
+            flex: 1;
+            display: none; /* Ẩn mặc định */
+        }
+        .cot-ngay {
+            flex: 1;
+            border-right: 1px solid #ddd;
+            position: relative;
+        }
+        .tieu-de-ngay {
+            text-align: center;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border-bottom: 1px solid #ddd;
+            font-weight: bold;
+        }
+        .o-luoi {
+            height: 60px;
+            border-bottom: 1px solid #eee;
+        }
+
+        /* Sự kiện trên lịch */
+        .su-kien {
+            position: absolute;
+            left: 5px;
+            right: 5px;
+            padding: 5px;
+            border-radius: 5px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        .mau-xanh { background-color: #BDFFDB; border: 1px solid #8FDCB2; color: #2C5A41;}
+        .mau-do { background-color: #FFDDDD; border: 1px solid #FDB7B7; color: #721818;}
+        .mau-tim { background-color: #D6C8FF; border: 1px solid #A384FF; color: #341D76;}
+        
     </style>
 </head>
 <body>
 
-    <div class="auth-container" id="auth-screen">
-        <div class="auth-box">
-            <div class="auth-form active-form" id="form-signin">
-                <div class="logo" style="margin-bottom: 0;"><i class="fa-solid fa-list-check" style="font-size: 40px;"></i></div>
-                <h2>Sign in</h2>
+    <div id="trang-xacthuc">
+        <div class="hop-xacthuc">
+            
+            <form id="form-dangnhap">
+                <h2>Đăng Nhập</h2>
                 <div class="form-group">
                     <label>Email</label>
-                    <input type="email" placeholder="example@email.com">
+                    <input type="email" placeholder="Nhập địa chỉ email của bạn" required>
                 </div>
                 <div class="form-group">
-                    <label>Password</label>
-                    <input type="password" placeholder="••••••••">
-                    <div style="position: absolute; right: 15px; top: 40px; cursor: pointer; color: #666;"><i class="fa-regular fa-eye-slash"></i></div>
+                    <label>Mật khẩu</label>
+                    <input type="password" placeholder="••••••••" required>
                 </div>
-                <div style="width: 100%; text-align: right; margin-bottom: 20px;">
-                    <a href="#" style="color: #111; font-weight: 500; text-decoration: underline;">Forgot your password?</a>
+                <div style="text-align: right; margin-bottom: 15px;">
+                    <a href="#">Quên mật khẩu?</a>
                 </div>
-                <button class="btn-auth" onclick="loginSuccess()">Log in</button>
-                <div class="auth-divider"><span></span><p>OR</p><span></span></div>
-                <button class="btn-outline" onclick="switchAuth('signup')">Sign up</button>
-            </div>
+                <button type="button" class="btn-chinh" onclick="xuLyDangNhap()">Đăng nhập</button>
+                <div class="duong-ke">HOẶC</div>
+                <button type="button" class="btn-phu" onclick="hienThiDangKy()">Tạo tài khoản mới</button>
+            </form>
 
-            <div class="auth-form" id="form-signup">
-                <div class="logo" style="margin-bottom: 0;"><i class="fa-solid fa-list-check" style="font-size: 40px;"></i></div>
-                <h2>Create an account</h2>
-                <p style="margin-top: -30px; margin-bottom: 30px; color: #333;">Already have an account? <a href="#" onclick="switchAuth('signin')" style="color: #111; font-weight: 600; text-decoration: underline;">Log in</a></p>
-                <div style="display: flex; gap: 15px; width: 100%;">
-                    <div class="form-group">
-                        <label>Name</label>
-                        <input type="text" placeholder="John Doe">
-                    </div>
-                    <div class="form-group">
-                        <label>Email</label>
-                        <input type="email" placeholder="example@email.com">
-                    </div>
+            <form id="form-dangky">
+                <h2>Đăng Ký Tài Khoản</h2>
+                <div class="form-group">
+                    <label>Họ và Tên</label>
+                    <input type="text" placeholder="Nguyễn Văn A" required>
                 </div>
                 <div class="form-group">
-                    <label>Password</label>
-                    <input type="password" placeholder="••••••••">
-                    <p style="font-size: 12px; color: #666; margin-top: 5px;">Use 8 or more characters with a mix of letters, numbers & symbols</p>
+                    <label>Email</label>
+                    <input type="email" placeholder="example@email.com" required>
                 </div>
-                <div class="check-group">
-                    <input type="checkbox" checked>
-                    <label style="margin: 0; color: #333;">I want to receive emails about product updates and marketing.</label>
+                <div class="form-group">
+                    <label>Mật khẩu</label>
+                    <input type="password" placeholder="••••••••" required>
                 </div>
-                <button class="btn-auth" onclick="loginSuccess()">Sign up</button>
-            </div>
-        </div>
+                <button type="button" class="btn-chinh" onclick="xuLyDangNhap()">Đăng ký</button>
+                <div class="duong-ke">HOẶC</div>
+                <button type="button" class="btn-phu" onclick="hienThiDangNhap()">Quay lại Đăng nhập</button>
+            </form>
 
-        <div class="auth-footer">
-            <span>Help Center</span>
-            <span>Terms of Service</span>
-            <span>Privacy Policy</span>
         </div>
     </div>
 
-    <div class="app-container">
+    <div id="trang-dashboard">
         
-        <div class="sidebar">
-            <div class="logo">
-                <i class="fa-solid fa-list-check"></i><span>Group 8</span>
-            </div>
-            <div class="nav-menu">
-                <div class="nav-item active" onclick="switchTab('overview')"><i class="fa-solid fa-border-all"></i> Overview</div>
-                <div class="nav-item" onclick="switchTab('task')"><i class="fa-regular fa-file-lines"></i> Task</div>
-                <div class="nav-item" onclick="switchTab('calendar')"><i class="fa-regular fa-calendar"></i> Calendar</div>
-            </div>
-        </div>
+        <aside>
+            <div class="logo">Nhóm 8</div>
+            <nav>
+                <div class="menu-item active" onclick="chuyenTab('tab-overview')">Tổng quan (Overview)</div>
+                <div class="menu-item" onclick="chuyenTab('tab-task')">Công việc (Task)</div>
+                <div class="menu-item" onclick="chuyenTab('tab-calendar')">Lịch (Calendar)</div>
+            </nav>
+        </aside>
 
-        <div class="main-wrapper">
-            
-            <div class="header">
-                <div class="search-bar">
-                    <i class="fa-solid fa-magnifying-glass"></i>
-                    <input type="text" placeholder="Search...">
+        <main>
+            <header>
+                <div class="search-box">
+                    <input type="text" placeholder="Tìm kiếm công việc...">
                 </div>
-                <div class="header-actions">
-                    <div class="noti-btn" onclick="toggleDropdown(event, 'drop-noti')"><i class="fa-regular fa-bell"></i></div>
-                    <div class="dropdown noti-drop" id="drop-noti">
-                        <div class="noti-header"><span>Notifications</span><i class="fa-solid fa-xmark" onclick="toggleDropdown(event, 'drop-noti')"></i></div>
-                        <div class="noti-body"><i class="fa-regular fa-circle-question" style="color: #00D1FF;"></i><span>You don't have any notifications</span><i class="fa-regular fa-face-smile"></i></div>
+                
+                <div class="header-right">
+                    <button class="btn-thongbao" onclick="moPopup('popup-thongbao')">🔔</button>
+                    <div id="popup-thongbao" class="popup">
+                        <ul>
+                            <li>Bạn không có thông báo mới</li>
+                        </ul>
                     </div>
 
-                    <div class="user-profile" onclick="toggleDropdown(event, 'drop-profile')">
-                        <span class="greeting">Hello, User!</span>
-                        <div class="avatar"><i class="fa-regular fa-user"></i></div>
-                        <i class="fa-solid fa-caret-down" style="font-size: 12px;"></i>
+                    <div class="ho-so" onclick="moPopup('popup-canhan')">
+                        Xin chào, User!
+                        <div class="anh-daidien"></div>
                     </div>
-                    <div class="dropdown profile-drop" id="drop-profile">
-                        <div class="drop-item"><i class="fa-regular fa-user-circle"></i> Profile</div>
-                        <div class="drop-item"><i class="fa-solid fa-gear"></i> Settings</div>
-                        <div class="drop-item" onclick="logout()"><i class="fa-solid fa-arrow-right-from-bracket"></i> Log out</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="page-content active-view" id="page-overview">
-                <div class="stats-row">
-                    <div class="card stat-card"><div class="stat-title"><i class="fa-solid fa-layer-group"></i> Total Projects</div><div class="stat-num">100</div></div>
-                    <div class="card stat-card"><div class="stat-title"><i class="fa-solid fa-triangle-exclamation"></i> Overdue</div><div class="stat-num">100</div></div>
-                    <div class="card stat-card"><div class="stat-title"><i class="fa-solid fa-check-double"></i> Completed</div><div class="stat-num">100</div></div>
-                    <div class="card stat-card"><div class="stat-title"><i class="fa-solid fa-xmark"></i> Incomplete</div><div class="stat-num">100</div></div>
-                </div>
-
-                <div class="main-grid">
-                    <div class="grid-left">
-                        <div class="card chart-card">
-                            <h3>Monthly Projects Completed</h3>
-                            <div style="flex: 1; position: relative;"><canvas id="projectChart"></canvas></div>
-                        </div>
-                        <div class="card recent-card">
-                            <h3>Recent Activities</h3>
-                            <div class="activity-tags">
-                                <div class="tag"><div class="tag-icon"><i class="fa-solid fa-pen"></i></div> Activity #1</div>
-                                <div class="tag"><div class="tag-icon"><i class="fa-solid fa-pen"></i></div> Activity #2</div>
-                                <div class="tag"><div class="tag-icon"><i class="fa-solid fa-pen"></i></div> Activity #3</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="grid-right">
-                        <div class="card deadline-card">
-                            <h3>Upcoming Deadlines</h3>
-                            <div class="deadline-list">
-                                <div class="dl-item" onclick="toggleTask(this)"><div class="dl-num">01</div><div class="dl-info"><strong>Create Wireframe</strong><p>dd/mm/yyyy</p></div><div class="dl-check"><i class="fa-solid fa-check" style="opacity: 0;"></i></div></div>
-                                <div class="dl-item" onclick="toggleTask(this)"><div class="dl-num">02</div><div class="dl-info"><strong>Design System</strong><p>dd/mm/yyyy</p></div><div class="dl-check"><i class="fa-solid fa-check" style="opacity: 0;"></i></div></div>
-                                <div class="dl-item" onclick="toggleTask(this)"><div class="dl-num">03</div><div class="dl-info"><strong>Frontend Dev</strong><p>dd/mm/yyyy</p></div><div class="dl-check"><i class="fa-solid fa-check" style="opacity: 0;"></i></div></div>
-                                <div class="dl-item done" onclick="toggleTask(this)"><div class="dl-num">04</div><div class="dl-info"><strong>Backend Setup</strong><p>dd/mm/yyyy</p></div><div class="dl-check"><i class="fa-solid fa-check"></i></div></div>
-                                <div class="dl-item done" onclick="toggleTask(this)"><div class="dl-num">05</div><div class="dl-info"><strong>Database Init</strong><p>dd/mm/yyyy</p></div><div class="dl-check"><i class="fa-solid fa-check"></i></div></div>
-                            </div>
-                        </div>
+                    <div id="popup-canhan" class="popup">
+                        <ul>
+                            <li>Hồ sơ của tôi</li>
+                            <li>Cài đặt</li>
+                            <li onclick="xuLyDangXuat()">Đăng xuất</li>
+                        </ul>
                     </div>
                 </div>
-            </div>
+            </header>
 
-            <div class="page-content" id="page-task">
-                <div class="task-section">
-                    <div class="ts-header">
-                        <h2>Personal Projects</h2>
-                        <div class="ts-actions"><div class="sort-text"><i class="fa-solid fa-arrow-down-short-wide"></i> Sort By : Deadline</div><button class="btn-primary"><i class="fa-solid fa-plus"></i> New Task</button></div>
-                    </div>
-                    <div class="task-list">
-                        <div class="t-card">
-                            <img class="t-img" src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=300&q=80" alt="Code">
-                            <div class="t-title">Creating Web UI</div><div class="t-sub">Your job as a UX Des</div>
-                            <div class="prog-info"><span>Progress</span><span class="prog-val">85%</span></div>
-                            <div class="prog-track"><div class="prog-fill" style="width:85%;"></div><div class="prog-thumb" style="left:calc(85% - 8px);"></div></div>
-                            <div class="t-footer"><i class="fa-regular fa-clock"></i> 4 Hours Left</div>
+            <section id="tab-overview" class="tab-noidung active">
+                <div class="row">
+                    <div class="col-25">
+                        <div class="card thongke-box">
+                            <h4>Tổng dự án</h4>
+                            <div class="so-luong">100</div>
                         </div>
-                        <div class="t-card">
-                            <img class="t-img" src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=300&q=80" alt="Code">
-                            <div class="t-title">Fixing Bugs</div><div class="t-sub">Frontend team</div>
-                            <div class="prog-info"><span>Progress</span><span class="prog-val">40%</span></div>
-                            <div class="prog-track"><div class="prog-fill" style="width: 40%;"></div><div class="prog-thumb" style="left: calc(40% - 8px);"></div></div>
-                            <div class="t-footer"><i class="fa-regular fa-clock"></i> 2 Days Left</div>
+                    </div>
+                    <div class="col-25">
+                        <div class="card thongke-box">
+                            <h4>Quá hạn</h4>
+                            <div class="so-luong">100</div>
+                        </div>
+                    </div>
+                    <div class="col-25">
+                        <div class="card thongke-box">
+                            <h4>Đã hoàn thành</h4>
+                            <div class="so-luong">100</div>
+                        </div>
+                    </div>
+                    <div class="col-25">
+                        <div class="card thongke-box">
+                            <h4>Chưa hoàn thành</h4>
+                            <div class="so-luong">100</div>
                         </div>
                     </div>
                 </div>
 
-                <div class="task-section" style="margin-bottom: 50px;">
-                    <div class="ts-header">
-                        <h2>Team Projects</h2>
-                        <div class="ts-actions"><div class="sort-text"><i class="fa-solid fa-arrow-down-short-wide"></i> Sort By : Deadline</div><button class="btn-primary"><i class="fa-solid fa-plus"></i> New Project</button></div>
-                    </div>
-                    <div class="task-list">
-                        <div class="t-card">
-                            <img class="t-img" src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=300&q=80" alt="Code">
-                            <div class="t-title">Creating Perfect Website</div><div class="t-sub">Web Developer</div>
-                            <div class="prog-info"><span>Progress</span><span class="prog-val">85%</span></div>
-                            <div class="prog-track"><div class="prog-fill" style="width:85%;"></div><div class="prog-thumb" style="left:calc(85% - 8px);"></div></div>
-                            <div class="t-footer"><i class="fa-regular fa-clock"></i> 4 Days Left</div>
+                <div class="row">
+                    <div class="col-66">
+                        <div class="card">
+                            <h3>Dự án hoàn thành trong tháng</h3>
+                            <img src="https://via.placeholder.com/700x300?text=Khu+vuc+hien+thi+Bieu+Do" alt="Biểu đồ dự án" style="width: 100%; border-radius: 10px;">
                         </div>
                     </div>
-                </div>
-            </div>
-
-            <div class="page-content" id="page-calendar">
-                <div class="calendar-wrapper">
-                    <div class="cal-header">
-                        <div class="cal-nav">
-                            <div class="btn-icon"><i class="fa-solid fa-chevron-left"></i></div>
-                            <div class="cal-date" onclick="toggleDropdown(event, 'drop-datepicker')">
-                                Apr 16, 2026 <i class="fa-solid fa-chevron-down" style="font-size:12px;"></i>
-                                <div class="dropdown date-picker-drop" id="drop-datepicker">
-                                    <div class="dp-header"><i class="fa-solid fa-chevron-left"></i> Apr 2026 <i class="fa-solid fa-chevron-right"></i></div>
-                                    <div class="dp-grid">
-                                        <div>Mo</div><div>Tu</div><div>We</div><div>Th</div><div>Fr</div><div>Sa</div><div>Su</div>
-                                        <div class="dp-day muted">30</div><div class="dp-day muted">31</div><div class="dp-day">1</div><div class="dp-day">2</div><div class="dp-day">3</div><div class="dp-day">4</div><div class="dp-day">5</div>
-                                        <div class="dp-day">6</div><div class="dp-day">7</div><div class="dp-day">8</div><div class="dp-day">9</div><div class="dp-day">10</div><div class="dp-day">11</div><div class="dp-day">12</div>
-                                        <div class="dp-day">13</div><div class="dp-day">14</div><div class="dp-day">15</div><div class="dp-day active">16</div><div class="dp-day">17</div><div class="dp-day">18</div><div class="dp-day">19</div>
-                                        <div class="dp-day">20</div><div class="dp-day">21</div><div class="dp-day">22</div><div class="dp-day">23</div><div class="dp-day">24</div><div class="dp-day">25</div><div class="dp-day">26</div>
+                    <div class="col-33">
+                        <div class="card">
+                            <h3>Deadline sắp tới</h3>
+                            <div id="danh-sach-deadline">
+                                <div class="deadline-item">
+                                    <div>
+                                        <strong>Thiết kế giao diện</strong>
+                                        <p>16/04/2026</p>
                                     </div>
+                                    <div class="btn-check" onclick="danhDauHoanThanh(this)"></div>
+                                </div>
+                                <div class="deadline-item">
+                                    <div>
+                                        <strong>Lập trình Frontend</strong>
+                                        <p>18/04/2026</p>
+                                    </div>
+                                    <div class="btn-check" onclick="danhDauHoanThanh(this)"></div>
+                                </div>
+                                <div class="deadline-item hoanthanh">
+                                    <div>
+                                        <strong>Lập trình Backend</strong>
+                                        <p>12/04/2026</p>
+                                    </div>
+                                    <div class="btn-check" onclick="danhDauHoanThanh(this)"></div>
                                 </div>
                             </div>
-                            <div style="color: var(--text-muted); margin-left:10px;">Today</div>
-                            <div class="btn-icon"><i class="fa-solid fa-chevron-right"></i></div>
                         </div>
-                        <div class="cal-view-switch">
-                            <div class="view-btn active" onclick="switchCalView('day', this)">Day</div>
-                            <div class="view-btn" onclick="switchCalView('week', this)">Week</div>
-                        </div>
-                        <button class="btn-primary"><i class="fa-solid fa-plus"></i> New Event</button>
-                    </div>
-
-                    <div class="cal-body">
-                        
-                        <div class="cal-sidebar" id="cal-mini-sidebar">
-                            <div class="mini-cal-header">
-                                <i class="fa-solid fa-chevron-left" style="cursor:pointer;"></i> 
-                                Apr 2026 
-                                <i class="fa-solid fa-chevron-right" style="cursor:pointer;"></i>
-                            </div>
-                            <div class="mini-grid">
-                                <div>Mo</div><div>Tu</div><div>We</div><div>Th</div><div>Fr</div><div>Sa</div><div>Su</div>
-                                <div class="m-day muted">30</div><div class="m-day muted">31</div><div class="m-day">1</div><div class="m-day">2</div><div class="m-day">3</div><div class="m-day">4</div><div class="m-day">5</div>
-                                <div class="m-day">6</div><div class="m-day">7</div><div class="m-day">8</div><div class="m-day">9</div><div class="m-day">10</div><div class="m-day">11</div><div class="m-day">12</div>
-                                <div class="m-day">13</div><div class="m-day">14</div><div class="m-day">15</div><div class="m-day active">16</div><div class="m-day">17</div><div class="m-day">18</div><div class="m-day">19</div>
-                                <div class="m-day">20</div><div class="m-day">21</div><div class="m-day">22</div><div class="m-day">23</div><div class="m-day">24</div><div class="m-day">25</div><div class="m-day">26</div>
-                                <div class="m-day">27</div><div class="m-day">28</div><div class="m-day">29</div><div class="m-day muted">1</div><div class="m-day muted">2</div><div class="m-day muted">3</div><div class="m-day muted">4</div>
-                            </div>
-                        </div>
-
-                        <div class="cal-main-area">
-                            
-                            <div class="week-header" id="week-header" style="display: none;">
-                                <div class="wh-time-gap"></div> <div class="wh-day"><span>Mon</span><span class="num">13</span></div>
-                                <div class="wh-day"><span>Tue</span><span class="num">14</span></div>
-                                <div class="wh-day"><span>Wed</span><span class="num">15</span></div>
-                                <div class="wh-day active"><span>Thu</span><span class="num">16</span></div>
-                                <div class="wh-day"><span>Fri</span><span class="num">17</span></div>
-                                <div class="wh-day weekend"><span>Sat</span><span class="num">18</span></div>
-                                <div class="wh-day weekend"><span>Sun</span><span class="num">19</span></div>
-                            </div>
-
-                            <div class="cal-scroll-area">
-                                <div class="time-col" id="time-column">
-                                    </div>
-                                
-                                <div class="grid-wrapper" id="grid-day">
-                                    <div class="day-column" id="day-col-1">
-                                        <div class="event-block e-green" style="top: 80px; height: 60px;">
-                                            <div class="ev-title">🧟‍♂️ Team Standup</div>
-                                            <div style="font-weight: 500;">09:00 - 10:00</div>
-                                        </div>
-                                        <div class="event-block e-red" style="top: 240px; height: 40px;">
-                                            <div class="ev-title">☕ Quick Review</div>
-                                            <div style="font-weight: 500;">11:00 - 11:30</div>
-                                        </div>
-                                        <div class="event-block e-yellow" style="top: 320px; height: 80px;">
-                                            <div class="ev-title">🐫 Lunch Break</div>
-                                        </div>
-                                        <div class="event-block e-blue" style="top: 480px; height: 100px;">
-                                            <div class="ev-title">🧠 Client Presentation</div>
-                                            <div style="font-weight: 500;">14:00 - 15:30</div>
-                                        </div>
-                                        <div class="event-block e-purple-dark" style="top: 640px; height: 80px;">
-                                            <div class="ev-title">🎉 Wrap up & Deploy</div>
-                                            <div style="font-weight: 500;">16:00 - 17:00</div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="grid-wrapper" id="grid-week" style="display: none;">
-                                    </div>
-
-                            </div>
-                        </div>
-
                     </div>
                 </div>
-            </div>
+            </section>
 
-        </div>
+            <section id="tab-task" class="tab-noidung">
+                <div class="card" style="margin-bottom: 30px;">
+                    <h3>Dự án cá nhân</h3>
+                    <button class="nut-them">+ Thêm công việc</button>
+                    
+                    <div class="danhsach-task">
+                        <div class="the-task">
+                            <img src="https://via.placeholder.com/300x150?text=Anh+Minh+Hoa+1" alt="Dự án 1">
+                            <h4>Thiết kế Web UI</h4>
+                            <p style="color: #666; font-size: 12px;">Web Developer</p>
+                            <div class="thanh-tiendo">
+                                <div class="tiendo-hoanthanh" style="width: 85%;"></div>
+                            </div>
+                            <p style="font-size: 12px; margin-top: 10px;">Tiến độ: 85%</p>
+                        </div>
+                        <div class="the-task">
+                            <img src="https://via.placeholder.com/300x150?text=Anh+Minh+Hoa+2" alt="Dự án 2">
+                            <h4>Lập trình Javascript</h4>
+                            <p style="color: #666; font-size: 12px;">Web Developer</p>
+                            <div class="thanh-tiendo">
+                                <div class="tiendo-hoanthanh" style="width: 50%;"></div>
+                            </div>
+                            <p style="font-size: 12px; margin-top: 10px;">Tiến độ: 50%</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <h3>Dự án nhóm</h3>
+                    <button class="nut-them">+ Thêm dự án</button>
+                    
+                    <div class="danhsach-task">
+                        <div class="the-task">
+                            <img src="https://via.placeholder.com/300x150?text=Anh+Nhom+1" alt="Dự án nhóm 1">
+                            <h4>Đồ án kết thúc học phần</h4>
+                            <p style="color: #666; font-size: 12px;">Nhóm 8</p>
+                            <div class="thanh-tiendo">
+                                <div class="tiendo-hoanthanh" style="width: 95%;"></div>
+                            </div>
+                            <p style="font-size: 12px; margin-top: 10px;">Tiến độ: 95%</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="tab-calendar" class="tab-noidung">
+                <div class="card">
+                    <div class="lich-header">
+                        <div>
+                            <strong>Tháng 4, 2026</strong>
+                        </div>
+                        <div>
+                            <button id="btn-day" class="active" onclick="doiCheDoLich('day')">Ngày (Day)</button>
+                            <button id="btn-week" onclick="doiCheDoLich('week')">Tuần (Week)</button>
+                        </div>
+                        <button style="background-color: #546FFF; color: white; border: none;">+ Thêm sự kiện</button>
+                    </div>
+
+                    <div class="khung-lich">
+                        <div class="cot-thoigian" id="cot-thoigian">
+                            </div>
+
+                        <div id="che-do-ngay">
+                            <div id="luoi-ngay">
+                                </div>
+                            <div class="su-kien mau-xanh" style="top: 80px; height: 60px;">
+                                Họp nhóm (09:00 - 10:00)
+                            </div>
+                            <div class="su-kien mau-do" style="top: 240px; height: 60px;">
+                                Nộp bài tập (11:00)
+                            </div>
+                            <div class="su-kien mau-tim" style="top: 480px; height: 100px;">
+                                Thuyết trình đồ án (14:00 - 15:30)
+                            </div>
+                        </div>
+
+                        <div id="che-do-tuan">
+                            </div>
+                    </div>
+                </div>
+            </section>
+        </main>
     </div>
 
     <script>
-        // 1. Logic Authentication (Sign In / Sign Up)
-        const authScreen = document.getElementById('auth-screen');
-        const formSignIn = document.getElementById('form-signin');
-        const formSignUp = document.getElementById('form-signup');
-
-        function switchAuth(type) {
-            if (type === 'signup') {
-                formSignIn.classList.remove('active-form');
-                formSignUp.classList.add('active-form');
-            } else {
-                formSignUp.classList.remove('active-form');
-                formSignIn.classList.add('active-form');
-            }
+        // --- CÁC HÀM XỬ LÝ ĐĂNG NHẬP / ĐĂNG KÝ ---
+        function hienThiDangKy() {
+            document.getElementById('form-dangnhap').style.display = 'none';
+            document.getElementById('form-dangky').style.display = 'block';
         }
 
-        // Click nút đăng nhập/đăng ký
-        function loginSuccess() {
-            authScreen.classList.add('hidden');
-            setTimeout(initChart, 600); // Đợi CSS trượt xong mới render chart
-            initCalendarGrid(); // Khởi tạo lưới lịch
+        function hienThiDangNhap() {
+            document.getElementById('form-dangky').style.display = 'none';
+            document.getElementById('form-dangnhap').style.display = 'block';
         }
 
-        // Đăng xuất
-        function logout() {
-            authScreen.classList.remove('hidden');
-            document.querySelectorAll('.dropdown').forEach(drop => drop.classList.remove('show'));
-        }
-
-        // 2. Chuyển Tab (Sidebar Nav)
-        function switchTab(tabName) {
-            const navItems = document.querySelectorAll('.nav-item');
-            const pages = document.querySelectorAll('.page-content');
+        function xuLyDangNhap() {
+            // Chuyển từ trang đăng nhập sang giao diện Dashboard
+            document.getElementById('trang-xacthuc').style.display = 'none';
+            document.getElementById('trang-dashboard').style.display = 'block';
             
-            navItems.forEach(nav => nav.classList.remove('active'));
-            pages.forEach(page => page.classList.remove('active-view'));
-
-            if(tabName === 'overview') {
-                navItems[0].classList.add('active');
-                document.getElementById('page-overview').classList.add('active-view');
-            } else if (tabName === 'task') {
-                navItems[1].classList.add('active');
-                document.getElementById('page-task').classList.add('active-view');
-            } else if (tabName === 'calendar') {
-                navItems[2].classList.add('active');
-                document.getElementById('page-calendar').classList.add('active-view');
-            }
+            // Vẽ lịch cơ bản
+            veLichBanDau();
         }
 
-        // 3. Dropdowns Toggle
-        function toggleDropdown(event, id) {
-            event.stopPropagation();
-            const targetDrop = document.getElementById(id);
-            const allDrops = document.querySelectorAll('.dropdown');
-            allDrops.forEach(drop => { if(drop.id !== id) drop.classList.remove('show'); });
-            targetDrop.classList.toggle('show');
-        }
-        document.addEventListener('click', () => {
-            document.querySelectorAll('.dropdown').forEach(drop => drop.classList.remove('show'));
-        });
-
-        // 4. Task Checkbox
-        function toggleTask(element) {
-            element.classList.toggle('done');
-            const icon = element.querySelector('.dl-check i');
-            icon.style.opacity = element.classList.contains('done') ? '1' : '0';
+        function xuLyDangXuat() {
+            // Quay về trang đăng nhập
+            document.getElementById('trang-dashboard').style.display = 'none';
+            document.getElementById('trang-xacthuc').style.display = 'flex';
+            document.getElementById('popup-canhan').style.display = 'none';
         }
 
-        // 5. Chart.js
-        let chartRendered = false;
-        function initChart() {
-            if(chartRendered) return;
-            const ctx = document.getElementById('projectChart').getContext('2d');
-            let gradient = ctx.createLinearGradient(0, 0, 0, 300);
-            gradient.addColorStop(0, 'rgba(137, 121, 255, 0.4)');
-            gradient.addColorStop(1, 'rgba(137, 121, 255, 0.0)');
-
-            new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-                    datasets: [{
-                        data: [63, 78, 118, 98, 94, 124, 144, 153, 182, 153, 127, 113],
-                        borderColor: '#8979FF', backgroundColor: gradient,
-                        borderWidth: 3, pointBackgroundColor: '#8979FF',
-                        pointBorderColor: '#FFF', pointBorderWidth: 2, pointRadius: 4,
-                        fill: true, tension: 0.4
-                    }]
-                },
-                options: {
-                    responsive: true, maintainAspectRatio: false,
-                    plugins: { legend: { display: false } },
-                    scales: {
-                        y: { beginAtZero: true, grid: { color: 'rgba(0,0,0,0.05)', borderDash: [5, 5] }, border: { display: false } },
-                        x: { grid: { display: false }, border: { display: false } }
-                    }
-                }
-            });
-            chartRendered = true;
-        }
-
-        // 6. Giao diện Lịch (Day / Week)
-        function switchCalView(type, btnObj) {
-            document.querySelectorAll('.view-btn').forEach(btn => btn.classList.remove('active'));
-            btnObj.classList.add('active');
-
-            const gridDay = document.getElementById('grid-day');
-            const gridWeek = document.getElementById('grid-week');
-            const weekHeader = document.getElementById('week-header');
-            const miniSidebar = document.getElementById('cal-mini-sidebar');
-
-            if(type === 'day') {
-                gridDay.style.display = 'flex';
-                gridWeek.style.display = 'none';
-                weekHeader.style.display = 'none';
-                miniSidebar.style.display = 'flex';
+        // --- HÀM ẨN/HIỆN POPUP MENU (Thực hành Javascript căn bản) ---
+        function moPopup(idPopup) {
+            var popup = document.getElementById(idPopup);
+            if (popup.style.display === 'block') {
+                popup.style.display = 'none';
             } else {
-                gridDay.style.display = 'none';
-                gridWeek.style.display = 'flex';
-                weekHeader.style.display = 'flex';
-                miniSidebar.style.display = 'none';
+                // Tắt các popup khác trước khi mở
+                document.getElementById('popup-thongbao').style.display = 'none';
+                document.getElementById('popup-canhan').style.display = 'none';
+                
+                popup.style.display = 'block';
             }
         }
 
-        function initCalendarGrid() {
-            // Render 24H Time Column
-            const timeCol = document.getElementById('time-column');
-            let timeHtml = '<div style="height: 40px;"></div>'; // padding top
-            for(let i = 1; i <= 23; i++) {
-                let hour = i < 10 ? '0'+i+':00' : i+':00';
-                timeHtml += `<div class="time-label">${hour}</div>`;
+        // --- HÀM CHUYỂN TAB TRONG DASHBOARD ---
+        function chuyenTab(idTab) {
+            // Ẩn tất cả nội dung
+            var cacTabNoidung = document.getElementsByClassName('tab-noidung');
+            for (var i = 0; i < cacTabNoidung.length; i++) {
+                cacTabNoidung[i].style.display = 'none';
             }
-            timeCol.innerHTML = timeHtml;
 
-            // Render Day Cells
-            const dayCol1 = document.getElementById('day-col-1');
-            for(let i=0; i<24; i++) dayCol1.insertAdjacentHTML('afterbegin', '<div class="grid-cell"></div>');
-
-            // Render Week Grid (7 columns)
-            const weekGrid = document.getElementById('grid-week');
-            let weekHtml = '';
-            for(let d = 0; d < 7; d++) {
-                let isWeekend = (d === 5 || d === 6) ? 'weekend' : '';
-                weekHtml += `<div class="day-column ${isWeekend}">`;
-                for(let h = 0; h < 24; h++) weekHtml += `<div class="grid-cell"></div>`;
-                
-                // Add demo events for Week View
-                if(d===0) weekHtml += `<div class="event-block e-green" style="top: 160px; height: 60px;"><div class="ev-title">🧟‍♂️ Design Sync</div></div>`;
-                if(d===3) weekHtml += `<div class="event-block e-blue" style="top: 320px; height: 120px;"><div class="ev-title">🧠 Client Present</div></div>`;
-                if(d===4) weekHtml += `<div class="event-block e-red" style="top: 560px; height: 80px;"><div class="ev-title">🚨 Fix Bugs</div></div>`;
-                
-                weekHtml += `</div>`;
+            // Xóa trạng thái active của menu
+            var cacMenuItem = document.getElementsByClassName('menu-item');
+            for (var i = 0; i < cacMenuItem.length; i++) {
+                cacMenuItem[i].className = 'menu-item'; // Xóa chữ active
             }
-            weekGrid.innerHTML = weekHtml;
+
+            // Hiển thị tab được chọn
+            document.getElementById(idTab).style.display = 'block';
+
+            // Active lại đúng menu đã bấm (dùng điều kiện if đơn giản)
+            if (idTab === 'tab-overview') {
+                cacMenuItem[0].className = 'menu-item active';
+            } else if (idTab === 'tab-task') {
+                cacMenuItem[1].className = 'menu-item active';
+            } else if (idTab === 'tab-calendar') {
+                cacMenuItem[2].className = 'menu-item active';
+            }
+        }
+
+        // --- HÀM TÍCH CHỌN HOÀN THÀNH DEADLINE ---
+        function danhDauHoanThanh(nutBam) {
+            var phanTuCha = nutBam.parentElement; // Lấy thẻ div .deadline-item
+            
+            // Nếu đã có class hoanthanh thì xóa, nếu chưa có thì thêm
+            if (phanTuCha.classList.contains('hoanthanh')) {
+                phanTuCha.classList.remove('hoanthanh');
+            } else {
+                phanTuCha.classList.add('hoanthanh');
+            }
+        }
+
+        // --- HÀM HIỂN THỊ VÀ CHUYỂN ĐỔI LỊCH (DAY/WEEK) ---
+        function doiCheDoLich(cheDo) {
+            var btnDay = document.getElementById('btn-day');
+            var btnWeek = document.getElementById('btn-week');
+            var viewDay = document.getElementById('che-do-ngay');
+            var viewWeek = document.getElementById('che-do-tuan');
+
+            if (cheDo === 'day') {
+                btnDay.className = 'active';
+                btnWeek.className = '';
+                viewDay.style.display = 'block';
+                viewWeek.style.display = 'none';
+            } else {
+                btnWeek.className = 'active';
+                btnDay.className = '';
+                viewWeek.style.display = 'flex'; // Hiển thị 7 cột ngang nhau
+                viewDay.style.display = 'none';
+            }
+        }
+
+        // Hàm hỗ trợ tạo các ô trong lịch bằng HTML nội tuyến (theo chuẩn dạy của giáo trình)
+        function veLichBanDau() {
+            // 1. Tạo cột thời gian từ 01:00 đến 23:00
+            var htmlThoiGian = '<div style="height: 40px;"></div>';
+            for (var i = 1; i <= 23; i++) {
+                var gio = (i < 10) ? '0' + i + ':00' : i + ':00';
+                htmlThoiGian += '<div class="o-thoigian">' + gio + '</div>';
+            }
+            document.getElementById('cot-thoigian').innerHTML = htmlThoiGian;
+
+            // 2. Tạo lưới cho chế độ Ngày
+            var htmlLuoiNgay = '';
+            for (var i = 0; i < 24; i++) {
+                htmlLuoiNgay += '<div class="o-luoi"></div>';
+            }
+            document.getElementById('luoi-ngay').innerHTML = htmlLuoiNgay;
+
+            // 3. Tạo lưới cho chế độ Tuần (7 cột)
+            var thuTrongTuan = ['T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'CN'];
+            var htmlTuan = '';
+            for (var ngay = 0; ngay < 7; ngay++) {
+                htmlTuan += '<div class="cot-ngay">';
+                htmlTuan += '<div class="tieu-de-ngay">' + thuTrongTuan[ngay] + '</div>';
+                
+                // Tạo ô lưới cho cột này
+                for (var i = 0; i < 24; i++) {
+                    htmlTuan += '<div class="o-luoi"></div>';
+                }
+
+                // Thêm sự kiện mẫu cho tuần
+                if (ngay === 0) { // Thứ 2
+                    htmlTuan += '<div class="su-kien mau-xanh" style="top: 100px; height: 60px;">Bắt đầu tuần</div>';
+                }
+                if (ngay === 4) { // Thứ 6
+                    htmlTuan += '<div class="su-kien mau-do" style="top: 300px; height: 120px;">Báo cáo</div>';
+                }
+
+                htmlTuan += '</div>';
+            }
+            document.getElementById('che-do-tuan').innerHTML = htmlTuan;
         }
     </script>
 </body>
