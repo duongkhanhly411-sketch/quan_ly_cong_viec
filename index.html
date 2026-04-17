@@ -7,6 +7,7 @@
     
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <style>
         /* ================= RESET ================= */
         * { 
@@ -25,7 +26,10 @@
             align-items: center;
             overflow: hidden;
         }
-        ::-webkit-scrollbar { display: none; }
+
+        ::-webkit-scrollbar { 
+            display: none; 
+        }
 
         /* ================= MAIN APP CONTAINER ================= */
         .app-container {
@@ -42,249 +46,1051 @@
         /* ================= AUTHENTICATION SCREEN ================= */
         .auth-container {
             position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
+            top: 0; 
+            left: 0; 
+            right: 0; 
+            bottom: 0;
             background: #F3F4F8;
-            display: flex; justify-content: center; align-items: center;
+            display: flex; 
+            justify-content: center; 
+            align-items: center;
             z-index: 1000; 
         }
-        .auth-container.hidden { display: none; }
+
+        .auth-container.hidden { 
+            display: none; 
+        }
 
         .auth-box {
             background: #FFFFFF;
             border: 1px solid rgba(102, 102, 102, 0.3);
             border-radius: 24px;
-            width: 640px; padding: 40px 56px;
-            display: flex; flex-direction: column; align-items: center;
-            position: relative; box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            width: 640px; 
+            padding: 40px 56px;
+            display: flex; 
+            flex-direction: column; 
+            align-items: center;
+            position: relative; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
         }
-        .auth-box h2 { font-size: 32px; font-weight: 500; color: #333; margin: 20px 0 40px 0; text-align: center;}
+
+        .auth-box h2 { 
+            font-size: 32px; 
+            font-weight: 500; 
+            color: #333; 
+            margin: 20px 0 40px 0; 
+            text-align: center;
+        }
         
-        .form-group { width: 100%; margin-bottom: 24px; position: relative; }
-        .form-group label { display: block; font-size: 16px; color: #666666; margin-bottom: 5px; }
+        .form-group { 
+            width: 100%; 
+            margin-bottom: 24px; 
+            position: relative; 
+        }
+
+        .form-group label { 
+            display: block; 
+            font-size: 16px; 
+            color: #666666; 
+            margin-bottom: 5px; 
+        }
+
         .form-group input { 
-            width: 100%; height: 56px; border: 1px solid rgba(102, 102, 102, 0.35);
-            border-radius: 12px; padding: 0 20px; font-family: 'Poppins'; font-size: 16px;
+            width: 100%; 
+            height: 56px; 
+            border: 1px solid rgba(102, 102, 102, 0.35);
+            border-radius: 12px; 
+            padding: 0 20px; 
+            font-family: 'Poppins'; 
+            font-size: 16px;
         }
-        .form-group input:focus { border-color: #546FFF; outline: none;} 
+
+        .form-group input:focus { 
+            border-color: #546FFF; 
+            outline: none;
+        } 
         
-        .check-group { display: flex; align-items: center; gap: 10px; width: 100%; font-size: 14px; margin-top: -10px; margin-bottom: 20px;}
-        .check-group input { width: 20px; height: 20px; cursor: pointer; }
+        .check-group { 
+            display: flex; 
+            align-items: center; 
+            gap: 10px; 
+            width: 100%; 
+            font-size: 14px; 
+            margin-top: -10px; 
+            margin-bottom: 20px;
+        }
+
+        .check-group input { 
+            width: 20px; 
+            height: 20px; 
+            cursor: pointer; 
+        }
 
         .btn-auth {
-            width: 100%; height: 64px; border-radius: 40px; border: none;
-            background: #111; color: white; font-size: 20px; font-weight: 500; font-family: 'Poppins';
-            cursor: pointer; margin-top: 10px;
+            width: 100%; 
+            height: 64px; 
+            border-radius: 40px; 
+            border: none;
+            background: #111; 
+            color: white; 
+            font-size: 20px; 
+            font-weight: 500; 
+            font-family: 'Poppins';
+            cursor: pointer; 
+            margin-top: 10px;
         }
-        .btn-auth:hover { background: #546FFF; } 
 
-        .auth-divider { display: flex; align-items: center; gap: 20px; width: 100%; margin: 30px 0;}
-        .auth-divider span { height: 1px; flex: 1; background: rgba(102,102,102,0.25);}
-        .auth-divider p { color: #666; font-size: 20px; font-weight: 500;}
+        .btn-auth:hover { 
+            background: #546FFF; 
+        } 
+
+        .auth-divider { 
+            display: flex; 
+            align-items: center; 
+            gap: 20px; 
+            width: 100%; 
+            margin: 30px 0;
+        }
+
+        .auth-divider span { 
+            height: 1px; 
+            flex: 1; 
+            background: rgba(102,102,102,0.25);
+        }
+
+        .auth-divider p { 
+            color: #666; 
+            font-size: 20px; 
+            font-weight: 500;
+        }
 
         .btn-outline {
-            width: 100%; height: 64px; border-radius: 40px; border: 1px solid rgba(102,102,102,0.5);
-            background: white; color: #111; font-size: 20px; font-weight: 500; font-family: 'Poppins';
-            cursor: pointer; display: flex; justify-content: center; align-items: center;
+            width: 100%; 
+            height: 64px; 
+            border-radius: 40px; 
+            border: 1px solid rgba(102,102,102,0.5);
+            background: white; 
+            color: #111; 
+            font-size: 20px; 
+            font-weight: 500; 
+            font-family: 'Poppins';
+            cursor: pointer; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center;
         }
-        .btn-outline:hover { background: #f5f5f5; }
 
-        .auth-form { width: 100%; display: none; flex-direction: column; align-items: center; } 
-        .auth-form.active-form { display: flex; }
+        .btn-outline:hover { 
+            background: #f5f5f5; 
+        }
+
+        .auth-form { 
+            width: 100%; 
+            display: none; 
+            flex-direction: column; 
+            align-items: center; 
+        } 
+
+        .auth-form.active-form { 
+            display: flex; 
+        }
 
         .auth-footer { 
-            position: absolute; bottom: 0; left: 0; width: 100%; height: 56px;
-            background: white; border-top: 1px solid rgba(102,102,102,0.25); display: flex; justify-content: center; align-items: center; gap: 40px; font-size: 14px; color: #666;
+            position: absolute; 
+            bottom: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 56px;
+            background: white; 
+            border-top: 1px solid rgba(102,102,102,0.25); 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            gap: 40px; 
+            font-size: 14px; 
+            color: #666;
         }
 
         /* ================= SIDEBAR ================= */
         .sidebar {
-            width: 250px; background: #FFFFFF;
-            padding: 40px 20px; display: flex; flex-direction: column;
-            border-radius: 20px 0 0 20px; z-index: 10;
+            width: 250px; 
+            background: #FFFFFF;
+            padding: 40px 20px; 
+            display: flex; 
+            flex-direction: column;
+            border-radius: 20px 0 0 20px; 
+            z-index: 10;
         }
-        .logo { display: flex; align-items: center; gap: 15px; margin-bottom: 60px; padding-left: 10px; }
-        .logo i { font-size: 32px; color: #141522; }
-        .logo span { font-family: 'Montserrat'; font-size: 32px; font-weight: 600; }
+
+        .logo { 
+            display: flex; 
+            align-items: center; 
+            gap: 15px; 
+            margin-bottom: 60px; 
+            padding-left: 10px; 
+        }
+
+        .logo i { 
+            font-size: 32px; 
+            color: #141522; 
+        }
+
+        .logo span { 
+            font-family: 'Montserrat'; 
+            font-size: 32px; 
+            font-weight: 600; 
+        }
         
-        .nav-menu { display: flex; flex-direction: column; gap: 15px; }
-        .nav-item {
-            display: flex; align-items: center; gap: 15px; padding: 15px 20px; border-radius: 10px;
-            font-size: 18px; font-weight: 600; cursor: pointer; opacity: 0.6; 
+        .nav-menu { 
+            display: flex; 
+            flex-direction: column; 
+            gap: 15px; 
         }
-        .nav-item:hover { opacity: 1; background: #f5f5f7; } 
-        .nav-item.active { background: #F5F5F7; opacity: 1; }
-        .nav-item.active i { color: #546FFF; }
+
+        .nav-item {
+            display: flex; 
+            align-items: center; 
+            gap: 15px; 
+            padding: 15px 20px; 
+            border-radius: 10px;
+            font-size: 18px; 
+            font-weight: 600; 
+            cursor: pointer; 
+            opacity: 0.6; 
+        }
+
+        .nav-item:hover { 
+            opacity: 1; 
+            background: #f5f5f7; 
+        } 
+
+        .nav-item.active { 
+            background: #F5F5F7; 
+            opacity: 1; 
+        }
+
+        .nav-item.active i { 
+            color: #546FFF; 
+        }
 
         /* ================= MAIN CONTENT ================= */
-        .main-wrapper { flex: 1; position: relative; padding: 40px; display: flex; flex-direction: column;}
+        .main-wrapper { 
+            flex: 1; 
+            position: relative; 
+            padding: 40px; 
+            display: flex; 
+            flex-direction: column;
+        }
 
         /* HEADER */
         .header {
-            height: 80px; background: #FFFFFF; border-radius: 20px;
-            display: flex; justify-content: space-between; align-items: center; padding: 0 30px;
-            margin-bottom: 40px; position: relative; z-index: 50; box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+            height: 80px; 
+            background: #FFFFFF; 
+            border-radius: 20px;
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            padding: 0 30px;
+            margin-bottom: 40px; 
+            position: relative; 
+            z-index: 50; 
+            box-shadow: 0 2px 10px rgba(0,0,0,0.02);
             flex-shrink: 0;
         }
-        .search-bar { background: #F5F5F7; width: 300px; height: 45px; border-radius: 30px; display: flex; align-items: center; padding: 0 20px; gap: 10px; }
-        .search-bar input { border: none; background: transparent; outline: none; font-family: 'Poppins'; font-size: 16px; width: 100%;}
+
+        .search-bar { 
+            background: #F5F5F7; 
+            width: 300px; 
+            height: 45px; 
+            border-radius: 30px; 
+            display: flex; 
+            align-items: center; 
+            padding: 0 20px; 
+            gap: 10px; 
+        }
+
+        .search-bar input { 
+            border: none; 
+            background: transparent; 
+            outline: none; 
+            font-family: 'Poppins'; 
+            font-size: 16px; 
+            width: 100%;
+        }
         
-        .header-actions { display: flex; align-items: center; gap: 30px; position: relative;}
-        .noti-btn { width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 24px;}
-        .noti-btn:hover { background: #F5F5F7; }
+        .header-actions { 
+            display: flex; 
+            align-items: center; 
+            gap: 30px; 
+            position: relative;
+        }
+
+        .noti-btn { 
+            width: 45px; 
+            height: 45px; 
+            border-radius: 50%; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            cursor: pointer; 
+            font-size: 24px;
+        }
+
+        .noti-btn:hover { 
+            background: #F5F5F7; 
+        }
         
-        .user-profile { display: flex; align-items: center; gap: 15px; cursor: pointer; padding: 5px 10px; border-radius: 30px;}
-        .user-profile:hover { background: #F5F5F7; }
-        .avatar { width: 45px; height: 45px; background: #e0e0e0; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px; }
+        .user-profile { 
+            display: flex; 
+            align-items: center; 
+            gap: 15px; 
+            cursor: pointer; 
+            padding: 5px 10px; 
+            border-radius: 30px;
+        }
+
+        .user-profile:hover { 
+            background: #F5F5F7; 
+        }
+
+        .avatar { 
+            width: 45px; 
+            height: 45px; 
+            background: #e0e0e0; 
+            border-radius: 50%; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            font-size: 20px; 
+        }
 
         /* DROPDOWNS */
         .dropdown {
-            position: absolute; background: #FFFFFF; border: 2px solid #F5F5F7;
-            border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            display: none; z-index: 100; 
+            position: absolute; 
+            background: #FFFFFF; 
+            border: 2px solid #F5F5F7;
+            border-radius: 20px; 
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            display: none; 
+            z-index: 100; 
         }
-        .dropdown.show { display: block; }
-        
-        .noti-drop { top: 60px; right: 200px; width: 280px; padding: 15px; }
-        .noti-header { display: flex; justify-content: space-between; font-weight: 700; margin-bottom: 15px; }
-        .noti-header i { cursor: pointer; }
-        .noti-header i:hover { color: red; } 
-        .noti-body { display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 500;}
 
-        .profile-drop { top: 60px; right: 0; width: 230px; padding: 10px; display: flex; flex-direction: column; gap: 5px;}
-        .drop-item { display: flex; align-items: center; gap: 15px; padding: 12px 15px; font-weight: 600; font-size: 18px; border-radius: 10px; cursor: pointer; }
-        .drop-item:hover { background: #F5F5F7; color: #546FFF; }
+        .dropdown.show { 
+            display: block; 
+        }
+        
+        .noti-drop { 
+            top: 60px; 
+            right: 200px; 
+            width: 280px; 
+            padding: 15px; 
+        }
+
+        .noti-header { 
+            display: flex; 
+            justify-content: space-between; 
+            font-weight: 700; 
+            margin-bottom: 15px; 
+        }
+
+        .noti-header i { 
+            cursor: pointer; 
+        }
+
+        .noti-header i:hover { 
+            color: red; 
+        } 
+
+        .noti-body { 
+            display: flex; 
+            align-items: center; 
+            gap: 10px; 
+            font-size: 14px; 
+            font-weight: 500;
+        }
+
+        .profile-drop { 
+            top: 60px; 
+            right: 0; 
+            width: 230px; 
+            padding: 10px; 
+            display: flex; 
+            flex-direction: column; 
+            gap: 5px;
+        }
+
+        .drop-item { 
+            display: flex; 
+            align-items: center; 
+            gap: 15px; 
+            padding: 12px 15px; 
+            font-weight: 600; 
+            font-size: 18px; 
+            border-radius: 10px; 
+            cursor: pointer; 
+        }
+
+        .drop-item:hover { 
+            background: #F5F5F7; 
+            color: #546FFF; 
+        }
 
         /* ================= TABS CHÍNH ================= */
         .page-content {
-            flex: 1; position: relative; overflow-y: auto; display: none; padding-bottom: 20px;
+            flex: 1; 
+            position: relative; 
+            overflow-y: auto; 
+            display: none; 
+            padding-bottom: 20px;
         }
-        .page-content.active-view { display: block; }
 
-        .card { background: #FFFFFF; border-radius: 20px; }
+        .page-content.active-view { 
+            display: block; 
+        }
+
+        .card { 
+            background: #FFFFFF; 
+            border-radius: 20px; 
+        }
 
         /* --- TAB OVERVIEW --- */
-        .stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px; margin-bottom: 30px; }
-        .stat-card { height: 160px; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 10px; cursor: pointer;}
-        .stat-title { font-size: 18px; font-weight: 500; display: flex; align-items: center; gap: 10px; color: #141522;}
-        .stat-num { font-size: 36px; font-weight: 700; }
+        .stats-row { 
+            display: grid; 
+            grid-template-columns: repeat(4, 1fr); 
+            gap: 30px; 
+            margin-bottom: 30px; 
+        }
 
-        .main-grid { display: grid; grid-template-columns: 1.5fr 1fr; gap: 30px; }
-        .chart-card { padding: 30px; height: 380px; display: flex; flex-direction: column; }
-        .chart-card h3 { font-size: 22px; font-weight: 700; margin-bottom: 20px; }
+        .stat-card { 
+            height: 160px; 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center; 
+            align-items: center; 
+            gap: 10px; 
+            cursor: pointer;
+        }
+
+        .stat-title { 
+            font-size: 18px; 
+            font-weight: 500; 
+            display: flex; 
+            align-items: center; 
+            gap: 10px; 
+            color: #141522;
+        }
+
+        .stat-num { 
+            font-size: 36px; 
+            font-weight: 700; 
+        }
+
+        .main-grid { 
+            display: grid; 
+            grid-template-columns: 1.5fr 1fr; 
+            gap: 30px; 
+        }
+
+        .chart-card { 
+            padding: 30px; 
+            height: 380px; 
+            display: flex; 
+            flex-direction: column; 
+        }
+
+        .chart-card h3 { 
+            font-size: 22px; 
+            font-weight: 700; 
+            margin-bottom: 20px; 
+        }
         
-        .recent-card { margin-top: 30px; padding: 25px 30px; display: flex; align-items: center; gap: 20px; height: 120px;}
-        .recent-card h3 { font-size: 20px; font-weight: 700; white-space: nowrap; }
-        .activity-tags { display: flex; gap: 15px; overflow-x: auto;}
-        .tag { background: #F7F7F7; padding: 8px 20px; border-radius: 20px; font-size: 14px; font-weight: 500; display: flex; align-items: center; gap: 10px; cursor: pointer; }
-        .tag:hover { background: #e2e4ff; color: #546FFF; }
-        .tag-icon { width: 28px; height: 28px; background: #7784EE; border-radius: 50%; color: white; display: flex; align-items: center; justify-content: center; font-size: 12px;}
+        .recent-card { 
+            margin-top: 30px; 
+            padding: 25px 30px; 
+            display: flex; 
+            align-items: center; 
+            gap: 20px; 
+            height: 120px;
+        }
 
-        .deadline-card { padding: 30px; height: 530px; }
-        .deadline-card h3 { font-size: 22px; font-weight: 700; text-align: center; margin-bottom: 20px; }
-        .dl-item { display: flex; align-items: center; gap: 15px; padding: 12px 0; border-bottom: 1px solid rgba(0,0,0,0.05); cursor: pointer;}
-        .dl-item:hover { background: #fafafa; border-radius: 10px; padding: 12px 10px; margin: 0 -10px;}
-        .dl-num { font-weight: 600; font-size: 18px; width: 25px; }
-        .dl-info { flex: 1; }
-        .dl-info strong { font-size: 16px; font-weight: 600; }
-        .dl-info p { font-size: 12px; color: #54577A; }
-        .dl-check { width: 26px; height: 26px; border-radius: 50%; border: 2px solid #141522; display: flex; align-items: center; justify-content: center; font-size: 12px;}
-        .dl-item.done .dl-info strong { text-decoration: line-through; color: #54577A; }
-        .dl-item.done .dl-check { background: #05cd99; border-color: #05cd99; color: white; }
+        .recent-card h3 { 
+            font-size: 20px; 
+            font-weight: 700; 
+            white-space: nowrap; 
+        }
+
+        .activity-tags { 
+            display: flex; 
+            gap: 15px; 
+            overflow-x: auto;
+        }
+
+        .tag { 
+            background: #F7F7F7; 
+            padding: 8px 20px; 
+            border-radius: 20px; 
+            font-size: 14px; 
+            font-weight: 500; 
+            display: flex; 
+            align-items: center; 
+            gap: 10px; 
+            cursor: pointer; 
+        }
+
+        .tag:hover { 
+            background: #e2e4ff; 
+            color: #546FFF; 
+        }
+
+        .tag-icon { 
+            width: 28px; 
+            height: 28px; 
+            background: #7784EE; 
+            border-radius: 50%; 
+            color: white; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            font-size: 12px;
+        }
+
+        .deadline-card { 
+            padding: 30px; 
+            height: 530px; 
+        }
+
+        .deadline-card h3 { 
+            font-size: 22px; 
+            font-weight: 700; 
+            text-align: center; 
+            margin-bottom: 20px; 
+        }
+
+        .dl-item { 
+            display: flex; 
+            align-items: center; 
+            gap: 15px; 
+            padding: 12px 0; 
+            border-bottom: 1px solid rgba(0,0,0,0.05); 
+            cursor: pointer;
+        }
+
+        .dl-item:hover { 
+            background: #fafafa; 
+            border-radius: 10px; 
+            padding: 12px 10px; 
+            margin: 0 -10px;
+        }
+
+        .dl-num { 
+            font-weight: 600; 
+            font-size: 18px; 
+            width: 25px; 
+        }
+
+        .dl-info { 
+            flex: 1; 
+        }
+
+        .dl-info strong { 
+            font-size: 16px; 
+            font-weight: 600; 
+        }
+
+        .dl-info p { 
+            font-size: 12px; 
+            color: #54577A; 
+        }
+
+        .dl-check { 
+            width: 26px; 
+            height: 26px; 
+            border-radius: 50%; 
+            border: 2px solid #141522; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            font-size: 12px;
+        }
+
+        .dl-item.done .dl-info strong { 
+            text-decoration: line-through; 
+            color: #54577A; 
+        }
+
+        .dl-item.done .dl-check { 
+            background: #05cd99; 
+            border-color: #05cd99; 
+            color: white; 
+        }
 
         /* --- TAB TASK --- */
-        .task-section { background: #FFFFFF; border-radius: 20px; padding: 30px; margin-bottom: 30px;}
-        .ts-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
-        .ts-header h2 { font-size: 24px; font-weight: 700; }
-        .ts-actions { display: flex; align-items: center; gap: 20px; }
-        .btn-primary { background: #546FFF; color: white; border: none; padding: 10px 20px; border-radius: 20px; font-weight: 500; font-size: 14px; cursor: pointer; }
-        .btn-primary:hover { background: #425adb; }
+        .task-section { 
+            background: #FFFFFF; 
+            border-radius: 20px; 
+            padding: 30px; 
+            margin-bottom: 30px;
+        }
+
+        .ts-header { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            margin-bottom: 20px; 
+        }
+
+        .ts-header h2 { 
+            font-size: 24px; 
+            font-weight: 700; 
+        }
+
+        .ts-actions { 
+            display: flex; 
+            align-items: center; 
+            gap: 20px; 
+        }
+
+        .btn-primary { 
+            background: #546FFF; 
+            color: white; 
+            border: none; 
+            padding: 10px 20px; 
+            border-radius: 20px; 
+            font-weight: 500; 
+            font-size: 14px; 
+            cursor: pointer; 
+        }
+
+        .btn-primary:hover { 
+            background: #425adb; 
+        }
         
-        .task-list { display: flex; gap: 30px; overflow-x: auto; padding: 10px 0 20px 0; }
-        .t-card { min-width: 300px; height: 280px; background: rgba(243, 244, 248, 0.5); border-radius: 20px; padding: 15px; border: 2px solid transparent; cursor: pointer;}
-        .t-card:hover { background: white; border-color: #BAC8FF;}
-        .t-img { width: 100%; height: 110px; border-radius: 10px; object-fit: cover; margin-bottom: 15px; }
-        .t-title { font-weight: 600; font-size: 16px; margin-bottom: 2px; }
-        .t-sub { font-weight: 500; font-size: 12px; color: #54577A; margin-bottom: 20px; }
-        .prog-info { display: flex; justify-content: space-between; font-weight: 500; font-size: 14px; margin-bottom: 8px; }
-        .prog-track { width: 100%; height: 8px; background: #BAC8FF; border-radius: 8px; position: relative; }
-        .prog-fill { height: 100%; background: #546FFF; border-radius: 8px;}
-        .prog-thumb { width: 16px; height: 16px; background: #546FFF; border: 2px solid white; border-radius: 50%; position: absolute; top: -4px;}
-        .t-footer { margin-top: 15px; font-weight: 500; font-size: 14px; display: flex; align-items: center; gap: 8px; }
+        .task-list { 
+            display: flex; 
+            gap: 30px; 
+            overflow-x: auto; 
+            padding: 10px 0 20px 0; 
+        }
+
+        .t-card { 
+            min-width: 300px; 
+            height: 280px; 
+            background: rgba(243, 244, 248, 0.5); 
+            border-radius: 20px; 
+            padding: 15px; 
+            border: 2px solid transparent; 
+            cursor: pointer;
+        }
+
+        .t-card:hover { 
+            background: white; 
+            border-color: #BAC8FF;
+        }
+
+        .t-img { 
+            width: 100%; 
+            height: 110px; 
+            border-radius: 10px; 
+            object-fit: cover; 
+            margin-bottom: 15px; 
+        }
+
+        .t-title { 
+            font-weight: 600; 
+            font-size: 16px; 
+            margin-bottom: 2px; 
+        }
+
+        .t-sub { 
+            font-weight: 500; 
+            font-size: 12px; 
+            color: #54577A; 
+            margin-bottom: 20px; 
+        }
+
+        .prog-info { 
+            display: flex; 
+            justify-content: space-between; 
+            font-weight: 500; 
+            font-size: 14px; 
+            margin-bottom: 8px; 
+        }
+
+        .prog-track { 
+            width: 100%; 
+            height: 8px; 
+            background: #BAC8FF; 
+            border-radius: 8px; 
+            position: relative; 
+        }
+
+        .prog-fill { 
+            height: 100%; 
+            background: #546FFF; 
+            border-radius: 8px;
+        }
+
+        .prog-thumb { 
+            width: 16px; 
+            height: 16px; 
+            background: #546FFF; 
+            border: 2px solid white; 
+            border-radius: 50%; 
+            position: absolute; 
+            top: -4px;
+        }
+
+        .t-footer { 
+            margin-top: 15px; 
+            font-weight: 500; 
+            font-size: 14px; 
+            display: flex; 
+            align-items: center; 
+            gap: 8px; 
+        }
 
         /* --- TAB CALENDAR --- */
-        .calendar-wrapper { background: #FFFFFF; border-radius: 20px; height: 100%; display: flex; flex-direction: column; overflow: hidden;}
+        .calendar-wrapper { 
+            background: #FFFFFF; 
+            border-radius: 20px; 
+            height: 100%; 
+            display: flex; 
+            flex-direction: column; 
+            overflow: hidden;
+        }
         
-        .cal-header { display: flex; justify-content: space-between; padding: 20px 30px; align-items: center; border-bottom: 1px solid #DADCE0; position: relative;}
-        .cal-nav { display: flex; align-items: center; gap: 15px; font-weight: 600;}
-        .btn-icon { width: 44px; height: 36px; border: 1px solid #DADCE0; border-radius: 20px; display: flex; align-items: center; justify-content: center; cursor: pointer; background: white;}
-        .btn-icon:hover { background: #F5F5F7; }
-        .cal-date { display: flex; align-items: center; gap: 5px; cursor: pointer; position: relative;}
+        .cal-header { 
+            display: flex; 
+            justify-content: space-between; 
+            padding: 20px 30px; 
+            align-items: center; 
+            border-bottom: 1px solid #DADCE0; 
+            position: relative;
+        }
+
+        .cal-nav { 
+            display: flex; 
+            align-items: center; 
+            gap: 15px; 
+            font-weight: 600;
+        }
+
+        .btn-icon { 
+            width: 44px; 
+            height: 36px; 
+            border: 1px solid #DADCE0; 
+            border-radius: 20px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            cursor: pointer; 
+            background: white;
+        }
+
+        .btn-icon:hover { 
+            background: #F5F5F7; 
+        }
+
+        .cal-date { 
+            display: flex; 
+            align-items: center; 
+            gap: 5px; 
+            cursor: pointer; 
+            position: relative;
+        }
         
         /* Dropdown Date Picker */
         .date-picker-drop {
-            position: absolute; top: 50px; left: 0; background: white; border-radius: 20px;
-            padding: 15px; border: 1px solid #ccc; display: none; z-index: 100; width: 250px;
+            position: absolute; 
+            top: 50px; 
+            left: 0; 
+            background: white; 
+            border-radius: 20px;
+            padding: 15px; 
+            border: 1px solid #ccc; 
+            display: none; 
+            z-index: 100; 
+            width: 250px;
         }
-        .date-picker-drop.show { display: block; }
-        .dp-header { display: flex; justify-content: space-between; font-weight: 600; margin-bottom: 10px; font-size: 14px;}
-        .dp-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; text-align: center; font-size: 14px;}
-        .dp-day { padding: 5px; cursor: pointer; border-radius: 4px; font-weight: 500;}
-        .dp-day:hover { background: #eee;}
-        .dp-day.muted { opacity: 0.3;}
-        .dp-day.active { background: #F5F5F7; border: 1px solid black;}
 
-        .cal-view-switch { display: flex; background: #F3F4F6; border: 1px solid #DADCE0; border-radius: 20px; padding: 2px;}
-        .view-btn { padding: 6px 12px; font-size: 14px; cursor: pointer; border-radius: 18px; }
-        .view-btn.active { background: white; border: 1px solid #ccc; font-weight: 600;}
+        .date-picker-drop.show { 
+            display: block; 
+        }
+
+        .dp-header { 
+            display: flex; 
+            justify-content: space-between; 
+            font-weight: 600; 
+            margin-bottom: 10px; 
+            font-size: 14px;
+        }
+
+        .dp-grid { 
+            display: grid; 
+            grid-template-columns: repeat(7, 1fr); 
+            gap: 2px; 
+            text-align: center; 
+            font-size: 14px;
+        }
+
+        .dp-day { 
+            padding: 5px; 
+            cursor: pointer; 
+            border-radius: 4px; 
+            font-weight: 500;
+        }
+
+        .dp-day:hover { 
+            background: #eee;
+        }
+
+        .dp-day.muted { 
+            opacity: 0.3;
+        }
+
+        .dp-day.active { 
+            background: #F5F5F7; 
+            border: 1px solid black;
+        }
+
+        .cal-view-switch { 
+            display: flex; 
+            background: #F3F4F6; 
+            border: 1px solid #DADCE0; 
+            border-radius: 20px; 
+            padding: 2px;
+        }
+
+        .view-btn { 
+            padding: 6px 12px; 
+            font-size: 14px; 
+            cursor: pointer; 
+            border-radius: 18px; 
+        }
+
+        .view-btn.active { 
+            background: white; 
+            border: 1px solid #ccc; 
+            font-weight: 600;
+        }
 
         /* Lịch View */
-        .cal-body { display: flex; flex: 1; overflow-y: auto; position: relative;}
+        .cal-body { 
+            display: flex; 
+            flex: 1; 
+            overflow-y: auto; 
+            position: relative;
+        }
         
-        .cal-sidebar { width: 280px; padding: 20px; border-right: 1px solid #DADCE0; display: flex; flex-direction: column; align-items: center; flex-shrink: 0;}
-        .mini-cal-header { font-weight: 600; margin-bottom: 15px; width: 100%; display: flex; justify-content: space-between; align-items: center;}
-        .mini-grid { display: grid; grid-template-columns: repeat(7, 33px); gap: 2px; text-align: center; font-size: 14px; font-weight: 500;}
-        .m-day { width: 33px; height: 33px; display: flex; justify-content: center; align-items: center; border-radius: 4px; cursor: pointer;}
-        .m-day:hover { background: #eee; }
-        .m-day.muted { opacity: 0.3; }
-        .m-day.active { background: #F5F5F7; border: 1px solid black;}
+        .cal-sidebar { 
+            width: 280px; 
+            padding: 20px; 
+            border-right: 1px solid #DADCE0; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            flex-shrink: 0;
+        }
 
-        .cal-main-area { flex: 1; display: flex; flex-direction: column; overflow: hidden;}
-        
-        .week-header { display: flex; height: 60px; border-bottom: 1px solid #DADCE0; background: white; z-index: 10;}
-        .wh-time-gap { width: 60px; border-right: 1px solid #DADCE0; }
-        .wh-day { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; border-right: 1px solid #DADCE0; font-size: 12px; font-weight: 500;}
-        .wh-day span.num { font-size: 20px; font-weight: 600; color: #141522;}
-        .wh-day.active { background: #F5F5F7; }
-        .wh-day.weekend { background: #F2F2F2; }
+        .mini-cal-header { 
+            font-weight: 600; 
+            margin-bottom: 15px; 
+            width: 100%; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center;
+        }
 
-        .cal-scroll-area { flex: 1; overflow-y: auto; display: flex; position: relative; }
-        
-        .time-col { width: 60px; border-right: 1px solid #DADCE0; display: flex; flex-direction: column; flex-shrink: 0; background: white;}
-        .time-label { height: 80px; font-size: 12px; color: #3B3E45; font-weight: 500; text-align: center; transform: translateY(-8px);}
+        .mini-grid { 
+            display: grid; 
+            grid-template-columns: repeat(7, 33px); 
+            gap: 2px; 
+            text-align: center; 
+            font-size: 14px; 
+            font-weight: 500;
+        }
 
-        .grid-wrapper { flex: 1; position: relative; display: flex; background: white;}
+        .m-day { 
+            width: 33px; 
+            height: 33px; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            border-radius: 4px; 
+            cursor: pointer;
+        }
+
+        .m-day:hover { 
+            background: #eee; 
+        }
+
+        .m-day.muted { 
+            opacity: 0.3; 
+        }
+
+        .m-day.active { 
+            background: #F5F5F7; 
+            border: 1px solid black;
+        }
+
+        .cal-main-area { 
+            flex: 1; 
+            display: flex; 
+            flex-direction: column; 
+            overflow: hidden;
+        }
         
-        .day-column { flex: 1; position: relative; border-right: 1px solid #DADCE0; display: flex; flex-direction: column;}
-        .day-column.weekend { background: #F2F2F2; }
-        .grid-cell { height: 80px; border-bottom: 1px solid #DADCE0; width: 100%;}
+        .week-header { 
+            display: flex; 
+            height: 60px; 
+            border-bottom: 1px solid #DADCE0; 
+            background: white; 
+            z-index: 10;
+        }
+
+        .wh-time-gap { 
+            width: 60px; 
+            border-right: 1px solid #DADCE0; 
+        }
+
+        .wh-day { 
+            flex: 1; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: center; 
+            border-right: 1px solid #DADCE0; 
+            font-size: 12px; 
+            font-weight: 500;
+        }
+
+        .wh-day span.num { 
+            font-size: 20px; 
+            font-weight: 600; 
+            color: #141522;
+        }
+
+        .wh-day.active { 
+            background: #F5F5F7; 
+        }
+
+        .wh-day.weekend { 
+            background: #F2F2F2; 
+        }
+
+        .cal-scroll-area { 
+            flex: 1; 
+            overflow-y: auto; 
+            display: flex; 
+            position: relative; 
+        }
+        
+        .time-col { 
+            width: 60px; 
+            border-right: 1px solid #DADCE0; 
+            display: flex; 
+            flex-direction: column; 
+            flex-shrink: 0; 
+            background: white;
+        }
+
+        .time-label { 
+            height: 80px; 
+            font-size: 12px; 
+            color: #3B3E45; 
+            font-weight: 500; 
+            text-align: center; 
+            transform: translateY(-8px);
+        }
+
+        .grid-wrapper { 
+            flex: 1; 
+            position: relative; 
+            display: flex; 
+            background: white;
+        }
+        
+        .day-column { 
+            flex: 1; 
+            position: relative; 
+            border-right: 1px solid #DADCE0; 
+            display: flex; 
+            flex-direction: column;
+        }
+
+        .day-column.weekend { 
+            background: #F2F2F2; 
+        }
+
+        .grid-cell { 
+            height: 80px; 
+            border-bottom: 1px solid #DADCE0; 
+            width: 100%;
+        }
 
         /* Event Blocks */
         .event-block { 
-            position: absolute; left: 4px; right: 4px; border-radius: 3px; padding: 4px 8px; 
-            font-size: 10px; font-weight: 600; cursor: pointer;
-            display: flex; flex-direction: column; overflow: hidden; justify-content: center;
+            position: absolute; 
+            left: 4px; 
+            right: 4px; 
+            border-radius: 3px; 
+            padding: 4px 8px; 
+            font-size: 10px; 
+            font-weight: 600; 
+            cursor: pointer;
+            display: flex; 
+            flex-direction: column; 
+            overflow: hidden; 
+            justify-content: center;
         }
-        .event-block:hover { border: 1px solid black; } 
-        .ev-title { display: flex; align-items: center; gap: 5px; white-space: nowrap;}
+
+        .event-block:hover { 
+            border: 1px solid black; 
+        } 
+
+        .ev-title { 
+            display: flex; 
+            align-items: center; 
+            gap: 5px; 
+            white-space: nowrap;
+        }
         
         /* Event Colors */
-        .e-green { background: #BDFFDB; border: 1px solid #8FDCB2; color: #2C5A41; }
-        .e-red { background: #FFDDDD; border: 1px solid #FDB7B7; color: #721818; }
-        .e-blue { background: #BFC6FF; border: 1px solid #939EFF; color: #131C6D; }
-        .e-purple { background: #D6C8FF; border: 1px solid #A384FF; color: #341D76; }
-        .e-yellow { background: #FFEBB7; border: 1px solid #E7C160; color: #684D08; }
-        .e-purple-dark { background: #6438E0; border: 1px solid #3A14A8; color: white; }
+        .e-green { 
+            background: #BDFFDB; 
+            border: 1px solid #8FDCB2; 
+            color: #2C5A41; 
+        }
 
+        .e-red { 
+            background: #FFDDDD; 
+            border: 1px solid #FDB7B7; 
+            color: #721818; 
+        }
+
+        .e-blue { 
+            background: #BFC6FF; 
+            border: 1px solid #939EFF; 
+            color: #131C6D; 
+        }
+
+        .e-purple { 
+            background: #D6C8FF; 
+            border: 1px solid #A384FF; 
+            color: #341D76; 
+        }
+
+        .e-yellow { 
+            background: #FFEBB7; 
+            border: 1px solid #E7C160; 
+            color: #684D08; 
+        }
+
+        .e-purple-dark { 
+            background: #6438E0; 
+            border: 1px solid #3A14A8; 
+            color: white; 
+        }
     </style>
 </head>
 <body>
@@ -292,7 +1098,9 @@
     <div class="auth-container" id="auth-screen">
         <div class="auth-box">
             <div class="auth-form active-form" id="form-signin">
-                <div class="logo" style="margin-bottom: 0;"><i class="fa-solid fa-list-check" style="font-size: 40px;"></i></div>
+                <div class="logo" style="margin-bottom: 0;">
+                    <i class="fa-solid fa-list-check" style="font-size: 40px;"></i>
+                </div>
                 <h2>Sign in</h2>
                 <div class="form-group">
                     <label>Email</label>
@@ -301,20 +1109,30 @@
                 <div class="form-group">
                     <label>Password</label>
                     <input type="password" placeholder="••••••••">
-                    <div style="position: absolute; right: 15px; top: 40px; cursor: pointer; color: #666;"><i class="fa-regular fa-eye-slash"></i></div>
+                    <div style="position: absolute; right: 15px; top: 40px; cursor: pointer; color: #666;">
+                        <i class="fa-regular fa-eye-slash"></i>
+                    </div>
                 </div>
                 <div style="width: 100%; text-align: right; margin-bottom: 20px;">
                     <a href="#" style="color: #111; font-weight: 500; text-decoration: underline;">Forgot your password?</a>
                 </div>
                 <button class="btn-auth" onclick="loginSuccess()">Log in</button>
-                <div class="auth-divider"><span></span><p>OR</p><span></span></div>
+                <div class="auth-divider">
+                    <span></span>
+                    <p>OR</p>
+                    <span></span>
+                </div>
                 <button class="btn-outline" onclick="switchAuth('signup')">Sign up</button>
             </div>
 
             <div class="auth-form" id="form-signup">
-                <div class="logo" style="margin-bottom: 0;"><i class="fa-solid fa-list-check" style="font-size: 40px;"></i></div>
+                <div class="logo" style="margin-bottom: 0;">
+                    <i class="fa-solid fa-list-check" style="font-size: 40px;"></i>
+                </div>
                 <h2>Create an account</h2>
-                <p style="margin-top: -30px; margin-bottom: 30px; color: #333;">Already have an account? <a href="#" onclick="switchAuth('signin')" style="color: #111; font-weight: 600; text-decoration: underline;">Log in</a></p>
+                <p style="margin-top: -30px; margin-bottom: 30px; color: #333;">
+                    Already have an account? <a href="#" onclick="switchAuth('signin')" style="color: #111; font-weight: 600; text-decoration: underline;">Log in</a>
+                </p>
                 <div style="display: flex; gap: 15px; width: 100%;">
                     <div class="form-group">
                         <label>Name</label>
@@ -337,7 +1155,6 @@
                 <button class="btn-auth" onclick="loginSuccess()">Sign up</button>
             </div>
         </div>
-
         <div class="auth-footer">
             <span>Help Center</span>
             <span>Terms of Service</span>
@@ -349,12 +1166,19 @@
         
         <div class="sidebar">
             <div class="logo">
-                <i class="fa-solid fa-list-check"></i><span>Group 8</span>
+                <i class="fa-solid fa-list-check"></i>
+                <span>Group 8</span>
             </div>
             <div class="nav-menu">
-                <div class="nav-item active" onclick="switchTab('overview')"><i class="fa-solid fa-border-all"></i> Overview</div>
-                <div class="nav-item" onclick="switchTab('task')"><i class="fa-regular fa-file-lines"></i> Task</div>
-                <div class="nav-item" onclick="switchTab('calendar')"><i class="fa-regular fa-calendar"></i> Calendar</div>
+                <div class="nav-item active" onclick="switchTab('overview')">
+                    <i class="fa-solid fa-border-all"></i> Overview
+                </div>
+                <div class="nav-item" onclick="switchTab('task')">
+                    <i class="fa-regular fa-file-lines"></i> Task
+                </div>
+                <div class="nav-item" onclick="switchTab('calendar')">
+                    <i class="fa-regular fa-calendar"></i> Calendar
+                </div>
             </div>
         </div>
 
@@ -364,33 +1188,71 @@
                     <i class="fa-solid fa-magnifying-glass"></i>
                     <input type="text" placeholder="Search...">
                 </div>
+                
                 <div class="header-actions">
-                    <div class="noti-btn" id="btn-noti"><i class="fa-regular fa-bell"></i></div>
+                    <div class="noti-btn" id="btn-noti">
+                        <i class="fa-regular fa-bell"></i>
+                    </div>
                     <div class="dropdown noti-drop" id="drop-noti">
-                        <div class="noti-header"><span>Notifications</span><i class="fa-solid fa-xmark" id="btn-close-noti"></i></div>
-                        <div class="noti-body"><i class="fa-regular fa-circle-question" style="color: #00D1FF;"></i><span>You don't have any notifications</span><i class="fa-regular fa-face-smile"></i></div>
+                        <div class="noti-header">
+                            <span>Notifications</span>
+                            <i class="fa-solid fa-xmark" id="btn-close-noti"></i>
+                        </div>
+                        <div class="noti-body">
+                            <i class="fa-regular fa-circle-question" style="color: #00D1FF;"></i>
+                            <span>You don't have any notifications</span>
+                            <i class="fa-regular fa-face-smile"></i>
+                        </div>
                     </div>
 
                     <div class="user-profile" id="btn-profile">
                         <span class="greeting">Hello, User!</span>
-                        <div class="avatar"><i class="fa-regular fa-user"></i></div>
+                        <div class="avatar">
+                            <i class="fa-regular fa-user"></i>
+                        </div>
                         <i class="fa-solid fa-caret-down" style="font-size: 12px;"></i>
                     </div>
                     
                     <div class="dropdown profile-drop" id="drop-profile">
-                        <div class="drop-item"><i class="fa-regular fa-user-circle"></i> Profile</div>
-                        <div class="drop-item"><i class="fa-solid fa-gear"></i> Settings</div>
-                        <div class="drop-item" onclick="logout()"><i class="fa-solid fa-arrow-right-from-bracket"></i> Log out</div>
+                        <div class="drop-item">
+                            <i class="fa-regular fa-user-circle"></i> Profile
+                        </div>
+                        <div class="drop-item">
+                            <i class="fa-solid fa-gear"></i> Settings
+                        </div>
+                        <div class="drop-item" onclick="logout()">
+                            <i class="fa-solid fa-arrow-right-from-bracket"></i> Log out
+                        </div>
                     </div>
                 </div>
             </div>
 
             <div class="page-content active-view" id="page-overview">
                 <div class="stats-row">
-                    <div class="card stat-card"><div class="stat-title"><i class="fa-solid fa-layer-group"></i> Total Projects</div><div class="stat-num">100</div></div>
-                    <div class="card stat-card"><div class="stat-title"><i class="fa-solid fa-triangle-exclamation"></i> Overdue</div><div class="stat-num">100</div></div>
-                    <div class="card stat-card"><div class="stat-title"><i class="fa-solid fa-check-double"></i> Completed</div><div class="stat-num">100</div></div>
-                    <div class="card stat-card"><div class="stat-title"><i class="fa-solid fa-xmark"></i> Incomplete</div><div class="stat-num">100</div></div>
+                    <div class="card stat-card">
+                        <div class="stat-title">
+                            <i class="fa-solid fa-layer-group"></i> Total Projects
+                        </div>
+                        <div class="stat-num">100</div>
+                    </div>
+                    <div class="card stat-card">
+                        <div class="stat-title">
+                            <i class="fa-solid fa-triangle-exclamation"></i> Overdue
+                        </div>
+                        <div class="stat-num">100</div>
+                    </div>
+                    <div class="card stat-card">
+                        <div class="stat-title">
+                            <i class="fa-solid fa-check-double"></i> Completed
+                        </div>
+                        <div class="stat-num">100</div>
+                    </div>
+                    <div class="card stat-card">
+                        <div class="stat-title">
+                            <i class="fa-solid fa-xmark"></i> Incomplete
+                        </div>
+                        <div class="stat-num">100</div>
+                    </div>
                 </div>
 
                 <div class="main-grid">
@@ -405,9 +1267,15 @@
                         <div class="card recent-card">
                             <h3>Recent Activities</h3>
                             <div class="activity-tags">
-                                <div class="tag"><div class="tag-icon"><i class="fa-solid fa-pen"></i></div> Activity #1</div>
-                                <div class="tag"><div class="tag-icon"><i class="fa-solid fa-pen"></i></div> Activity #2</div>
-                                <div class="tag"><div class="tag-icon"><i class="fa-solid fa-pen"></i></div> Activity #3</div>
+                                <div class="tag">
+                                    <div class="tag-icon"><i class="fa-solid fa-pen"></i></div> Activity #1
+                                </div>
+                                <div class="tag">
+                                    <div class="tag-icon"><i class="fa-solid fa-pen"></i></div> Activity #2
+                                </div>
+                                <div class="tag">
+                                    <div class="tag-icon"><i class="fa-solid fa-pen"></i></div> Activity #3
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -415,11 +1283,56 @@
                         <div class="card deadline-card">
                             <h3>Upcoming Deadlines</h3>
                             <div class="deadline-list">
-                                <div class="dl-item" onclick="toggleTask(this)"><div class="dl-num">01</div><div class="dl-info"><strong>Create Wireframe</strong><p>dd/mm/yyyy</p></div><div class="dl-check"><i class="fa-solid fa-check" style="opacity: 0;"></i></div></div>
-                                <div class="dl-item" onclick="toggleTask(this)"><div class="dl-num">02</div><div class="dl-info"><strong>Design System</strong><p>dd/mm/yyyy</p></div><div class="dl-check"><i class="fa-solid fa-check" style="opacity: 0;"></i></div></div>
-                                <div class="dl-item" onclick="toggleTask(this)"><div class="dl-num">03</div><div class="dl-info"><strong>Frontend Dev</strong><p>dd/mm/yyyy</p></div><div class="dl-check"><i class="fa-solid fa-check" style="opacity: 0;"></i></div></div>
-                                <div class="dl-item done" onclick="toggleTask(this)"><div class="dl-num">04</div><div class="dl-info"><strong>Backend Setup</strong><p>dd/mm/yyyy</p></div><div class="dl-check"><i class="fa-solid fa-check"></i></div></div>
-                                <div class="dl-item done" onclick="toggleTask(this)"><div class="dl-num">05</div><div class="dl-info"><strong>Database Init</strong><p>dd/mm/yyyy</p></div><div class="dl-check"><i class="fa-solid fa-check"></i></div></div>
+                                <div class="dl-item" onclick="toggleTask(this)">
+                                    <div class="dl-num">01</div>
+                                    <div class="dl-info">
+                                        <strong>Create Wireframe</strong>
+                                        <p>dd/mm/yyyy</p>
+                                    </div>
+                                    <div class="dl-check">
+                                        <i class="fa-solid fa-check" style="opacity: 0;"></i>
+                                    </div>
+                                </div>
+                                <div class="dl-item" onclick="toggleTask(this)">
+                                    <div class="dl-num">02</div>
+                                    <div class="dl-info">
+                                        <strong>Design System</strong>
+                                        <p>dd/mm/yyyy</p>
+                                    </div>
+                                    <div class="dl-check">
+                                        <i class="fa-solid fa-check" style="opacity: 0;"></i>
+                                    </div>
+                                </div>
+                                <div class="dl-item" onclick="toggleTask(this)">
+                                    <div class="dl-num">03</div>
+                                    <div class="dl-info">
+                                        <strong>Frontend Dev</strong>
+                                        <p>dd/mm/yyyy</p>
+                                    </div>
+                                    <div class="dl-check">
+                                        <i class="fa-solid fa-check" style="opacity: 0;"></i>
+                                    </div>
+                                </div>
+                                <div class="dl-item done" onclick="toggleTask(this)">
+                                    <div class="dl-num">04</div>
+                                    <div class="dl-info">
+                                        <strong>Backend Setup</strong>
+                                        <p>dd/mm/yyyy</p>
+                                    </div>
+                                    <div class="dl-check">
+                                        <i class="fa-solid fa-check"></i>
+                                    </div>
+                                </div>
+                                <div class="dl-item done" onclick="toggleTask(this)">
+                                    <div class="dl-num">05</div>
+                                    <div class="dl-info">
+                                        <strong>Database Init</strong>
+                                        <p>dd/mm/yyyy</p>
+                                    </div>
+                                    <div class="dl-check">
+                                        <i class="fa-solid fa-check"></i>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -430,22 +1343,47 @@
                 <div class="task-section">
                     <div class="ts-header">
                         <h2>Personal Projects</h2>
-                        <div class="ts-actions"><div class="sort-text"><i class="fa-solid fa-arrow-down-short-wide"></i> Sort By : Deadline</div><button class="btn-primary"><i class="fa-solid fa-plus"></i> New Task</button></div>
+                        <div class="ts-actions">
+                            <div class="sort-text">
+                                <i class="fa-solid fa-arrow-down-short-wide"></i> Sort By : Deadline
+                            </div>
+                            <button class="btn-primary">
+                                <i class="fa-solid fa-plus"></i> New Task
+                            </button>
+                        </div>
                     </div>
                     <div class="task-list">
                         <div class="t-card">
                             <img class="t-img" src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=300&q=80" alt="Code">
-                            <div class="t-title">Creating Web UI</div><div class="t-sub">Your job as a UX Des</div>
-                            <div class="prog-info"><span>Progress</span><span class="prog-val">85%</span></div>
-                            <div class="prog-track"><div class="prog-fill" style="width:85%;"></div><div class="prog-thumb" style="left:calc(85% - 8px);"></div></div>
-                            <div class="t-footer"><i class="fa-regular fa-clock"></i> 4 Hours Left</div>
+                            <div class="t-title">Creating Web UI</div>
+                            <div class="t-sub">Your job as a UX Des</div>
+                            <div class="prog-info">
+                                <span>Progress</span>
+                                <span class="prog-val">85%</span>
+                            </div>
+                            <div class="prog-track">
+                                <div class="prog-fill" style="width:85%;"></div>
+                                <div class="prog-thumb" style="left:calc(85% - 8px);"></div>
+                            </div>
+                            <div class="t-footer">
+                                <i class="fa-regular fa-clock"></i> 4 Hours Left
+                            </div>
                         </div>
                         <div class="t-card">
                             <img class="t-img" src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=300&q=80" alt="Code">
-                            <div class="t-title">Fixing Bugs</div><div class="t-sub">Frontend team</div>
-                            <div class="prog-info"><span>Progress</span><span class="prog-val">40%</span></div>
-                            <div class="prog-track"><div class="prog-fill" style="width: 40%;"></div><div class="prog-thumb" style="left: calc(40% - 8px);"></div></div>
-                            <div class="t-footer"><i class="fa-regular fa-clock"></i> 2 Days Left</div>
+                            <div class="t-title">Fixing Bugs</div>
+                            <div class="t-sub">Frontend team</div>
+                            <div class="prog-info">
+                                <span>Progress</span>
+                                <span class="prog-val">40%</span>
+                            </div>
+                            <div class="prog-track">
+                                <div class="prog-fill" style="width: 40%;"></div>
+                                <div class="prog-thumb" style="left: calc(40% - 8px);"></div>
+                            </div>
+                            <div class="t-footer">
+                                <i class="fa-regular fa-clock"></i> 2 Days Left
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -453,22 +1391,47 @@
                 <div class="task-section" style="margin-bottom: 50px;">
                     <div class="ts-header">
                         <h2>Team Projects</h2>
-                        <div class="ts-actions"><div class="sort-text"><i class="fa-solid fa-arrow-down-short-wide"></i> Sort By : Deadline</div><button class="btn-primary"><i class="fa-solid fa-plus"></i> New Project</button></div>
+                        <div class="ts-actions">
+                            <div class="sort-text">
+                                <i class="fa-solid fa-arrow-down-short-wide"></i> Sort By : Deadline
+                            </div>
+                            <button class="btn-primary">
+                                <i class="fa-solid fa-plus"></i> New Project
+                            </button>
+                        </div>
                     </div>
                     <div class="task-list">
                         <div class="t-card">
                             <img class="t-img" src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=300&q=80" alt="Code">
-                            <div class="t-title">Creating Perfect Website</div><div class="t-sub">Web Developer</div>
-                            <div class="prog-info"><span>Progress</span><span class="prog-val">85%</span></div>
-                            <div class="prog-track"><div class="prog-fill" style="width:85%;"></div><div class="prog-thumb" style="left:calc(85% - 8px);"></div></div>
-                            <div class="t-footer"><i class="fa-regular fa-clock"></i> 4 Days Left</div>
+                            <div class="t-title">Creating Perfect Website</div>
+                            <div class="t-sub">Web Developer</div>
+                            <div class="prog-info">
+                                <span>Progress</span>
+                                <span class="prog-val">85%</span>
+                            </div>
+                            <div class="prog-track">
+                                <div class="prog-fill" style="width:85%;"></div>
+                                <div class="prog-thumb" style="left:calc(85% - 8px);"></div>
+                            </div>
+                            <div class="t-footer">
+                                <i class="fa-regular fa-clock"></i> 4 Days Left
+                            </div>
                         </div>
                         <div class="t-card">
                             <img class="t-img" src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=300&q=80" alt="Code">
-                            <div class="t-title">Backend API Setup</div><div class="t-sub">Backend Developer</div>
-                            <div class="prog-info"><span>Progress</span><span class="prog-val">60%</span></div>
-                            <div class="prog-track"><div class="prog-fill" style="width:60%;"></div><div class="prog-thumb" style="left:calc(60% - 8px);"></div></div>
-                            <div class="t-footer"><i class="fa-regular fa-clock"></i> 6 Days Left</div>
+                            <div class="t-title">Backend API Setup</div>
+                            <div class="t-sub">Backend Developer</div>
+                            <div class="prog-info">
+                                <span>Progress</span>
+                                <span class="prog-val">60%</span>
+                            </div>
+                            <div class="prog-track">
+                                <div class="prog-fill" style="width:60%;"></div>
+                                <div class="prog-thumb" style="left:calc(60% - 8px);"></div>
+                            </div>
+                            <div class="t-footer">
+                                <i class="fa-regular fa-clock"></i> 6 Days Left
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -478,62 +1441,150 @@
                 <div class="calendar-wrapper">
                     <div class="cal-header">
                         <div class="cal-nav">
-                            <div class="btn-icon"><i class="fa-solid fa-chevron-left"></i></div>
+                            <div class="btn-icon">
+                                <i class="fa-solid fa-chevron-left"></i>
+                            </div>
                             <div class="cal-date" id="btn-date">
                                 Apr 16, 2026 <i class="fa-solid fa-chevron-down" style="font-size:12px;"></i>
                                 <div class="dropdown date-picker-drop" id="drop-datepicker">
-                                    <div class="dp-header"><i class="fa-solid fa-chevron-left"></i> Apr 2026 <i class="fa-solid fa-chevron-right"></i></div>
+                                    <div class="dp-header">
+                                        <i class="fa-solid fa-chevron-left"></i> Apr 2026 <i class="fa-solid fa-chevron-right"></i>
+                                    </div>
                                     <div class="dp-grid">
                                         <div>Mo</div><div>Tu</div><div>We</div><div>Th</div><div>Fr</div><div>Sa</div><div>Su</div>
-                                        <div class="dp-day muted">30</div><div class="dp-day muted">31</div><div class="dp-day">1</div><div class="dp-day">2</div><div class="dp-day">3</div><div class="dp-day">4</div><div class="dp-day">5</div>
-                                        <div class="dp-day">6</div><div class="dp-day">7</div><div class="dp-day">8</div><div class="dp-day">9</div><div class="dp-day">10</div><div class="dp-day">11</div><div class="dp-day">12</div>
-                                        <div class="dp-day">13</div><div class="dp-day">14</div><div class="dp-day">15</div><div class="dp-day active">16</div><div class="dp-day">17</div><div class="dp-day">18</div><div class="dp-day">19</div>
-                                        <div class="dp-day">20</div><div class="dp-day">21</div><div class="dp-day">22</div><div class="dp-day">23</div><div class="dp-day">24</div><div class="dp-day">25</div><div class="dp-day">26</div>
+                                        <div class="dp-day muted">30</div>
+                                        <div class="dp-day muted">31</div>
+                                        <div class="dp-day">1</div>
+                                        <div class="dp-day">2</div>
+                                        <div class="dp-day">3</div>
+                                        <div class="dp-day">4</div>
+                                        <div class="dp-day">5</div>
+                                        <div class="dp-day">6</div>
+                                        <div class="dp-day">7</div>
+                                        <div class="dp-day">8</div>
+                                        <div class="dp-day">9</div>
+                                        <div class="dp-day">10</div>
+                                        <div class="dp-day">11</div>
+                                        <div class="dp-day">12</div>
+                                        <div class="dp-day">13</div>
+                                        <div class="dp-day">14</div>
+                                        <div class="dp-day">15</div>
+                                        <div class="dp-day active">16</div>
+                                        <div class="dp-day">17</div>
+                                        <div class="dp-day">18</div>
+                                        <div class="dp-day">19</div>
+                                        <div class="dp-day">20</div>
+                                        <div class="dp-day">21</div>
+                                        <div class="dp-day">22</div>
+                                        <div class="dp-day">23</div>
+                                        <div class="dp-day">24</div>
+                                        <div class="dp-day">25</div>
+                                        <div class="dp-day">26</div>
                                     </div>
                                 </div>
                             </div>
                             <div style="color: #54577A; margin-left:10px;">Today</div>
-                            <div class="btn-icon"><i class="fa-solid fa-chevron-right"></i></div>
+                            <div class="btn-icon">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </div>
                         </div>
                         <div class="cal-view-switch">
                             <div class="view-btn active" onclick="switchCalView('day', this)">Day</div>
                             <div class="view-btn" onclick="switchCalView('week', this)">Week</div>
                         </div>
-                        <button class="btn-primary"><i class="fa-solid fa-plus"></i> New Event</button>
+                        <button class="btn-primary">
+                            <i class="fa-solid fa-plus"></i> New Event
+                        </button>
                     </div>
 
                     <div class="cal-body">
                         <div class="cal-sidebar" id="cal-mini-sidebar">
-                            <div class="mini-cal-header"><i class="fa-solid fa-chevron-left" style="cursor:pointer;"></i> Apr 2026 <i class="fa-solid fa-chevron-right" style="cursor:pointer;"></i></div>
+                            <div class="mini-cal-header">
+                                <i class="fa-solid fa-chevron-left" style="cursor:pointer;"></i> 
+                                Apr 2026 
+                                <i class="fa-solid fa-chevron-right" style="cursor:pointer;"></i>
+                            </div>
                             <div class="mini-grid">
                                 <div>Mo</div><div>Tu</div><div>We</div><div>Th</div><div>Fr</div><div>Sa</div><div>Su</div>
-                                <div class="m-day muted">30</div><div class="m-day muted">31</div><div class="m-day">1</div><div class="m-day">2</div><div class="m-day">3</div><div class="m-day">4</div><div class="m-day">5</div>
-                                <div class="m-day">6</div><div class="m-day">7</div><div class="m-day">8</div><div class="m-day">9</div><div class="m-day">10</div><div class="m-day">11</div><div class="m-day">12</div>
-                                <div class="m-day">13</div><div class="m-day">14</div><div class="m-day">15</div><div class="m-day active">16</div><div class="m-day">17</div><div class="m-day">18</div><div class="m-day">19</div>
-                                <div class="m-day">20</div><div class="m-day">21</div><div class="m-day">22</div><div class="m-day">23</div><div class="m-day">24</div><div class="m-day">25</div><div class="m-day">26</div>
+                                <div class="m-day muted">30</div>
+                                <div class="m-day muted">31</div>
+                                <div class="m-day">1</div>
+                                <div class="m-day">2</div>
+                                <div class="m-day">3</div>
+                                <div class="m-day">4</div>
+                                <div class="m-day">5</div>
+                                <div class="m-day">6</div>
+                                <div class="m-day">7</div>
+                                <div class="m-day">8</div>
+                                <div class="m-day">9</div>
+                                <div class="m-day">10</div>
+                                <div class="m-day">11</div>
+                                <div class="m-day">12</div>
+                                <div class="m-day">13</div>
+                                <div class="m-day">14</div>
+                                <div class="m-day">15</div>
+                                <div class="m-day active">16</div>
+                                <div class="m-day">17</div>
+                                <div class="m-day">18</div>
+                                <div class="m-day">19</div>
+                                <div class="m-day">20</div>
+                                <div class="m-day">21</div>
+                                <div class="m-day">22</div>
+                                <div class="m-day">23</div>
+                                <div class="m-day">24</div>
+                                <div class="m-day">25</div>
+                                <div class="m-day">26</div>
                             </div>
                         </div>
 
                         <div class="cal-main-area">
                             <div class="week-header" id="week-header" style="display: none;">
-                                <div class="wh-time-gap"></div> <div class="wh-day"><span>Mon</span><span class="num">13</span></div>
-                                <div class="wh-day"><span>Tue</span><span class="num">14</span></div>
-                                <div class="wh-day"><span>Wed</span><span class="num">15</span></div>
-                                <div class="wh-day active"><span>Thu</span><span class="num">16</span></div>
-                                <div class="wh-day"><span>Fri</span><span class="num">17</span></div>
-                                <div class="wh-day weekend"><span>Sat</span><span class="num">18</span></div>
-                                <div class="wh-day weekend"><span>Sun</span><span class="num">19</span></div>
+                                <div class="wh-time-gap"></div> 
+                                <div class="wh-day">
+                                    <span>Mon</span><span class="num">13</span>
+                                </div>
+                                <div class="wh-day">
+                                    <span>Tue</span><span class="num">14</span>
+                                </div>
+                                <div class="wh-day">
+                                    <span>Wed</span><span class="num">15</span>
+                                </div>
+                                <div class="wh-day active">
+                                    <span>Thu</span><span class="num">16</span>
+                                </div>
+                                <div class="wh-day">
+                                    <span>Fri</span><span class="num">17</span>
+                                </div>
+                                <div class="wh-day weekend">
+                                    <span>Sat</span><span class="num">18</span>
+                                </div>
+                                <div class="wh-day weekend">
+                                    <span>Sun</span><span class="num">19</span>
+                                </div>
                             </div>
 
                             <div class="cal-scroll-area">
                                 <div class="time-col" id="time-column"></div>
                                 <div class="grid-wrapper" id="grid-day">
                                     <div class="day-column" id="day-col-1">
-                                        <div class="event-block e-green" style="top: 80px; height: 60px;"><div class="ev-title">🧟‍♂️ Team Standup</div><div style="font-weight: 500;">09:00 - 10:00</div></div>
-                                        <div class="event-block e-red" style="top: 240px; height: 40px;"><div class="ev-title">☕ Quick Review</div></div>
-                                        <div class="event-block e-yellow" style="top: 320px; height: 80px;"><div class="ev-title">🐫 Lunch Break</div></div>
-                                        <div class="event-block e-blue" style="top: 480px; height: 100px;"><div class="ev-title">🧠 Client Presentation</div><div style="font-weight: 500;">14:00 - 15:30</div></div>
-                                        <div class="event-block e-purple-dark" style="top: 640px; height: 80px;"><div class="ev-title">🎉 Wrap up & Deploy</div><div style="font-weight: 500;">16:00 - 17:00</div></div>
+                                        <div class="event-block e-green" style="top: 80px; height: 60px;">
+                                            <div class="ev-title">🧟‍♂️ Team Standup</div>
+                                            <div style="font-weight: 500;">09:00 - 10:00</div>
+                                        </div>
+                                        <div class="event-block e-red" style="top: 240px; height: 40px;">
+                                            <div class="ev-title">☕ Quick Review</div>
+                                        </div>
+                                        <div class="event-block e-yellow" style="top: 320px; height: 80px;">
+                                            <div class="ev-title">🐫 Lunch Break</div>
+                                        </div>
+                                        <div class="event-block e-blue" style="top: 480px; height: 100px;">
+                                            <div class="ev-title">🧠 Client Presentation</div>
+                                            <div style="font-weight: 500;">14:00 - 15:30</div>
+                                        </div>
+                                        <div class="event-block e-purple-dark" style="top: 640px; height: 80px;">
+                                            <div class="ev-title">🎉 Wrap up & Deploy</div>
+                                            <div style="font-weight: 500;">16:00 - 17:00</div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="grid-wrapper" id="grid-week" style="display: none;"></div>
@@ -574,10 +1625,15 @@
             var navItems = document.getElementsByClassName('nav-item');
             var pages = document.getElementsByClassName('page-content');
             
-            for(var i = 0; i < navItems.length; i++) navItems[i].classList.remove('active');
-            for(var j = 0; j < pages.length; j++) pages[j].classList.remove('active-view');
+            for (var i = 0; i < navItems.length; i++) {
+                navItems[i].classList.remove('active');
+            }
+            
+            for (var j = 0; j < pages.length; j++) {
+                pages[j].classList.remove('active-view');
+            }
 
-            if(tabName === 'overview') {
+            if (tabName === 'overview') {
                 navItems[0].classList.add('active');
                 document.getElementById('page-overview').classList.add('active-view');
             } else if (tabName === 'task') {
@@ -605,7 +1661,11 @@
             var isClickCloseNoti = btnCloseNoti && btnCloseNoti.contains(event.target);
 
             if (isClickProfileBtn) {
-                dropProfile.style.display = (dropProfile.style.display === 'block') ? 'none' : 'block';
+                if (dropProfile.style.display === 'block') {
+                    dropProfile.style.display = 'none';
+                } else {
+                    dropProfile.style.display = 'block';
+                }
             } else if (dropProfile && !dropProfile.contains(event.target)) {
                 dropProfile.style.display = 'none';
             }
@@ -613,13 +1673,21 @@
             if (isClickCloseNoti) {
                 dropNoti.style.display = 'none'; 
             } else if (isClickNotiBtn) {
-                dropNoti.style.display = (dropNoti.style.display === 'block') ? 'none' : 'block';
+                if (dropNoti.style.display === 'block') {
+                    dropNoti.style.display = 'none';
+                } else {
+                    dropNoti.style.display = 'block';
+                }
             } else if (dropNoti && !dropNoti.contains(event.target)) {
                 dropNoti.style.display = 'none';
             }
 
             if (isClickDateBtn) {
-                dropDate.style.display = (dropDate.style.display === 'block') ? 'none' : 'block';
+                if (dropDate.style.display === 'block') {
+                    dropDate.style.display = 'none';
+                } else {
+                    dropDate.style.display = 'block';
+                }
             } else if (dropDate && !dropDate.contains(event.target)) {
                 dropDate.style.display = 'none';
             }
@@ -628,16 +1696,21 @@
         function toggleTask(element) {
             element.classList.toggle('done');
             var icon = element.querySelector('.dl-check i');
-            if(element.classList.contains('done')) { icon.style.opacity = '1'; } 
-            else { icon.style.opacity = '0'; }
+            if (element.classList.contains('done')) { 
+                icon.style.opacity = '1'; 
+            } else { 
+                icon.style.opacity = '0'; 
+            }
         }
 
         function switchCalView(type, btnObj) {
             var viewBtns = document.getElementsByClassName('view-btn');
-            for(var i = 0; i < viewBtns.length; i++) viewBtns[i].classList.remove('active');
+            for (var i = 0; i < viewBtns.length; i++) {
+                viewBtns[i].classList.remove('active');
+            }
             btnObj.classList.add('active');
 
-            if(type === 'day') {
+            if (type === 'day') {
                 document.getElementById('grid-day').style.display = 'flex';
                 document.getElementById('grid-week').style.display = 'none';
                 document.getElementById('week-header').style.display = 'none';
@@ -653,25 +1726,38 @@
         function initCalendarGrid() {
             var timeCol = document.getElementById('time-column');
             var timeHtml = '<div style="height: 40px;"></div>'; 
-            for(var i = 1; i <= 23; i++) {
+            
+            for (var i = 1; i <= 23; i++) {
                 var hour = i < 10 ? '0' + i + ':00' : i + ':00';
                 timeHtml += '<div class="time-label">' + hour + '</div>';
             }
             timeCol.innerHTML = timeHtml;
 
             var dayCol1 = document.getElementById('day-col-1');
-            for(var j = 0; j < 24; j++) dayCol1.insertAdjacentHTML('afterbegin', '<div class="grid-cell"></div>');
+            for (var j = 0; j < 24; j++) {
+                dayCol1.insertAdjacentHTML('afterbegin', '<div class="grid-cell"></div>');
+            }
 
             var weekGrid = document.getElementById('grid-week');
             var weekHtml = '';
-            for(var d = 0; d < 7; d++) {
+            
+            for (var d = 0; d < 7; d++) {
                 var isWeekend = (d === 5 || d === 6) ? 'weekend' : '';
                 weekHtml += '<div class="day-column ' + isWeekend + '">';
-                for(var h = 0; h < 24; h++) weekHtml += '<div class="grid-cell"></div>';
                 
-                if(d === 0) weekHtml += '<div class="event-block e-green" style="top: 160px; height: 60px;"><div class="ev-title">🧟‍♂️ Design Sync</div></div>';
-                if(d === 3) weekHtml += '<div class="event-block e-blue" style="top: 320px; height: 120px;"><div class="ev-title">🧠 Client Present</div></div>';
-                if(d === 4) weekHtml += '<div class="event-block e-red" style="top: 560px; height: 80px;"><div class="ev-title">🚨 Fix Bugs</div></div>';
+                for (var h = 0; h < 24; h++) {
+                    weekHtml += '<div class="grid-cell"></div>';
+                }
+                
+                if (d === 0) {
+                    weekHtml += '<div class="event-block e-green" style="top: 160px; height: 60px;"><div class="ev-title">🧟‍♂️ Design Sync</div></div>';
+                }
+                if (d === 3) {
+                    weekHtml += '<div class="event-block e-blue" style="top: 320px; height: 120px;"><div class="ev-title">🧠 Client Present</div></div>';
+                }
+                if (d === 4) {
+                    weekHtml += '<div class="event-block e-red" style="top: 560px; height: 80px;"><div class="ev-title">🚨 Fix Bugs</div></div>';
+                }
                 
                 weekHtml += '</div>';
             }
